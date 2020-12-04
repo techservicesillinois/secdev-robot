@@ -113,32 +113,40 @@ Safer Illinois home screen Your Care Team
 
 Safer Illinois home screen Wellness
     Sleep  5s
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.Button[4]
-    Swipe    500     1300     500    0  1000
-    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'COVID-19 Wellness Center')]
-    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1] [contains(@text,'COVID Wellness Answer Center for assistance.')]
+    Click Element  accessibility_id=COVID-19 Wellness Answer Center
+    Sleep  5s
+    Wait Until Page Contains Element  accessibility_id=COVID-19 Wellness Center    timeout=None    error=None
+    #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'COVID-19 Wellness Center')]
+    #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1] [contains(@text,'COVID Wellness Answer Center for assistance.')]
 
 
 Safer Illinois home Find test location
+    Sleep  5s
+    Click Element  accessibility_id=Find test locations
+    Wait Until Page Contains Element  accessibility_id=Test Locations
+    #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'Test Locations')]
+    #Click Element  accessibility_id=County dropdown Champaign County
+    #Click Element At Coordinates    980 293
+
+    Click Element At Coordinates    971    511
+    Sleep  5s
+    Click Element  accessibility_id=All Providers
+    Sleep  5s
     Swipe    500     1300     500    0  1000
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.Button[3]
-    Swipe    500     1300     500    0  1000
-    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'Test Locations')]
-    Swipe    500     1300     500    0  1000
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]/android.widget.Button
-    Swipe    500     1300     500    0  1000
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    #Sleep  5s
+    #Wait Until Page Contains Element  accessibility_id=State Farm Center 1800 S. First St., Champaign, Il Short wait time
 
 
 Safer Illinois home screen County Guidelines
     Sleep  5s
     #scroll down and tap on Next button
-    Click Element    accessibility_id=County Guidelines
+    Click Element At Coordinates    299    554
+    Wait Until Page Contains Element  accessibility_id=Champaign, Illinois County
+    #Click Element    accessibility_id=County Guidelines
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View [contains(@text,'Safer Illinois Home')]
     #County Guidelines
     #Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.Button[1]
@@ -214,14 +222,14 @@ Valid Open and Close Test location
     Start the Application
     Proceed with NO Netid
     Covid onboarding screen
-    Safer Illinois home screen Your Care Team
-    #Safer Illinois home Find test location
+    #Safer Illinois home screen Your Care Team
+    Safer Illinois home Find test location
     #Safer Illinois home screen Wellness
     #Safer Illinois home screen Your Care Team
     #Safer Illinois home screen County Guidelines
     Close the Application
 
-Valid Wellnesss screen
+Valid Wellness screen
      Open the Application
      Start the Application
      Proceed with NO Netid
@@ -232,7 +240,7 @@ Valid Wellnesss screen
      #Safer Illinois home screen County Guidelines
      Close the Application
 
-Valid Wellnesss screen Your Care Team
+Valid Your Care Team
        Open the Application
        Start the Application
        Proceed with NO Netid
@@ -243,7 +251,7 @@ Valid Wellnesss screen Your Care Team
        #Safer Illinois home screen County Guidelines
        Close the Application
 
-Valid Wellnesss screen County Guidelines
+Valid County Guidelines
        #Open the Browser
        Open the Application
        Start the Application
