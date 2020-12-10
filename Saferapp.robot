@@ -8,7 +8,7 @@ Documentation  Test Cases for evaluation of a proper setup with
 
 Library     Dialogs     # Built-in, but requires tkinter as part of Python install.
 Library     AppiumLibrary
-
+Variables    input.yaml
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 ${LOCAL_APPIUM_SERVER1}    http://localhost:4723/wd/hub
@@ -154,59 +154,73 @@ Safer Illinois home screen County Guidelines
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View [contains(@text,'There are no specific guidelines for your status in this county.')]
 
 Setting screen with NO NETID
+    #Log to Console    ${NETID}
+    #Log to Console    ${PWD}
+	Sleep  5s
+# Tap on Settings icon
+	Click Element  	accessibility_id=Settings
+# Tap on connect your netid on setting screen
+    Sleep  5s
+    Click Element  	accessibility_id=Connect your NetID
+# Shib page displays
 
-	Swipe    500     1300     500    0  1000
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button
-#Display settings
+    Sleep   10s
+# get all the context displayed on the Shib screen
+    ${contexts}    Get Contexts
+# Print the content in cammand line ie Native app and Webview chrome
+    Log To Console    ${contexts}
+#Get the current active context Native app
+    ${current}    Get Current Context
+# Result of current is Native app
+    Log To Console    ${current}
+# Context [1]  is Webview chrome
+    Log To Console    ${contexts}[1]
+# Displays Webview
+    Switch To Context    ${contexts}[1]
+     #Log To Console    ${contexts}[1]
+     ${current}        Get Current Context
+     Log To Console      ${current}  
+     Input Text    id=j_username    ${NETID}
+     Input Password  id=j_password   ${PWD}
+
+#Close the Keyboard
+    Press Keycode    4
+#Go back to Safer App
+    Press Keycode    4
+    Sleep  5s
+# Swtich back to Native app
+    Switch To Context     ${contexts}[0] 
+    ${current}        Get Current Context
+    Log To Console       ${current}  
+
+
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
+
+
+Setting screen with NO NETID verify who are you
+
+# Verify who are
+
+    Click Element  	accessibility_id=Who you are
+    Sleep     5s
+    #${User_role}    Get Element Attribute  accessibility_id=checked, checkbox, University Student content-desc
+    #Log To Console  ${User_role}
+    Element Should Be Enabled    accessibility_id=checked, checkbox, University Student
+    Click Element  	accessibility_id=Back
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Settings
+    #privacy screen
+    Sleep    5s
     Swipe    500     1300     500    0  1000
-    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View [contains(@text,'Settings')]
-#tap on Connect Net id
-
-    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.Button[1]
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep  5s
+    Click Element  	accessibility_id=Privacy Statement
+    Sleep  5s
+    Page Should Contain Element    accessibility_id=Privacy Statement
     Sleep  10s
-#Switch to Shib screen
-    ${context}   Get Contexts
-    Log To Console  ${context}
-    ${currentcontent}   Get Current Context
-#Printing Native app
-    Log To Console  ${currentcontent}
-  #Switching to Webview
-    Switch To Context  WEBVIEW_chrome
-    ${currentcontent}   Get Current Context
-    Log To Console  ${currentcontent}
-#Switch Natvie App
-    Switch Application  MyApp1
-    Sleep  10s
-    ${currentcontent}   Get Current Context
-    Log To Console  ${currentcontent}
-#Verify Shib page
-    #Wait Until Page Contains  ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[1]/android.view.View [contains(@text,'You must log in to Illinois']
+    Click Element  	accessibility_id=Back
 
-
-#Click back to Setting screen
-#     Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button
-#tap on Who are you
-
-#    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.Button[2]
-#Verfiy University student is Enabled and checked
-#   ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2] [contains(@text,'checked, checkbox, University Student')]
-#Click back to Setting screen
-#     Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button
-#Verfify Covid Notification Enabled
-
-#    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.view.View[5] [contains(@text,'checked, checkbox, COVID-19 notifications')]
-#Tap on Privacy Center
-#    Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.Button[3]
-#verify Privacy screen is displayed
-#    ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'Privacy Statement')]
-#Click back to Setting screen
-#     Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button
-#Tap on Feedback button
-#   Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.Button[4]
-#Verify Feedback screen is displayed
-#   ${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'Provide Feedback')]
-#Click back to Setting screen
-#     Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button
 
 
 Close the Application
