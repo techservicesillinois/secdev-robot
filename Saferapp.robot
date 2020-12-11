@@ -192,15 +192,10 @@ Setting screen with NO NETID
     Switch To Context     ${contexts}[0] 
     ${current}        Get Current Context
     Log To Console       ${current}  
-
-
-    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
-
-
-Setting screen with NO NETID verify who are you
+#Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
 
 # Verify who are
-
+    Sleep     5s
     Click Element  	accessibility_id=Who you are
     Sleep     5s
     #${User_role}    Get Element Attribute  accessibility_id=checked, checkbox, University Student content-desc
@@ -209,6 +204,8 @@ Setting screen with NO NETID verify who are you
     Click Element  	accessibility_id=Back
     Sleep    5s
     Page Should Contain Element    accessibility_id=Settings
+    Sleep   5s
+
     #privacy screen
     Sleep    5s
     Swipe    500     1300     500    0  1000
@@ -219,6 +216,14 @@ Setting screen with NO NETID verify who are you
     Sleep  5s
     Page Should Contain Element    accessibility_id=Privacy Statement
     Sleep  10s
+    Click Element  	accessibility_id=Back
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Click Element  	accessibility_id=Submit Feedback
+    Sleep  5s
+    Page Should Contain Element    accessibility_id=Provide Feedback
     Click Element  	accessibility_id=Back
 
 
@@ -286,3 +291,4 @@ Validating Setting screen
        Covid onboarding screen
        Setting screen with NO NETID
        Close the Application
+
