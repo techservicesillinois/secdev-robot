@@ -110,6 +110,7 @@ Safer Illinois home screen Your Care Team
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.view.View[4] [contains(@text,'Members of the OSF OnCall Connect care team')]
+    Click Element    accessibility_id=Back
 
 Safer Illinois home screen Wellness
     Sleep  5s
@@ -118,7 +119,7 @@ Safer Illinois home screen Wellness
     Wait Until Page Contains Element  accessibility_id=COVID-19 Wellness Center    timeout=None    error=None
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'COVID-19 Wellness Center')]
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1] [contains(@text,'COVID Wellness Answer Center for assistance.')]
-
+    Click Element    accessibility_id=Back
 
 Safer Illinois home Find test location
     Sleep  5s
@@ -139,7 +140,7 @@ Safer Illinois home Find test location
     Swipe    500     1300     500    0  1000
     #Sleep  5s
     #Wait Until Page Contains Element  accessibility_id=State Farm Center 1800 S. First St., Champaign, Il Short wait time
-
+    Click Element    accessibility_id=Back
 
 Safer Illinois home screen County Guidelines
     Sleep  5s
@@ -152,6 +153,7 @@ Safer Illinois home screen County Guidelines
     #Click Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.Button[1]
     #Swipe    500     100     500    0  1000
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View [contains(@text,'There are no specific guidelines for your status in this county.')]
+    Click Element    accessibility_id=Back
 
 Setting screen with NO NETID
     #Log to Console    ${NETID}
@@ -194,7 +196,66 @@ Setting screen with NO NETID
     Log To Console       ${current}  
 #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
 
+
+Failure Login credentials NETID
+
+    #Log to Console    ${NETID}
+    #Log to Console    ${PWD}
+	Sleep  5s
+# Tap on Settings icon
+	Click Element  	accessibility_id=Settings
+# Tap on connect your netid on setting screen
+    Sleep  5s
+    Click Element  	accessibility_id=Connect your NetID
+# Shib page displays
+
+    Sleep   10s
+# get all the context displayed on the Shib screen
+    ${contexts}    Get Contexts
+# Print the content in cammand line ie Native app and Webview chrome
+    Log To Console    ${contexts}
+#Get the current active context Native app
+    ${current}    Get Current Context
+# Result of current is Native app
+    Log To Console    ${current}
+# Context [1]  is Webview chrome
+    Log To Console    ${contexts}[1]
+# Displays Webview
+    Switch To Context    ${contexts}[1]
+     #Log To Console    ${contexts}[1]
+     ${current}        Get Current Context
+     Log To Console      ${current}  
+     Input Text    id=j_username    asdasdas
+     Input Password  id=j_password   poewdfdfg
+#Tap on Login button
+     Press Keycode    66
+#Close the keyboard
+     Press Keycode    4
+     Sleep  5s
+     Swipe    500    400    500    1300    1000
+     Swipe    500    400    500    1300    1000
+     Sleep  5s
+     #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
+     #Click Element   id=submit_button
+
+     #Sleep  5s
+#Close the Keyboard
+
+#Go back to Safer App
+    Press Keycode    4
+    Press Keycode    4
+    Sleep  5s
+# Swtich back to Native app
+    Switch To Context     ${contexts}[0] 
+    ${current}        Get Current Context
+    Log To Console       ${current}  
+
+
+Setting screen with NO NETID validating elements in setting screen
+
 # Verify who are
+    #Sleep     5s
+    #Click Element  	accessibility_id=Settings
     Sleep     5s
     Click Element  	accessibility_id=Who you are
     Sleep     5s
@@ -224,6 +285,7 @@ Setting screen with NO NETID
     Click Element  	accessibility_id=Submit Feedback
     Sleep  5s
     Page Should Contain Element    accessibility_id=Provide Feedback
+    Sleep  5s
     Click Element  	accessibility_id=Back
 
 
@@ -290,5 +352,34 @@ Validating Setting screen
        Proceed with NO Netid
        Covid onboarding screen
        Setting screen with NO NETID
+       Close the Application
+
+Failure path of connect Netid screen
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Failure Login credentials NETID
+       Close the Application
+
+Validating elements on setting screen
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Setting screen with NO NETID validating elements in setting screen
+       Close the Application
+
+Demo Test case
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Safer Illinois home screen Your Care Team
+       Safer Illinois home screen Wellness
+       Safer Illinois home Find test location
+       Safer Illinois home screen County Guidelines
+       Failure Login credentials NETID
+       Setting screen with NO NETID validating elements in setting screen
        Close the Application
 
