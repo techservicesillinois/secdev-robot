@@ -54,18 +54,73 @@ Proceed with NO Netid
     Click Element At Coordinates    517    1697
     Sleep  5s
 
+Proceed with Netid
+
+    Sleep    5s
+    Click Element    accessibility_id=Log in with NetID
+
+    # Shib page displays
+    Sleep    15s
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
+    #Sleep    15s
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
+    #Sleep    30s
+    # get all the context displayed on the Shib screen
+    ${contexts}    Get Contexts
+    # Print the content in cammand line ie Native app and Webview chrome
+    #Sleep   5s
+    #Log To Console    ${contexts}
+    #Get the current active context Native app
+    ${current}    Get Current Context
+    # Result of current is Native app
+    #Log To Console    ${current}
+    # Context [1]  is Webview chrome
+    #Log To Console    ${contexts}[1]
+    # Displays Webview
+    Switch To Context    ${contexts}[1]
+    #Log To Console    ${contexts}[1]
+    Sleep    10s
+    ${current}        Get Current Context
+    #Log To Console      ${current}  
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
+    #Sleep    5s
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
+    #Sleep    5s
+    Input Text    id=j_username    ${NETID}
+    Input Password  id=j_password   ${PWD}
+    #Close the keyboard
+    Press Keycode    4
+    #Tap on Login button
+    Press Keycode    66
+    #Close the keyboard
+    #Press Keycode    4
+    Sleep  10s
+
+    #Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
+    #Click Element   id=submit_button
+
+    #Sleep  5s
+    #Close the Keyboard
+
+    #Go back to Safer App
+    #Press Keycode    4
+    #Press Keycode    4
+    # Sleep  5s
+    # Swtich back to Native app
+    Switch To Context     ${contexts}[0] 
+    #${current}        Get Current Context
+    #Log To Console       ${current}  
+    Sleep  10s
+    Click Element    accessibility_id=Continue
+    Sleep  10s
+
+
 
 
 Covid onboarding screen
 
-    Sleep  5s
-    #Click on continue in Covid onboarding screen
-    Click Element    accessibility_id=Continue
-    #Click Element  xpath = //android.widget.Button[@content-desc="Continue"]
-    #Click Element At Coordinates    526    1673
-
     #How to work screens
-    Sleep  5s
+
     Click Element    accessibility_id=Next
 
     #Consent screen Exposure Notification
@@ -79,22 +134,65 @@ Covid onboarding screen
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+
     Sleep  5s
     #scroll down and tap on Next button
     Click Element    accessibility_id=Next
+    #Sleep  15s
+    #Swipe    500     1300     500    0  1000
+    #Swipe    500     1300     500    0  1000
+    #Swipe    500     1300     500    0  1000
+    #Click Element    accessibility_id=Reset my COVID-19 Secret QRcode
+    #Sleep    5s
+    #Click Element At Coordinates    318    1234
+    #Sleep    10s
+    Wait Until Page Contains Element    accessibility_id=Continue  timeout=120s
 
-#All set
+    Click Element    accessibility_id=Continue
+
+
+    #All set
     #${response}  Get Text  xpath = //android.view.View[@content-desc="You’re all set!, Header 1"] [contains(@text,'You’re all set!')]
-    Sleep  5s
+    #Wait Until Page Contains Element  accessibility_id=Continue
+    ##Click Element    accessibility_id=Continue
+    Sleep    5s
     Click Element    accessibility_id=Get started
+    Sleep  10s
+    Click Element At Coordinates    442    968
+    #Click Element    accessibility_id=Symptom Check-in Self-report any symptoms to see if you should get tested or stay home.
+   #Click Element    xpath=//android.widget.ImageView[@content-desc="Symptom Check-in Self-report any symptoms to see if you should get tested or stay home."]
+    Sleep  20s
+    Click Element    accessibility_id=unchecked, checkbox, Fever or chills
+    Click Element    accessibility_id=unchecked, checkbox, Fatigue
+    Click Element    accessibility_id=unchecked, checkbox, Headache
+    Click Element    accessibility_id=unchecked, checkbox, New loss of taste or smell
+    Click Element    accessibility_id=unchecked, checkbox, Cough
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Click Element    accessibility_id=Submit
+    Sleep  10s
+    Click Element    accessibility_id=OK
+    Sleep  10s
+    # To verify the symptoms user checked
+    #To Verify Text
+    ##[Arguments]      ${locator}    ${expectedString}
+    ####${Somevariable}=    Get Text     accessibility_id = [contains(@text,'MOST RECENT EVENT')]
+    ##Should Be Equal       ${Somevariable}      ${expectedString}
+
+    # To verify Next step is displayed
+    ####${Somevariable}=    Get Text    accessibility_id = [contains(@text,'NEXT STEP Take a COVID-19 test now')]
+    #Should Be Equal       ${Somevariable}      ${expectedString}
 
 Safer Illinois home screen Your Care Team
     Sleep  5s
     Wait Until Page Contains Element  accessibility_id=Safer Illinois Home    timeout=None    error=None
     #${response}  Get Text  xpath = //android.view.View[contains(@content-desc,"Your Health"]
     # Tap on Your care team on Home screen
-    Click Element At Coordinates    718    617
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    #Click Element At Coordinates    718    617  -- no net id coordinators
+    Click Element At Coordinates    805    1104
     sleep  5s
     Wait Until Page Contains Element  accessibility_id=Call 18336735669    timeout=None    error=None
     #accessibility_id=contains(@content-desc,'Your Health')]
@@ -114,8 +212,10 @@ Safer Illinois home screen Your Care Team
 
 Safer Illinois home screen Wellness
     Sleep  5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
     Click Element  accessibility_id=COVID-19 Wellness Answer Center
-    Sleep  5s
+    Sleep  10s
     Wait Until Page Contains Element  accessibility_id=COVID-19 Wellness Center    timeout=None    error=None
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View [contains(@text,'COVID-19 Wellness Center')]
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1] [contains(@text,'COVID Wellness Answer Center for assistance.')]
@@ -145,7 +245,11 @@ Safer Illinois home Find test location
 Safer Illinois home screen County Guidelines
     Sleep  5s
     #scroll down and tap on Next button
-    Click Element At Coordinates    299    554
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    #Click Element    accessibility_id=County Guidelines
+    Click Element At Coordinates    278    1084
+    Sleep    5s
     Wait Until Page Contains Element  accessibility_id=Champaign, Illinois County
     #Click Element    accessibility_id=County Guidelines
     #${response}  Get Text  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View [contains(@text,'Safer Illinois Home')]
@@ -182,6 +286,10 @@ Setting screen with NO NETID
      #Log To Console    ${contexts}[1]
      ${current}        Get Current Context
      Log To Console      ${current}  
+     Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
+     Sleep    5s
+     Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
+     Sleep    5s
      Input Text    id=j_username    ${NETID}
      Input Password  id=j_password   ${PWD}
 
@@ -255,7 +363,7 @@ Setting screen with NO NETID validating elements in setting screen
 
 # Verify who are
     #Sleep     5s
-    #Click Element  	accessibility_id=Settings
+    Click Element  	accessibility_id=Settings
     Sleep     5s
     Click Element  	accessibility_id=Who you are
     Sleep     5s
@@ -266,12 +374,15 @@ Setting screen with NO NETID validating elements in setting screen
     Sleep    5s
     Page Should Contain Element    accessibility_id=Settings
     Sleep   5s
-
-    #privacy screen
+    Swipe    500     1000     500    600  1000
+    Element Should Be Enabled    accessibility_id=checked, checkbox, COVID-19 notifications
     Sleep    5s
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    Element Should Be Enabled    accessibility_id=checked, checkbox, Exposure Notifications
+    Sleep    5s
+    Element Should Be Enabled    accessibility_id=checked, checkbox, Health Provider Test Results
+    #privacy screen
+    Swipe    500     1000     500    600  1000
+
     Sleep  5s
     Click Element  	accessibility_id=Privacy Statement
     Sleep  5s
@@ -281,7 +392,11 @@ Setting screen with NO NETID validating elements in setting screen
     Sleep    5s
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    Click Element  	accessibility_id=Personal Info
+    Sleep  5s
+    Page Should Contain Element    accessibility_id=mariotm
+    Click Element  	accessibility_id=Back
+    Sleep    5s
     Click Element  	accessibility_id=Submit Feedback
     Sleep  5s
     Page Should Contain Element    accessibility_id=Provide Feedback
@@ -290,14 +405,24 @@ Setting screen with NO NETID validating elements in setting screen
 
 
 
+
+
+
 Close the Application
 #    Capture Page Screenshot
-    Close Application
+    Close All Applications
+
 
 
 
 
 *** Test Cases ***
+
+Clear Cache of all application
+    Open the Application
+    Close the Application
+
+
 Valid Open and Close Test location
     Open the Application
     Start the Application
@@ -309,6 +434,27 @@ Valid Open and Close Test location
     #Safer Illinois home screen Your Care Team
     #Safer Illinois home screen County Guidelines
     Close the Application
+
+
+Check Box Selection Test
+     Open the Application
+     Start the Application
+     Proceed with Netid
+     Covid onboarding screen
+     Close the Application
+
+Valid Safer app with Netid
+    Open the Application
+    Start the Application
+    Proceed with Netid
+    Covid onboarding screen
+    Safer Illinois home Find test location
+    Safer Illinois home screen County Guidelines
+    Safer Illinois home screen Wellness
+    Safer Illinois home screen Your Care Team
+    Setting screen with NO NETID validating elements in setting screen
+    Close the Application
+
 
 Valid Wellness screen
      Open the Application
