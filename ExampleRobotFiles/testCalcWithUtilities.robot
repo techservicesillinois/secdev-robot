@@ -9,6 +9,9 @@ Documentation  Test Cases for evaluation of a proper setup with
 ...   Screenshots will be saved through a few methodologies 
 ...   including the BuiltIn "Capture Page Screenshot" and 
 ...   using a User created Keyword in an external resource file
+...
+...   IF statement logic will be utilized both with and without
+...   utilization of the external resource file
 
 Library     AppiumLibrary  
 
@@ -28,6 +31,12 @@ Enter the Equation
     Click Element    accessibility_id=plus
     Click Element    xpath=//android.widget.LinearLayout[@content-desc="Numbers and basic operations"]/android.view.ViewGroup[1]/android.widget.Button[4]
 
+Good Value Logged
+    Log To Console      ${\n} KEYWORD Solution is 6 ${\n}
+    
+Bad Value Logged
+    Log To Console      ${\n} KEYWORD Solution not 6 ${\n}
+
 Solve the Equation
     Click Element At Coordinates    600    1600 
 
@@ -44,6 +53,21 @@ Solve the Equation
     #   Capture a Screenshot with a Variable Set Name
     ${custom}       Set Variable    OtherCustomKeywordText
     Create ${custom} Screenshot
+
+    # If Statement Call and Logic
+    #   Set some variables
+    ${solution}     Get Text  id=com.android.calculator2:id/result
+    ${expected}     Set Variable    6
+    ${unexpected}     Set Variable    8
+
+    #   If Statement here
+    Run Keyword If      ${solution} == ${expected}     
+    ...     Log To Console      ${\n} Solution is 6 ${\n}
+    ...     ELSE 
+    ...     Log To Console      ${\n} Solution not 6 ${\n}
+
+    #   If Statement from Resouce File
+    If ${solution} is ${unexpected} then Good Value Logged else Bad Value Logged
 
 Close the Application
     Capture Page Screenshot
