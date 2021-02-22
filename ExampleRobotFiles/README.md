@@ -1,9 +1,9 @@
-# secdev-robot example files
+#  Usage
 
-This directory contains example Robot files. 
+Run an example using the built-in Android calculator:
 
-`exampleTestCalc.robot` is run with `robot exampleTestCalc.robot` on the command line. 
+`robot exampleTestCalc.robot`
 
-`testCalcWithUtilities.robot` is run with `robot testCalcWithUtilities.robot` on the command line. 
-This Robot file uses the `testCalcUtilities.resource` file.
+Run the second example with the `testCalcUtilities.resource` file:
 
+`robot testCalcWithUtilities.robot`
