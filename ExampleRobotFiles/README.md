@@ -14,4 +14,4 @@ Run the second example with the `testCalcUtilities.resource` file:
 
 Run an example with the `testClearUtilities.resource` file to clear listed app data:
 
-`robot testClearChromeData.robot`
+`robot testClearAppData.robot`
