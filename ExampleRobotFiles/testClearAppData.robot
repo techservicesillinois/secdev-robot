@@ -27,7 +27,7 @@ Go to Apps and Notifications ${var}
 Go to Chosen App
     # Scroll Down to the App
     Sleep   5s
-    FOR    ${count}    IN RANGE    10
+    FOR    ${count}    IN RANGE    200
         ${value}    Run Keyword And Return Status  Page Should Contain Text    ${CLEAR_APP}
         Exit For Loop If    ${value} == True
         Swipe    500     1600     500    500  1000
