@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation  Utility resouces for the testcalc demonstration
+Documentation  Utility resources for the testcalc demonstration
 
 *** Keywords ***
 
