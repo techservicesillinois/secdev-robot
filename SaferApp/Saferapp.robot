@@ -14,19 +14,20 @@ Variables    input.yaml
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 ${LOCAL_APPIUM_SERVER1}    http://localhost:4723/wd/hub
 *** Keywords ***
-Open the Application
+Open the Application Noreset
     Open Application    ${LOCAL_APPIUM_SERVER}    alias=MyApp1    platformName=android    platformVersion=9.0
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.covid    appActivity=edu.illinois.covid.MainActivity
         ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
         ...    allowInvisibleElements=true    ignoreUnimportantViews=false
 
+Open the Application
+    Open Application    ${LOCAL_APPIUM_SERVER}    alias=MyApp1    platformName=android    platformVersion=9.0
+        ...    deviceName=emulator-5554    automationName=uiautomator2
+        ...    appPackage=edu.illinois.covid    appActivity=edu.illinois.covid.MainActivity
+        ...    allowInvisibleElements=true    ignoreUnimportantViews=false
 
-Open the Browser
 
-    Open Application    ${LOCAL_APPIUM_SERVER1}    alias=MyApp2    platformName=android    platformVersion=9.0
-       ...    deviceName=emulator-5554    automationName=uiautomator2
-        ...    appPackage=com.android.chrome    appActivity=org.chromium.chrome.browser.ChromeTabbedActivity
 
 Start the Application
     Sleep  5s
@@ -644,7 +645,7 @@ Clear Cache of all application
     Close the Application
 
 Valid Status User Update
-    Open the Application
+    Open the Application Noreset
     Action Status Update
     Show Staus Card
     Close the Application
