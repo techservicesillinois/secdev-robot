@@ -8,6 +8,7 @@ Documentation  Test Cases for evaluation of a proper setup with
 
 Library     Dialogs     # Built-in, but requires tkinter as part of Python install.
 Library     AppiumLibrary
+Library    String
 Variables    input.yaml
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
@@ -17,6 +18,9 @@ Open the Application
     Open Application    ${LOCAL_APPIUM_SERVER}    alias=MyApp1    platformName=android    platformVersion=9.0
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.covid    appActivity=edu.illinois.covid.MainActivity
+        ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
+        ...    allowInvisibleElements=true    ignoreUnimportantViews=false
+
 
 Open the Browser
 
@@ -463,31 +467,51 @@ Show Staus Card
     Sleep    5s
 
 
-    #Run Keyword If      ${value1} == True     Log To Console    ${value1}
-
-
-    #//android.widget.ImageView[@content-desc="Current Status: Orange, Test Required Building access denied"]
-
-    #//android.widget.ImageView[@content-desc="Current Status: Orange, Test Required Building access denied"]
-
-
-    #${response}    Get Value    accessibility_id=Current Status: Orange, Test Required Building access denied
-
 Action Status Update
-    ${title}=  Get Element Attribute    class=android.view.View
-    Log to Console    ${title}
-    Sleep    5s
-    ${Value}    Run Keyword And Return Status    Should Contain    ${title}    Status updated
+    Sleep    15s
+    #${title}=  Get Element Attribute    class=android.view.View[1]  content-desc
+    #${title}=  Get Element Attribute    xpath=//android.view.View[1]    content-desc
+    Page Should Contain Element    class=//android.view.View[1]
+    #Element Attribute Should Match    	class=android.view.View[contains(@content-desc,'Status updated')]  enabled  True
+    #${StatusValue}=  Get Element Attribute    class=android.view.View    content-desc
+#    ${contexts} =    Get Source
+#    log   ${contexts.content}
+    #@{words} =  Split String    ${elements}
 
-    Click Element  	 accessibility_id=View Health History
-    ${History}    Run Keyword And Return Status    Should Contain    ${title}    Status updated
+#    @{lines} =	Split To Lines	${manylines}
+    #Log to Console  ${elements}
+    #FOR  ${item} IN  @{words}
+    #    log to console  Item: ${item}
+    #END
+    #${elements}    Run Keyword And Return Status    Page Should Contain Element    id=7b90874d-a1f5-4597-9ab6-e4d5f2ac61e7
+    #xpath=//android.view.View[@content-desc="NEXT STEP March 21, 2021 Resume testing on your assigned days You will turn orange/access denied if no negative test by Sunday, Mar 21."]
+    #class=android.widget.FrameLayout[contains(@content-desc,'MOST RECENT EVENT March 17, 2021 Action Required Status updated, please follow next steps')]
+    #[contains(@text,'There are no specific guidelines for your status in this county.')]
+    ${HealthValue}=  Get Element Attribute    accessibility_id=View Health History   content-desc
+    Log to Console    ${HealthValue}
     Sleep    5s
-    Click Element  	 accessibility_id=Back
+    ${HValue}    Run Keyword And Return Status    Should Contain    ${HealthValue}    View Health History
     Sleep    5s
-    ${Step}=  Get Element Attribute    class=android.view.View
-    Log to Console    ${Step}
+    ${LoctionValue}=  Get Element Attribute    accessibility_id=Find test locations   content-desc
+    Log to Console    ${LoctionValue}
     Sleep    5s
-    ${NValue}    Run Keyword And Return Status    Should Contain    ${Step}    NEXT STEP
+    ${LValue}    Run Keyword And Return Status    Should Contain    ${LoctionValue}    Find test locations
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Click Element At Coordinates    278    1101
+    Sleep    5s
+    ${CountyValue}=  Get Element Attribute    class=android.view.View    content-desc
+    Log to Console    ${CountyValue}
+    ${CValue}    Run Keyword And Return Status    Should Contain    ${CountyValue}     Yellow, Recent Negative Test
+    Click Element    accessibility_id=Back
+    #${History}    Run Keyword And Return Status    Should Contain    ${StatusValue}    Status updated
+    Sleep    5s
+    #Click Element  	 accessibility_id=Back
+    #Sleep    5s
+    #${Step}=  Get Element Attribute    class=android.view.View
+    #Log to Console    ${Step}
+    #Sleep    5s
+    #${NValue}    Run Keyword And Return Status    Should Contain    ${Step}    NEXT STEP
 
 
 
@@ -621,7 +645,7 @@ Clear Cache of all application
 
 Valid Status User Update
     Open the Application
-    #Action Status Update
+    Action Status Update
     Show Staus Card
     Close the Application
 
