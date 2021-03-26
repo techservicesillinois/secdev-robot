@@ -11,10 +11,10 @@ University of Illinois Urbana-Champaign on a best-effort basis.
 
 Please see https://answers.uillinois.edu/illinois/106384 for details. 
 
-# EOL and EOS
+# End-of-Life and End-of-Support Dates
 
 As of the last update to this README, the expected End-of-Life and 
-End-of-Support dates of this product are 30 Apr 2023.
+End-of-Support dates of this product are Apr 2023.
 
 End-of-Life was decided upon based on these dependencies and their 
 End-of-Life dates:
@@ -24,12 +24,8 @@ End-of-Life dates:
 
 These dependencies have unknown End-of-Life dates:
 
-    - Appium Command Line Tools (unknown)
-    - Appium Desktop (unknown)
-    - Appium Doctor (unknown)
-    - Chocolatey
-    - Python pip
-    - Python Wheel 
-    - Robot Framework (unknown)
-    - Robot Framework Appium Library (unknown)
-
+    - Appium Command Line Tools 
+    - Appium Desktop 
+    - Appium Doctor 
+    - Robot Framework 
+    - Robot Framework Appium Library
