@@ -37,8 +37,14 @@ Start the Application
     Click Element    accessibility_id=Get Started
     Sleep  5s
     Capture Page Screenshot     filename=SaferApp02.png
-
+    Sleep  5s
+    Page Should Contain Element    accessibility_id = Information Usage Disclosure, Header 1
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Click Element    accessibility_id=unchecked, checkbox, Acknowledge
+    Click Element    accessibility_id=Next
     Sleep  15s
+
     #Enable Location
     Click Element    accessibility_id=Continue
     Sleep  15s
@@ -550,8 +556,9 @@ Clear Chrome Browser Cache
     Open the Browser
     clear browser cachea
 
-Clear Cache of all application
+Validate Acknowledgement Screen
     Open the Application
+    Start the Application
     Close the Application
 
 Valid Status User Yellow
