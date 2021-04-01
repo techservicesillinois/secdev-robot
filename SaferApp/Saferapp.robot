@@ -399,6 +399,32 @@ Show Staus Card
     ...    BuildingAccessGrant
     Sleep    5s
 
+Status Change Yellow
+    Sleep    30s
+    Click Element    accessibility_id=See Next Steps
+    Sleep    5s
+    Click Element    accessibility_id=Find location
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    10s
+    Swipe    500     1300     500    0  1000
+    BuildingAccessGrant
+
+Status Change Orange
+    Sleep    30s
+    Click Element    accessibility_id=See Next Steps
+    Sleep    5s
+    Click Element    accessibility_id=Get in Touch with Care Team
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    10s
+    Swipe    500     1300     500    0  1000
+    BuildingAccessDeny
+
+
+
+    #Click Element    class=android.widget.TextView
+
 #FIXME: Once we get correct TEXT and ID attributes
 Action Status Update
     Sleep    15s
@@ -528,11 +554,23 @@ Clear Cache of all application
     Open the Application
     Close the Application
 
-Valid Status User Update
+Valid Status User Yellow
     Open the Application Noreset
-    #Action Status Update
-    Show Staus Card
+    #Open the Application
+    #Start the Application
+    #User already loggedin
+    Status Change Yellow
     Close the Application
+
+Valid Status User Orange
+    Open the Application Noreset
+    #Open the Application
+    #Start the Application
+    #User already loggedin
+    Status Change Orange
+    Close the Application
+
+
 
 #DEMO
 Valid Screenshot Result
