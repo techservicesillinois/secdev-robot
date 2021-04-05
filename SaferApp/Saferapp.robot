@@ -265,27 +265,52 @@ Safer Add Test Result
     Click Element    accessibility_id=Back
 
 Safer Illinois home screen Your Care Team
-    Sleep  5s
+    Sleep  15s
     Wait Until Page Contains Element  accessibility_id=Safer Illinois Home    timeout=None    error=None
     # Tap on Your care team on Home screen
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
-    Sleep    5s
+    Sleep    15s
     Capture Page Screenshot     filename=SaferApp14.png
+    Sleep    5s
     Click Element At Coordinates    805    1104
-    Sleep  5s
-    Capture Page Screenshot     filename=SaferApp15.png
-    Wait Until Page Contains Element  accessibility_id=Call 18336735669    timeout=None    error=None
-    Swipe    500     100     500    0  1000
-    Swipe    500     100     500    0  1000
+    Sleep  15s
+    #Capture Page Screenshot     filename=SaferApp15.png
+    #Wait Until Page Contains Element  accessibility_id=Call 18336735669    timeout=None    error=None
     Capture Page Screenshot     filename=SaferApp16.png
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    15s
     Click Element At Coordinates    956    1416
     Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    #Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Learn more
+    Sleep    10s
+    Capture Page Screenshot     filename=Learnmore.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
     Click Element At Coordinates    956    1640
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Counseling Center
+    Sleep    5s
+    Capture Page Screenshot     filename=Counseling Center.png
     Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=McKinley Mental Health Program
+    Sleep    10s
+    Capture Page Screenshot     filename=MentalHealth.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Virtual Counseling
+    Sleep    5s
+    Capture Page Screenshot     filename=Virtual Counseling.png
+    Click Element    accessibility_id=Back
+
 
 Safer Illinois home screen Wellness
     Sleep  5s
@@ -557,8 +582,8 @@ Clear Chrome Browser Cache
     clear browser cachea
 
 Validate Acknowledgement Screen
-    Open the Application
-    Start the Application
+    Open the Application Noreset
+    Safer Illinois home screen Your Care Team
     Close the Application
 
 Valid Status User Yellow
