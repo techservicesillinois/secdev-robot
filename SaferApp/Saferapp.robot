@@ -10,9 +10,11 @@ Library     Dialogs     # Built-in, but requires tkinter as part of Python insta
 Library     AppiumLibrary
 Library    String
 Variables    input.yaml
+
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 ${LOCAL_APPIUM_SERVER1}    http://localhost:4723/wd/hub
+
 *** Keywords ***
 Open the Application Noreset
     Open Application    ${LOCAL_APPIUM_SERVER}    alias=MyApp1    platformName=android    platformVersion=9.0
@@ -26,9 +28,6 @@ Open the Application
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.covid    appActivity=edu.illinois.covid.MainActivity
         ...    allowInvisibleElements=true    ignoreUnimportantViews=false
-
-
-
 
 Start the Application
     Sleep  10s
@@ -50,7 +49,7 @@ Start the Application
     Sleep  15s
 
     Click Element At Coordinates    775    1042
-   # who are you screen
+    # who are you screen
 	Sleep  10s
 	#Select University student role
 	Capture Page Screenshot     filename=SaferApp03.png
@@ -127,8 +126,6 @@ Proceed with NO Netid
     Sleep  10s
     Wait Until Page Contains Element  accessibility_id=COVID-19 Wellness Center    timeout=None    error=None
     Click Element    accessibility_id=Back
-
-
 
 Proceed with Netid
 
@@ -311,7 +308,6 @@ Safer Illinois home screen Your Care Team
     Capture Page Screenshot     filename=Virtual Counseling.png
     Click Element    accessibility_id=Back
 
-
 Safer Illinois home screen Wellness
     Sleep  5s
     Swipe    500     1300     500    0  1000
@@ -374,15 +370,15 @@ Setting screen with NO NETID
     Log To Console    ${contexts}[1]
     # Displays Webview
     Switch To Context    ${contexts}[1]
-     #Log To Console    ${contexts}[1]
-     ${current}        Get Current Context
-     Log To Console      ${current}  
-     Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
-     Sleep    5s
-     Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
-     Sleep    5s
-     Input Text    id=j_username    ${NETID}
-     Input Password  id=j_password   ${PWD}
+    #Log To Console    ${contexts}[1]
+    ${current}        Get Current Context
+    Log To Console      ${current}  
+    Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
+    Sleep    5s
+    Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
+    Sleep    5s
+    Input Text    id=j_username    ${NETID}
+    Input Password  id=j_password   ${PWD}
     #Close the Keyboard
     Press Keycode    4
     #Go back to Safer App
@@ -452,8 +448,6 @@ Status Change Orange
     Swipe    500     1300     500    0  1000
     BuildingAccessDeny
 
-
-
     #Click Element    class=android.widget.TextView
 
 #FIXME: Once we get correct TEXT and ID attributes
@@ -501,19 +495,19 @@ Failure Login credentials NETID
     Log To Console    ${contexts}[1]
     # Displays Webview
     Switch To Context    ${contexts}[1]
-     #Log To Console    ${contexts}[1]
-     ${current}        Get Current Context
-     Log To Console      ${current}  
-     Input Text    id=j_username    asdasdas
-     Input Password  id=j_password   poewdfdfg
+    #Log To Console    ${contexts}[1]
+    ${current}        Get Current Context
+    Log To Console      ${current}  
+    Input Text    id=j_username    asdasdas
+    Input Password  id=j_password   poewdfdfg
     #Tap on Login button
-     Press Keycode    66
+    Press Keycode    66
     #Close the keyboard
-     Press Keycode    4
-     Sleep  5s
-     Swipe    500    400    500    1300    1000
-     Swipe    500    400    500    1300    1000
-     Sleep  5s
+    Press Keycode    4
+    Sleep  5s
+    Swipe    500    400    500    1300    1000
+    Swipe    500    400    500    1300    1000
+    Sleep  5s
     #Go back to Safer App
     Press Keycode    4
     Press Keycode    4
@@ -602,8 +596,6 @@ Valid Status User Orange
     Status Change Orange
     Close the Application
 
-
-
 #DEMO
 Valid Screenshot Result
     Open the Application
@@ -655,55 +647,55 @@ Valid Safer app with Netid
     Close the Application
 
 Valid Wellness screen
-     Open the Application
-     Start the Application
-     Proceed with NO Netid
-     Covid onboarding screen
-     Safer Illinois home screen Wellness
-     Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Covid onboarding screen
+    Safer Illinois home screen Wellness
+    Close the Application
 
 Valid Your Care Team
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Covid onboarding screen
-       Safer Illinois home screen Your Care Team
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Covid onboarding screen
+    Safer Illinois home screen Your Care Team
+    Close the Application
 
 Valid County Guidelines
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Covid onboarding screen
-       Safer Illinois home screen County Guidelines
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Covid onboarding screen
+    Safer Illinois home screen County Guidelines
+    Close the Application
 
 Validating Setting screen
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Covid onboarding screen
-       Setting screen with NO NETID
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Covid onboarding screen
+    Setting screen with NO NETID
+    Close the Application
 
 Failure path of connect Netid screen
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Failure Login credentials NETID
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Failure Login credentials NETID
+    Close the Application
 
 Validating elements on setting screen
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Covid onboarding screen
-       Setting screen with NO NETID validating elements in setting screen
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Covid onboarding screen
+    Setting screen with NO NETID validating elements in setting screen
+    Close the Application
 
 Demo Test case user without login
-       Open the Application
-       Start the Application
-       Proceed with NO Netid
-       Setting screen with NO NETID validating elements in setting screen
-       Close the Application
+    Open the Application
+    Start the Application
+    Proceed with NO Netid
+    Setting screen with NO NETID validating elements in setting screen
+    Close the Application
