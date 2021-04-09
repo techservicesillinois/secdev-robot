@@ -1,3 +1,3 @@
 # secdev-robot
 
-TODO: README description
+Run this file as `robot IllinoisApp.yaml`.
