@@ -10,11 +10,9 @@ Library     Dialogs     # Built-in, but requires tkinter as part of Python insta
 Library     AppiumLibrary
 Library    String
 Variables    input.yaml
-
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 ${LOCAL_APPIUM_SERVER1}    http://localhost:4723/wd/hub
-
 *** Keywords ***
 Open the Application Noreset
     Open Application    ${LOCAL_APPIUM_SERVER}    alias=MyApp1    platformName=android    platformVersion=9.0
@@ -29,6 +27,9 @@ Open the Application
         ...    appPackage=edu.illinois.covid    appActivity=edu.illinois.covid.MainActivity
         ...    allowInvisibleElements=true    ignoreUnimportantViews=false
 
+
+
+
 Start the Application
     Sleep  10s
     Capture Page Screenshot     filename=SaferApp01.png
@@ -37,7 +38,7 @@ Start the Application
     Sleep  5s
     Capture Page Screenshot     filename=SaferApp02.png
     Sleep  5s
-    Page Should Contain Element    accessibility_id = Information Usage Disclosure, Header 1
+    #Page Should Contain Element    accessibility_id = Information Usage Disclosure, Header 1
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     Click Element    accessibility_id=unchecked, checkbox, Acknowledge
@@ -45,11 +46,11 @@ Start the Application
     Sleep  15s
 
     #Enable Location
-    Click Element    accessibility_id=Continue
+    Click Element    accessibility_id=Enable Location Services
     Sleep  15s
 
     Click Element At Coordinates    775    1042
-    # who are you screen
+   # who are you screen
 	Sleep  10s
 	#Select University student role
 	Capture Page Screenshot     filename=SaferApp03.png
@@ -82,50 +83,65 @@ Proceed with NO Netid
     Click Element    accessibility_id=Get started
     Sleep  5s
     Wait Until Page Contains Element  accessibility_id=Safer Illinois Home    timeout=None    error=None
-    #Your care team screen
-    Click Element At Coordinates    757    531
-    sleep  5s
-    Wait Until Page Contains Element  accessibility_id=Your Care Team    timeout=None    error=None
+    Sleep   5s
 
+    Page Should Contain Element  accessibility_id=Connect to Illinois
+    Sleep   5s
     Swipe    500     100     500    0  1000
     Swipe    500     100     500    0  1000
-    Click Element At Coordinates    956    1416
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Click Element At Coordinates    956    1640
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    Sleep   5s
 
-    Click Element    accessibility_id=Back
-    #County Guidelines screen
-    Click Element At Coordinates    956    1640289    557
-    Sleep    5s
-    Wait Until Page Contains Element  accessibility_id=Champaign, Illinois County
-    Sleep    5s
-    Click Element    accessibility_id=Back
-    #Test location screen
-    Sleep  5s
-    Click Element  accessibility_id=Find test locations
-    Wait Until Page Contains Element  accessibility_id=Test Locations
-    Click Element At Coordinates    971    511
-    Sleep  5s
-    Click Element  accessibility_id=All Providers
-    Sleep  5s
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+#    Sleep   5s
+    Safer Illinois home screen Your Care Team
+    Safer Illinois home screen County Guidelines
+    Safer Illinois home Find test location
+    Safer Illinois home screen Wellness
 
-    Click Element    accessibility_id=Back
-    #Wellness Answer Center
-    Sleep  5s
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Click Element  accessibility_id=COVID-19 Wellness Answer Center
+
+    Sleep    5s
+
+
+Verify Connect Netid on safer Home screen
+
+    Swipe    585     475     490    1110  1000
+    Click Element    accessibility_id=Connect your NetID
+    Sleep    15s
+
+    # get all the context displayed on the Shib screen
+    ${contexts}    Get Contexts
+
+    #Get the current active context Native app
+    ${current}    Get Current Context
+
+    # Displays Webview
+    Switch To Context    ${contexts}[1]
+    #Log To Console    ${contexts}[1]
+    Sleep    10s
+    ${current}        Get Current Context
+
+    Input Text    id=j_username    ${NETID}
+    Input Password  id=j_password   ${PWD}
+    #Close the keyboard
+    Press Keycode    4
+    #Tap on Login button
+    Press Keycode    66
+    #Close the keyboard
     Sleep  10s
-    Wait Until Page Contains Element  accessibility_id=COVID-19 Wellness Center    timeout=None    error=None
+    # Swtich back to Native app
+    Switch To Context     ${contexts}[0] 
+    Sleep  10s
+    Page Should Contain Element    accessibility_id=Safer Illinois Home
+    Sleep   5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Click Element    accessibility_id=Settings
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Illinois NetID
+    Sleep   5s
     Click Element    accessibility_id=Back
+    Sleep    5s
+
 
 Proceed with Netid
 
@@ -306,7 +322,11 @@ Safer Illinois home screen Your Care Team
     Click Element    accessibility_id=Virtual Counseling
     Sleep    5s
     Capture Page Screenshot     filename=Virtual Counseling.png
+    Sleep    5s
     Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
 
 Safer Illinois home screen Wellness
     Sleep  5s
@@ -326,6 +346,9 @@ Safer Illinois home Find test location
     Wait Until Page Contains Element  accessibility_id=Test Locations
     Click Element At Coordinates    971    511
     Sleep  5s
+    #Click Element  accessibility_id=Provider dropdown All Providers
+    Click Element At Coordinates    470    575
+    Sleep  5s
     Click Element  accessibility_id=All Providers
     Sleep  5s
     Swipe    500     1300     500    0  1000
@@ -334,6 +357,17 @@ Safer Illinois home Find test location
     Swipe    500     1300     500    0  1000
     Capture Page Screenshot     filename=SaferApp19.png
     Swipe    500     1300     500    0  1000
+    Sleep  5s
+    #Click Element  accessibility_id=Provider dropdown All Providers
+    Click Element At Coordinates    470    575
+    Sleep  5s
+    Click Element  accessibility_id=McKinley Health Center / SHIELD
+    Sleep  5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep  5s
     Click Element    accessibility_id=Back
 
 Safer Illinois home screen County Guidelines
@@ -355,39 +389,41 @@ Setting screen with NO NETID
 	Click Element  	accessibility_id=Settings
     # Tap on connect your netid on setting screen
     Sleep  5s
-    Click Element  	accessibility_id=Connect your NetID
+    Wait Until Page Contains Element  accessibility_id=Connect your NetID
     # Shib page displays
-    Sleep   10s
-    # get all the context displayed on the Shib screen
-    ${contexts}    Get Contexts
-    # Print the content in cammand line ie Native app and Webview chrome
-    Log To Console    ${contexts}
-    #Get the current active context Native app
-    ${current}    Get Current Context
-    # Result of current is Native app
-    Log To Console    ${current}
-    # Context [1]  is Webview chrome
-    Log To Console    ${contexts}[1]
-    # Displays Webview
-    Switch To Context    ${contexts}[1]
-    #Log To Console    ${contexts}[1]
-    ${current}        Get Current Context
-    Log To Console      ${current}  
-    Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.Button
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Verify Your Phone Number
+    Sleep   5s
+#Verify Phone number
+    Click Element  	accessibility_id=Who you are
+    Sleep     5s
+    #Log To Console  ${User_role}
+    Page Should Contain Element    accessibility_id=checked, checkbox, University Student
+    Click Element  	accessibility_id=Back
     Sleep    5s
-    Click Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.view.ViewPager/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button[1]
+    Page Should Contain Element    accessibility_id=Settings
     Sleep    5s
-    Input Text    id=j_username    ${NETID}
-    Input Password  id=j_password   ${PWD}
-    #Close the Keyboard
-    Press Keycode    4
-    #Go back to Safer App
-    Press Keycode    4
-    Sleep  5s
-    # Swtich back to Native app
-    Switch To Context     ${contexts}[0] 
-    ${current}        Get Current Context
-    Log To Console       ${current}  
+    Page Should Contain Element    accessibility_id=checked, checkbox, COVID-19 notifications
+    Sleep   5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep   5s
+    Click Element  	accessibility_id=Privacy Statement
+    Sleep   5s
+    Capture Page Screenshot     filename=Privacy Statement.png
+    Sleep   5s
+    Click Element  	accessibility_id=Back
+    Sleep   5s
+    Click Element  	accessibility_id=Submit Feedback
+    Sleep   5s
+    Capture Page Screenshot     filename=Submit feedback.png
+    Sleep   5s
+    Click Element  	accessibility_id=Back
+    Sleep   5s
+    Click Element  	accessibility_id=Back
+    Sleep   5s
+
 
 BuildingAccessDeny
 
@@ -448,6 +484,8 @@ Status Change Orange
     Swipe    500     1300     500    0  1000
     BuildingAccessDeny
 
+
+
     #Click Element    class=android.widget.TextView
 
 #FIXME: Once we get correct TEXT and ID attributes
@@ -495,19 +533,19 @@ Failure Login credentials NETID
     Log To Console    ${contexts}[1]
     # Displays Webview
     Switch To Context    ${contexts}[1]
-    #Log To Console    ${contexts}[1]
-    ${current}        Get Current Context
-    Log To Console      ${current}  
-    Input Text    id=j_username    asdasdas
-    Input Password  id=j_password   poewdfdfg
+     #Log To Console    ${contexts}[1]
+     ${current}        Get Current Context
+     Log To Console      ${current}  
+     Input Text    id=j_username    asdasdas
+     Input Password  id=j_password   poewdfdfg
     #Tap on Login button
-    Press Keycode    66
+     Press Keycode    66
     #Close the keyboard
-    Press Keycode    4
-    Sleep  5s
-    Swipe    500    400    500    1300    1000
-    Swipe    500    400    500    1300    1000
-    Sleep  5s
+     Press Keycode    4
+     Sleep  5s
+     Swipe    500    400    500    1300    1000
+     Swipe    500    400    500    1300    1000
+     Sleep  5s
     #Go back to Safer App
     Press Keycode    4
     Press Keycode    4
@@ -596,9 +634,12 @@ Valid Status User Orange
     Status Change Orange
     Close the Application
 
+
+
 #DEMO
 Valid Screenshot Result
     Open the Application
+    #Open the Application Noreset
     Start the Application
     User already loggedin
     Safer Add Test Result
@@ -647,55 +688,56 @@ Valid Safer app with Netid
     Close the Application
 
 Valid Wellness screen
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Covid onboarding screen
-    Safer Illinois home screen Wellness
-    Close the Application
+     Open the Application
+     Start the Application
+     Proceed with NO Netid
+     Covid onboarding screen
+     Safer Illinois home screen Wellness
+     Close the Application
 
 Valid Your Care Team
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Covid onboarding screen
-    Safer Illinois home screen Your Care Team
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Safer Illinois home screen Your Care Team
+       Close the Application
 
 Valid County Guidelines
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Covid onboarding screen
-    Safer Illinois home screen County Guidelines
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Safer Illinois home screen County Guidelines
+       Close the Application
 
 Validating Setting screen
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Covid onboarding screen
-    Setting screen with NO NETID
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Setting screen with NO NETID
+       Close the Application
 
 Failure path of connect Netid screen
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Failure Login credentials NETID
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Failure Login credentials NETID
+       Close the Application
 
 Validating elements on setting screen
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Covid onboarding screen
-    Setting screen with NO NETID validating elements in setting screen
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Covid onboarding screen
+       Setting screen with NO NETID validating elements in setting screen
+       Close the Application
 
 Demo Test case user without login
-    Open the Application
-    Start the Application
-    Proceed with NO Netid
-    Setting screen with NO NETID validating elements in setting screen
-    Close the Application
+       Open the Application
+       Start the Application
+       Proceed with NO Netid
+       Setting screen with NO NETID
+       Verify Connect Netid on safer Home screen
+       Close the Application
