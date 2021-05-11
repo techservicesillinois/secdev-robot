@@ -62,17 +62,153 @@ Validating Setting screen
     Swipe    500     1300     500    0  1000
     Click Element    accessibility_id=Privacy Center
     Sleep    5s
+    Click Element    accessibility_id=Verify your Identity
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Verify your Identity
+#
+    Click Element    accessibility_id=Connect Your NetID
+    Sleep    5s
+    Click Element    accessibility_id=Log in with NetID
+    Proceed with Netid
+    Sleep   5s
+
+    Click Element    accessibility_id=Manage and Understand Your Privacy
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Choose Your Privacy Level
+    Sleep    5s
+    ${title}=  Get Element Attribute    class=android.widget.SeekBar  content-desc
+    Log to Console    ${title}
+    ${Value}    Run Keyword And Return Status    Should Contain    ${title}    5
+
+    Sleep    5s
+
+    Click Element    accessibility_id=Expand All
+    Sleep     5s
+
+    Page Should Contain Element    accessibility_id=Close All
+    Sleep   5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Student and Community Involvement, Double tap to Hide information
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    log to console     new loop
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Close All
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500    600    500    1000    1000
+        ...    ELSE
+        ...    #Click Element At Coordinates    790    342
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Click Element At Coordinates    790    342
+    Sleep   5s
+
+#Privacy Level: 3 You can personalize and customize the app. Wifi and Bluetooth location data is stored over time to make recommendations and improve your overall app experience.
+    ${title}=  Get Element Attribute    class=android.widget.SeekBar  content-desc
+    Log to Console    ${title}
+    ${Value}    Run Keyword And Return Status    Should Contain    ${title}    4
+    ###Scroll up untill the below element is visible####
+    #Page Should Contain Element    accessibility_id=Privacy Level: 4 Let the app work for you. You can access your iCard, save credit cards to make future purchases easier, access health information, and get notifications based on your specific interests.
+    Sleep    5s
+    Click Element At Coordinates    968    342
+    Sleep     5s
+    Click Element    accessibility_id=Set my Privacy
+    Sleep     5s
+    Personal data
+#    Click Element    accessibility_id=Personal Information
+#    Sleep   5s
+#    Page Should Contain Element    accessibility_id=Personal Information
+#    Click Element    accessibility_id=Personal Information Your name and contact info you’ve shared
+#    Sleep   5s
+#    Page Should Contain Element    accessibility_id=Connect to Illinois
+#    Sleep   5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Who You Are Your status as a student, faculty, resident, etc.
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=checked, checkbox, University Student
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
+#    Sleep    5s
+#    Click Element    accessibility_id=unchecked, checkbox, Academic
+#    Click Element    accessibility_id=unchecked, checkbox, Community
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
+#    Sleep    5s
+#    Click Element    accessibility_id=unchecked, checkbox, Academic
+#    Click Element    accessibility_id=unchecked, checkbox, Community
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=checked, checkbox, Academic
+#    Page Should Contain Element    accessibility_id=checked, checkbox, Community
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Food Filters Add or edit your food preferences
+#    Sleep    5s
+#    Click Element    accessibility_id=unchecked, checkbox, Vegan
+#
+#    Click Element    accessibility_id=unchecked, checkbox, Vegetarian
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Sleep   5s
+#    Click Element    accessibility_id=unchecked, checkbox, Peanuts
+#    Sleep   5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=checked, checkbox, Vegan
+#    Page Should Contain Element    accessibility_id=checked, checkbox, Vegetarian
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Page Should Contain Element    accessibility_id=checked, checkbox, Peanuts
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Delete my personal data
+#    Sleep    5s
+#    Click Element    accessibility_id=unchecked, checkbox, Your interests
+#    Click Element    accessibility_id=unchecked, checkbox, Food filters
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Delete My Data
+#    Sleep    5s
+#
+#    ############Chekec the values here ########
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
     Swipe    500     1300     500    0  1000
     Click Element    accessibility_id=Privacy Statement
     Sleep   5s
     Wait Until Page Contains Element  accessibility_id=Privacy Statement    timeout=None    error=None
-    Click Element At Coordinates    1007    944
+    #Click Element At Coordinates    1007    944
     Sleep   5s
-    ${privacytext}  Get Text  xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[5]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]
-    Log To Console    ${privacytext}
-    Should Be Equal As Strings      ${privacytext}    ILLINOIS APPLICATION PRIVACY NOTICE
+    Capture Page Screenshot     filename=Privacy.png
+    #${privacytext}  Get Text  xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[5]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]
+    #Log To Console    ${privacytext}
+    #Should Be Equal As Strings      ${privacytext}    ILLINOIS APPLICATION PRIVACY NOTICE
     Click Element    accessibility_id=Back
     Sleep   5s
+
+
+
+
+
+
     Click Element    accessibility_id=Browse, Browse Page
     Sleep   5s
     #external link MyIllini
@@ -88,6 +224,185 @@ Validating Setting screen
     Should Be Equal As Strings      ${illinitext}    Log In to myIllini
     Sleep    5s
 
+
+Personal data
+
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Personal Information
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Personal Information
+    Sleep    5s
+    Click Element At Coordinates    970    351
+    #Click Element    accessibility_id=Personal Information Your name and contact info you’ve shared
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Connect to Illinois
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    983    565
+    #Click Element    accessibility_id=Who You Are Your status as a student, faculty, resident, etc.
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, University Student
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    973    762
+    #Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
+    Sleep    5s
+    Click Element    accessibility_id=unchecked, checkbox, Academic
+    Click Element    accessibility_id=unchecked, checkbox, Community
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    973    762
+    #Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
+    Sleep    5s
+#    Click Element    accessibility_id=unchecked, checkbox, Academic
+#    Click Element    accessibility_id=unchecked, checkbox, Community
+#    Click Element    accessibility_id=Back
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, Academic
+    Page Should Contain Element    accessibility_id=checked, checkbox, Community
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    973    976
+    #Click Element    accessibility_id=Food Filters Add or edit your food preferences
+    Sleep    5s
+    Click Element    accessibility_id=unchecked, checkbox, Vegan
+
+    Click Element    accessibility_id=unchecked, checkbox, Vegetarian
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep   5s
+    Click Element    accessibility_id=unchecked, checkbox, Peanuts
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    973    976
+    #Click Element    accessibility_id=Food Filters Add or edit your food preferences
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, Vegan
+    Page Should Contain Element    accessibility_id=checked, checkbox, Vegetarian
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Page Should Contain Element    accessibility_id=checked, checkbox, Peanuts
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Delete my personal data
+    Sleep    5s
+    Click Element    accessibility_id=unchecked, checkbox, Your interests
+    Click Element    accessibility_id=unchecked, checkbox, Food filters
+
+    Sleep    5s
+    Click Element    accessibility_id=Delete My Data
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Notification Preferences
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, Event reminders
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, Athletics updates
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=checked, checkbox, Dining specials
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Forget all of my information, This will delete all of your personal information that was shared and stored within the app.
+    Sleep    5s
+    Click Element    accessibility_id=Forget My Information
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Privacy Center
+    Sleep   5s
+
+Scroll test
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Click Element    accessibility_id=Privacy Center
+    Sleep    5s
+    Click Element    accessibility_id=Manage and Understand Your Privacy
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Choose Your Privacy Level
+    #Page Should Contain Element    accessibility_id=Privacy Level: 5 Access all features, get connected to campus, and let the app suggest tailored experiences that you and your friends all enjoy.
+    Sleep    5s
+    Click Element    accessibility_id=Expand All
+    Sleep     5s
+
+    Page Should Contain Element    accessibility_id=Close All
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Student and Community Involvement, Double tap to Hide information
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    Click Element At Coordinates    790    342
+#    Sleep   5s
+#    ###Scroll up untill the below element is visible####
+#    Page Should Contain Element    accessibility_id=Privacy Level: 4 Let the app work for you. You can access your iCard, save credit cards to make future purchases easier, access health information, and get notifications based on your specific interests.
+#    Sleep    5s
+#    Click Element At Coordinates    968    342
+#    Sleep     5s
+#    Click Element    accessibility_id=Set my Privacy
+#
+#    FOR    ${i}    IN RANGE    999999
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=CorrectIDHere
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     1300     500    0  1000
+#        ...    ELSE
+#        ...    Click Text    ${text}
+#        Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+
+Proceed with Netid
+
+    Sleep    15s
+
+    # get all the context displayed on the Shib screen
+    ${contexts}    Get Contexts
+
+    #Get the current active context Native app
+    ${current}    Get Current Context
+
+    # Displays Webview
+    Switch To Context    ${contexts}[1]
+    #Log To Console    ${contexts}[1]
+    Sleep    10s
+    ${current}        Get Current Context
+
+    Input Text    id=j_username    ${NETID}
+    Input Password  id=j_password   ${PWD}
+    #Close the keyboard
+    Press Keycode    4
+    #Tap on Login button
+    Press Keycode    66
+    #Close the keyboard
+    Sleep  10s
+    # Swtich back to Native app
+    Switch To Context     ${contexts}[0] 
+    Sleep  10s
+    Capture Page Screenshot     filename=SaferApp05.png
 
 Validating Wellness link
     Click Element    accessibility_id=Browse, Browse Page
@@ -743,6 +1058,140 @@ Validating Emotional links
      Sleep   40s
      Capture Page Screenshot     filename=Mental Health.png
      Sleep   5s
+    Click Element    accessibility_id=Back
+
+
+
+Validating Social links
+    Sleep   15s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep   5s
+    Click Element    accessibility_id=Wellness
+    Sleep    5s
+    Swipe    500     1000     500    600  1000
+    Swipe    500     1000     500    600  1000
+    Sleep    5s
+    Click Element    accessibility_id=Social
+    Sleep    5s
+    Swipe    500     1000     500    600  1000
+    Swipe    500     1000     500    600  1000
+    Sleep    5s
+    Click Element    accessibility_id=Mood Meter
+    Sleep   20s
+    Capture Page Screenshot     filename=Mood Meter.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Wellness Reflection
+    Sleep   20s
+    Capture Page Screenshot     filename=MWR.png
+    Sleep   10s
+    Click Element    accessibility_id=Back
+    Sleep    10s
+    Click Element    accessibility_id=Wellness Pledge
+    Sleep   30s
+    Capture Page Screenshot     filename=MWP.png
+    Sleep   10s
+    Click Element    accessibility_id=Back
+
+    Sleep    10s
+    Click Element    accessibility_id=Engage, This link takes you to a website outside of the Illinois app
+    Sleep   30s
+    Capture Page Screenshot     filename=Engage.png
+    Sleep   10s
+    Click Element    accessibility_id=Back
+    Sleep    10s
+    Click Element    accessibility_id=Intramural Sports, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=Intramural Sports.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Swipe    500     1000     500    600  1000
+    Swipe    500     1000     500    600  1000
+    Sleep    5s
+    Click Element    accessibility_id=RSO, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=RSO.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Master Calendar, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=Master Calendar.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=BNAACC, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=BNAACC.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=AACC, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=AACC.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Swipe    500     1000     500    600  1000
+    Sleep    5s
+    Click Element    accessibility_id=La Casa, This link takes you to a website outside of the Illinois app
+    Sleep   40s
+    Capture Page Screenshot     filename=La Casa.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Native American House, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Native American House.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Swipe    500     1000     500    600  1000
+    Swipe    500     1000     500    600  1000
+    Sleep    5s
+    Click Element    accessibility_id=Women’s Center, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Women’s Center.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=LGBT Resource Center, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=LGBT Resource Center.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=International Education, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=International Education.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Getting Involved, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Getting Involved.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Going Out, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Going Out.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Peer Pressure, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Peer Pressure.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Roommates, This link takes you to a website outside of the Illinois app
+    Sleep   10s
+    Capture Page Screenshot     filename=Roommates.png
+    Sleep   5s
+    Click Element    accessibility_id=Back
+
 
 
 Close the Application
@@ -790,6 +1239,17 @@ Valid Wellness Emotional links
     Validating Emotional links
     Close the Application
 
+Valid Wellness Social links
+    Open the Application Noreset
+    Validating Social links
+    Close the Application
 
+
+Valid Swipe links
+
+    Open the Application
+    Start the Application
+    Validating Setting screen
+    Close the Application
 
 

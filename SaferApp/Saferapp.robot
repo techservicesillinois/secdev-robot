@@ -6,9 +6,10 @@ Documentation  Test Cases for evaluation of a proper setup with
 ...
 ...   A screenshot will be saved to the working directory before closing
 
-Library     Dialogs     # Built-in, but requires tkinter as part of Python install.
+Library      Dialogs     # Built-in, but requires tkinter as part of Python install.
 Library     AppiumLibrary
-Library    String
+Library     DateTime
+Library     String
 Variables    input.yaml
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
@@ -54,6 +55,39 @@ Start the Application
 	Sleep  10s
 	#Select University student role
 	Capture Page Screenshot     filename=SaferApp03.png
+
+
+Role as Employee
+
+	Click Element    accessibility_id=unchecked, checkbox, Employee/Affiliate
+
+    # Click on Confirm button
+    Click Element    accessibility_id=Confirm
+    Sleep  10s
+    Capture Page Screenshot     filename=SaferApp04.png
+
+
+Role as Non University Member
+
+	Click Element    accessibility_id=unchecked, checkbox, Non University Member
+
+    # Click on Confirm button
+    Click Element    accessibility_id=Confirm
+    Sleep  10s
+    Capture Page Screenshot     filename=SaferApp04.png
+    Sleep   5s
+    Click Element    accessibility_id=Verify Phone Number
+    Sleep   5s
+    #Enter the phone number
+    Sleep   5s
+    Click Element    accessibility_id=Next, Tap to continue
+    Sleep    15s
+    Click Element    accessibility_id=Confirm phone number
+
+
+
+Role as University Student
+
 	Click Element    accessibility_id=unchecked, checkbox, University Student
 
     # Click on Confirm button
@@ -109,15 +143,15 @@ Verify Connect Netid on safer Home screen
 
     # get all the context displayed on the Shib screen
     ${contexts}    Get Contexts
-
+    log to console    ${contexts}
     #Get the current active context Native app
     ${current}    Get Current Context
-
+    log to console    ${current}
     # Displays Webview
-    Switch To Context    ${contexts}[1]
+    #Switch To Context    ${contexts}[1]
     #Log To Console    ${contexts}[1]
     Sleep    10s
-    ${current}        Get Current Context
+    #${current}        Get Current Context
 
     Input Text    id=j_username    ${NETID}
     Input Password  id=j_password   ${PWD}
@@ -149,16 +183,16 @@ Proceed with Netid
 
     # get all the context displayed on the Shib screen
     ${contexts}    Get Contexts
-
+    Log To Console    ${contexts}
     #Get the current active context Native app
     ${current}    Get Current Context
-
+    Log To Console    ${current}
     # Displays Webview
-    Switch To Context    ${contexts}[1]
+    #Switch To Context    ${contexts}[1]
     #Log To Console    ${contexts}[1]
     Sleep    10s
-    ${current}        Get Current Context
-
+    #${current}        Get Current Context
+    Log To Console    ${current}
     Input Text    id=j_username    ${NETID}
     Input Password  id=j_password   ${PWD}
     #Close the keyboard
@@ -254,7 +288,15 @@ Safer Add Test Result
     Click Element At Coordinates    384    1255
     Sleep    5s
     Capture Page Screenshot     filename=SaferApp13.png
+    Sleep    5s
+    Click Element    accessibility_id=More Info
+    Sleep   5s
 
+    #${passed}=    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Results retrieved from your healthcare provider are instantly verified. Any changes to your health status will be reflected instantly. Results entered manually will be reviewed and verified by a public healthcare provider. Once verified, status changes may occur.
+    #${Value}    Run Keyword And Return Status    Should Contain    ${future}    ${MD}
+    #Sleep    5s
+    Click Element    accessibility_id=Close
+    Sleep   5s
     Wait Until Page Contains Element    accessibility_id=Healthcare Provider    timeout=None    error=None
     Click Element    accessibility_id=Select a provider
     Sleep    5s
@@ -270,9 +312,15 @@ Safer Add Test Result
     Sleep    5s
     ${contexts}    Get Contexts
     Sleep    10s
-    Switch To Context     ${contexts}[1]
+    log to console  ${contexts}[0]
+    Sleep    5s
+    #log to console  ${contexts}[1]
     Sleep    10s
+    #Switch To Context     ${contexts}[1]
+    #Sleep    5s
+    # System back button. It will go back to Native app
     Press Keycode    4
+    Sleep    5s
     Switch To Context     ${contexts}[0]
     Sleep   5s
     Click Element    accessibility_id=Back
@@ -432,7 +480,18 @@ BuildingAccessDeny
     Sleep    10s
     ${Deny}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=DENIED
     Sleep    5s
+    ${date}     Get Current Date
+    ${future}      Convert Date      ${date}      result_format=%B %d,%Y %H:%M %p
+    ${MD}      Convert Date      ${date}      result_format=%B %d,%Y
+    Log To Console    ${future}
+    Log To Console    ${MD}
+    Sleep     5s
+    ${Value}    Run Keyword And Return Status    Should Contain    ${future}    ${MD}
     Swipe    880     1298     240    1244  1000
+    #else pop up error
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
     ${Orange}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Orange, Test Required
     Sleep    5s
     Click Element    accessibility_id=Close
@@ -453,6 +512,12 @@ Show Staus Card
     Sleep    10s
     Swipe    500     1300     500    0  1000
     Sleep    15s
+    #Click Element    accessibility_id=Info
+    #Sleep    5s
+    #${info}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Status color definitions can change depending on different counties. Status colors for Champaign, Illinois: Yellow: Recent negative test Orange: First time user, Past due for test, Self-reported symptoms, Received exposure notification or Quarantined Red: Positive test Default status for new users is set to Orange. An up-to-date on-campus negative test result will reset your COVID-19 status to Yellow, and Building Entry will change to Granted.
+    #Sleep    5s
+    #Click Element    accessibility_id=Close
+    #Sleep   5s
     ${title}=  Get Element Attribute    class=android.widget.ImageView  content-desc
     Log to Console    ${title}
     ${Value}    Run Keyword And Return Status    Should Contain    ${title}    Orange
@@ -532,7 +597,7 @@ Failure Login credentials NETID
     # Context [1]  is Webview chrome
     Log To Console    ${contexts}[1]
     # Displays Webview
-    Switch To Context    ${contexts}[1]
+    #Switch To Context    ${contexts}[1]
      #Log To Console    ${contexts}[1]
      ${current}        Get Current Context
      Log To Console      ${current}  
@@ -555,9 +620,8 @@ Failure Login credentials NETID
     ${current}        Get Current Context
     Log To Console       ${current}  
 
-Setting screen with NETID validating elements in setting screen
+Verify Student role on Setting screen
 
-    # Verify who are
     Click Element  	accessibility_id=Settings
     Sleep     5s
     Capture Page Screenshot     filename=SaferApp21.png
@@ -567,6 +631,47 @@ Setting screen with NETID validating elements in setting screen
     Element Should Be Enabled    accessibility_id=checked, checkbox, University Student
     Click Element  	accessibility_id=Back
     Sleep    5s
+
+Verify Employee role on Setting screen
+
+    Click Element  	accessibility_id=Settings
+    Sleep     5s
+    Capture Page Screenshot     filename=SaferApp21.png
+    Click Element  	accessibility_id=Who you are
+    Sleep     5s
+    #Log To Console  ${User_role}
+    Element Should Be Enabled    accessibility_id=checked, checkbox, Employee/Affiliate
+    Click Element  	accessibility_id=Back
+    Sleep    5s
+
+Verify Non University Member role on Setting screen
+
+    Click Element  	accessibility_id=Settings
+    Sleep     5s
+    Capture Page Screenshot     filename=SaferApp21.png
+    Click Element  	accessibility_id=Who you are
+    Sleep     5s
+    #Log To Console  ${User_role}
+    Element Should Be Enabled    accessibility_id=checked, checkbox, Non University Member
+    Click Element  	accessibility_id=Back
+    Sleep    5s
+    ${Phone Verification}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Phone Verification
+    Run Keyword If   ${Phone Verification}
+        ...    Page Should Contain Element    accessibility_id=Priya Tester Ravi
+
+
+Setting screen with NETID validating elements in setting screen
+
+#    # Verify who are
+#    Click Element  	accessibility_id=Settings
+#    Sleep     5s
+#    Capture Page Screenshot     filename=SaferApp21.png
+#    Click Element  	accessibility_id=Who you are
+#    Sleep     5s
+#    #Log To Console  ${User_role}
+#    Element Should Be Enabled    accessibility_id=checked, checkbox, University Student
+#    Click Element  	accessibility_id=Back
+#    Sleep    5s
     Page Should Contain Element    accessibility_id=Settings
     Sleep   5s
     Swipe    500     1000     500    600  1000
@@ -593,7 +698,7 @@ Setting screen with NETID validating elements in setting screen
     Click Element  	accessibility_id=Personal Info
     Sleep  5s
     Capture Page Screenshot     filename=SaferApp25.png
-    Page Should Contain Element    accessibility_id=mmerit
+    Page Should Contain Element    accessibility_id=Priya Tester Ravi
     Click Element  	accessibility_id=Back
     Sleep    10s
     Click Element  	accessibility_id=Submit Feedback
@@ -641,6 +746,25 @@ Valid Screenshot Result
     Open the Application
     #Open the Application Noreset
     Start the Application
+    Role as University Student
+    User already loggedin
+    Safer Add Test Result
+    #Safer Illinois home Find test location
+    #Safer app with symptoms checkin
+    #Safer Illinois home screen County Guidelines
+    #Safer Illinois home screen Your Care Team
+    #Safer Illinois home screen Wellness
+    #Show Staus Card
+    #Verify Student role on Setting screen
+    #Setting screen with NETID validating elements in setting screen
+    Close the Application
+
+
+Employee Valid Screenshot Result
+    Open the Application
+    #Open the Application Noreset
+    Start the Application
+    Role as Employee
     User already loggedin
     Safer Add Test Result
     Safer Illinois home Find test location
@@ -649,47 +773,71 @@ Valid Screenshot Result
     Safer Illinois home screen Your Care Team
     Safer Illinois home screen Wellness
     Show Staus Card
+    Verify Employee role on Setting screen
+    Setting screen with NETID validating elements in setting screen
+    Close the Application
+
+Non University Member Valid Screenshot Result
+    Open the Application
+    #Open the Application Noreset
+    Start the Application
+    Role as Non University Member
+    Covid onboarding screen
+    Safer Add Test Result
+    Safer Illinois home Find test location
+    Safer app with symptoms checkin
+    Safer Illinois home screen County Guidelines
+    Safer Illinois home screen Your Care Team
+    Safer Illinois home screen Wellness
+    Show Staus Card
+    Verify Non University Member role on Setting screen
     Setting screen with NETID validating elements in setting screen
     Close the Application
 
 Valid Status Result
     Open the Application
     Start the Application
-    Proceed with Netid
-    Covid onboarding screen
+    Role as University Student
+    User already loggedin
     Show Staus Card
     Close the Application
 
 Checking User already loggedin
     Open the Application
     Start the Application
+    Role as University Student
     User already loggedin
     Close the Application
 
 Valid Add Test Result
     Open the Application
     Start the Application
-    Proceed with Netid
-    Covid onboarding screen
-    Safer app with symptoms checkin
+    Role as University Student
+    #Proceed with Netid
+    User already loggedin
+    #Covid onboarding screen
+    #Safer app with symptoms checkin
     Safer Add Test Result
     Close the Application
 
 Valid Safer app with Netid
     Open the Application
     Start the Application
+    Role as University Student
     Proceed with Netid
     Covid onboarding screen
     Safer Illinois home Find test location
     Safer Illinois home screen County Guidelines
     Safer Illinois home screen Wellness
     Safer Illinois home screen Your Care Team
+    Verify Student role on Setting screen
     Setting screen with NETID validating elements in setting screen
     Close the Application
 
 Valid Wellness screen
      Open the Application
      Start the Application
+     Role as University Student
      Proceed with NO Netid
      Covid onboarding screen
      Safer Illinois home screen Wellness
@@ -698,6 +846,7 @@ Valid Wellness screen
 Valid Your Care Team
        Open the Application
        Start the Application
+       Role as University Student
        Proceed with NO Netid
        Covid onboarding screen
        Safer Illinois home screen Your Care Team
@@ -705,6 +854,7 @@ Valid Your Care Team
 
 Valid County Guidelines
        Open the Application
+       Role as University Student
        Start the Application
        Proceed with NO Netid
        Covid onboarding screen
@@ -714,6 +864,7 @@ Valid County Guidelines
 Validating Setting screen
        Open the Application
        Start the Application
+       Role as University Student
        Proceed with NO Netid
        Covid onboarding screen
        Setting screen with NO NETID
@@ -722,6 +873,7 @@ Validating Setting screen
 Failure path of connect Netid screen
        Open the Application
        Start the Application
+       Role as University Student
        Proceed with NO Netid
        Failure Login credentials NETID
        Close the Application
@@ -729,14 +881,16 @@ Failure path of connect Netid screen
 Validating elements on setting screen
        Open the Application
        Start the Application
+       Role as University Student
        Proceed with NO Netid
        Covid onboarding screen
-       Setting screen with NO NETID validating elements in setting screen
+       Setting screen with NO NETID
        Close the Application
 
 Demo Test case user without login
        Open the Application
        Start the Application
+       Role as University Student
        Proceed with NO Netid
        Setting screen with NO NETID
        Verify Connect Netid on safer Home screen
