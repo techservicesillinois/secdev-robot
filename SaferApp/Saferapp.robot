@@ -121,8 +121,8 @@ Proceed with NO Netid
 
     Page Should Contain Element  accessibility_id=Connect to Illinois
     Sleep   5s
-    Swipe    500     100     500    0  1000
-    Swipe    500     100     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300      500    0  1000
     Sleep   5s
 
 #    Sleep   5s
@@ -179,19 +179,21 @@ Verify Connect Netid on safer Home screen
 
 Proceed with Netid
 
+    Sleep    30s
     Sleep    15s
-
     # get all the context displayed on the Shib screen
     ${contexts}    Get Contexts
+    Sleep    15s
     Log To Console    ${contexts}
     #Get the current active context Native app
     ${current}    Get Current Context
+    Sleep    5s
     Log To Console    ${current}
     # Displays Webview
-    #Switch To Context    ${contexts}[1]
-    #Log To Console    ${contexts}[1]
+    Switch To Context    ${contexts}[1]
+    Log To Console    ${contexts}[1]
     Sleep    10s
-    #${current}        Get Current Context
+    ${current} Get Current Context
     Log To Console    ${current}
     Input Text    id=j_username    ${NETID}
     Input Password  id=j_password   ${PWD}
@@ -231,7 +233,7 @@ CheckQRCodeStatus
 Covid onboarding screen
 
     #How to work screens
-    Sleep    5s
+    Sleep    10s
     Click Element    accessibility_id=Continue
     Sleep    5s
     Capture Page Screenshot     filename=SaferApp06.png
@@ -253,15 +255,21 @@ Covid onboarding screen
     Capture Page Screenshot     filename=SaferApp08.png
     Sleep   10s
     ${TValue}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Transfer Later
-    Sleep  5s
+    Sleep  10s
 
     Run Keyword If   ${TValue}
     ...    CheckQRCodeStatus
     ...    ELSE
-    ...    Click Element    accessibility_id=Continue
-    Sleep    5s
+    ...    Continue QR
+    Sleep    10s
     Capture Page Screenshot     filename=SaferApp10.png
     Click Element    accessibility_id=Get started
+
+
+Continue QR
+    Sleep    20s
+    Click Element    accessibility_id=Continue
+
 
 Safer app with symptoms checkin
 
@@ -345,8 +353,8 @@ Safer Illinois home screen Your Care Team
     Click Element At Coordinates    956    1416
     Swipe    500     1300     500    0  1000
     #Swipe    500     1300     500    0  1000
-    Sleep    5s
-    Click Element    accessibility_id=Learn more
+    Sleep    15s
+    Click Element At Coordinates    206    1431
     Sleep    10s
     Capture Page Screenshot     filename=Learnmore.png
     Sleep    5s
@@ -355,19 +363,19 @@ Safer Illinois home screen Your Care Team
     Click Element At Coordinates    956    1640
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
-    Sleep    5s
-    Click Element    accessibility_id=Counseling Center
+    Sleep    15s
+    Click Element At Coordinates    245    1425
     Sleep    5s
     Capture Page Screenshot     filename=Counseling Center.png
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element    accessibility_id=McKinley Mental Health Program
+    Click Element At Coordinates    260    1494
     Sleep    10s
     Capture Page Screenshot     filename=MentalHealth.png
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element    accessibility_id=Virtual Counseling
+    Click Element At Coordinates    263    1570
     Sleep    5s
     Capture Page Screenshot     filename=Virtual Counseling.png
     Sleep    5s
@@ -698,12 +706,20 @@ Setting screen with NETID validating elements in setting screen
     Click Element  	accessibility_id=Personal Info
     Sleep  5s
     Capture Page Screenshot     filename=SaferApp25.png
-    Page Should Contain Element    accessibility_id=Priya Tester Ravi
+    #Page Should Contain Element    accessibility_id=mmerit
     Click Element  	accessibility_id=Back
     Sleep    10s
     Click Element  	accessibility_id=Submit Feedback
     Sleep  10s
     Click Element  	accessibility_id=Back
+    Sleep  5s
+    Click Element  	accessibility_id=Personal Info
+    Sleep  5s
+    Click Element  	accessibility_id=Remove My Information
+    Sleep  5s
+    Click Element  	accessibility_id=Yes
+    Sleep   5s
+
 
 Clear Browser Cachea
     Close Browser
@@ -748,15 +764,27 @@ Valid Screenshot Result
     Start the Application
     Role as University Student
     User already loggedin
-    Safer Add Test Result
-    #Safer Illinois home Find test location
-    #Safer app with symptoms checkin
-    #Safer Illinois home screen County Guidelines
+    #Safer Add Test Result
+    Safer Illinois home Find test location
+    Safer app with symptoms checkin
+    Safer Illinois home screen County Guidelines
     #Safer Illinois home screen Your Care Team
     #Safer Illinois home screen Wellness
     #Show Staus Card
-    #Verify Student role on Setting screen
+    Verify Student role on Setting screen
     #Setting screen with NETID validating elements in setting screen
+    Close the Application
+
+
+Valid Student Result
+    Open the Application
+    Start the Application
+    Role as University Student
+    User already loggedin
+    Safer Illinois home Find test location
+    Safer app with symptoms checkin
+    Show Staus Card
+    Verify Student role on Setting screen
     Close the Application
 
 

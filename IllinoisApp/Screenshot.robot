@@ -38,8 +38,9 @@ Start the Application
     Click Element    accessibility_id=Continue
     Sleep    5s
     Capture Page Screenshot     filename=Continue.png
-    Sleep    5s
-    Click Element    accessibility_id=unchecked, checkbox, University Student
+    Sleep    10s
+    Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, University student"]
+    #Click Element    accessibility_id=unchecked, checkbox, University Student
     Sleep    5s
     Capture Page Screenshot     filename=Role.png
     Sleep    5s
@@ -67,13 +68,14 @@ Start the Application
     Click Element    accessibility_id=Continue
     Sleep    5s
     Capture Page Screenshot     filename=FullAccess.png
-    Sleep    5s
-    Click Element    accessibility_id=Save Privacy Level
+    Sleep    10s
+    #Click Element    accessibility_id=Save Privacy Level
+	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
     Sleep    5s
 
     Capture Page Screenshot     filename=login.png
     Sleep    5s
-    Click Element    accessibility_id=Log in with NetID
+    Click Element    accessibility_id=Sign in with NetID
     Sleep    5s
     Proceed with Netid
     Sleep    5s
@@ -87,7 +89,10 @@ Screen Shot of Homescreen
     Sleep    5s
     Click Element    accessibility_id=Events
     Sleep   10s
-    Click Element    id=com.android.packageinstaller:id/permission_allow_button
+    ${Value}    Run Keyword And Return Status    Text Should Be Visible    ALLOW
+    Run Keyword If   ${Value}
+    ...    Click Text   ALLOW
+    #Click Element    id=com.android.packageinstaller:id/permission_allow_button
     sleep   5s
     #Click Element At Coordinates    790    1053
     Capture Page Screenshot     filename=Events1.png
@@ -349,6 +354,923 @@ Wallet screen
     Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
     #Click Element At Coordinates    542    1704
     Sleep    5s
+
+
+StudentGuide screen
+    Sleep    10s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    5s
+    Click Element    accessibility_id=Student Guide
+    Sleep    5s
+    Capture Page Screenshot     filename=S1StudentGuide1.png
+    Sleep    5s
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Capture Page Screenshot     filename=S2Book1.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Excel academically
+    Sleep    5s
+    Capture Page Screenshot     filename=S3Excel academically.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=General support
+    Sleep    5s
+    Capture Page Screenshot     filename=S4General support.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=International education
+    Sleep    5s
+    Capture Page Screenshot     filename=S5IE.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Writing help
+    Sleep    5s
+    Capture Page Screenshot     filename=S6Writing.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Support services
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    10s
+
+    Click Element    accessibility_id=Get ready for the job market
+    Sleep    5s
+    Capture Page Screenshot     filename=S7JM.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Jobs
+    Sleep    5s
+    Capture Page Screenshot     filename=S8Jobs.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Cultural centers
+    Sleep    5s
+    Capture Page Screenshot     filename=S9CC.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=LGBTQ
+    Sleep    5s
+    Capture Page Screenshot     filename=S10LGBTQ.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Support services
+
+    #Click Element    xpath=//android.widget.ImageView[@content-desc="Support centers"]
+    Sleep    5s
+    Capture Page Screenshot     filename=S11Support centers.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Exercise
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+
+    Click Element    accessibility_id=Financial support
+
+    Sleep    5s
+    Capture Page Screenshot     filename=S13Financial Support.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Jobs
+    Sleep    5s
+    Capture Page Screenshot     filename=S14Jobs.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Exercise
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+
+    Sleep   5s
+    Click Element    accessibility_id=Legal support
+    Sleep    5s
+    Capture Page Screenshot     filename=S15Legal support.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Money management
+    Sleep    5s
+    Capture Page Screenshot     filename=S16Money management.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=COVID-19
+    Sleep    5s
+    Capture Page Screenshot     filename=S17COVID-19.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Exercise
+    Sleep    5s
+    Capture Page Screenshot     filename=S20Exercise.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+###########
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Private certified housing
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+    Click Element    accessibility_id=Mental & emotional health
+    Sleep    5s
+    Capture Page Screenshot     filename=S21Mental & emotional health.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+
+
+
+    Sleep    5s
+    Click Element    accessibility_id=Nutrition
+    Sleep    5s
+    Capture Page Screenshot     filename=S22Nutrition.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Physical health
+    Sleep    5s
+    Capture Page Screenshot     filename=S23Physical health.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+
+    Click Element    accessibility_id=Community engagement
+    Sleep    5s
+    Capture Page Screenshot     filename=S24Community engagement.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Socializing
+    Sleep    5s
+    Capture Page Screenshot     filename=S25Socializing.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=General housing information
+    Sleep    5s
+    Capture Page Screenshot     filename=S25GHSocializing.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Off-campus housing
+    Sleep    5s
+    Capture Page Screenshot     filename=S25OFFCampus.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Private certified housing
+    Sleep    5s
+    Capture Page Screenshot     filename=S25PCH.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Physical health
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Capture Page Screenshot     filename=S25UH.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Capture Page Screenshot     filename=S26Books.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+
+
+    Click Element    accessibility_id=Digital tools and computers
+    Sleep    5s
+    Capture Page Screenshot     filename=S27DTC.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Financial support
+    Sleep    5s
+    Capture Page Screenshot     filename=S28FS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+    Click Element    accessibility_id=General safety
+    Sleep    5s
+    Capture Page Screenshot     filename=S29GS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+    Click Element    accessibility_id=Physical health
+    Sleep    5s
+    Capture Page Screenshot     filename=S31PH.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+#    Click Element    accessibility_id=Socializing
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S32SC.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Quiet space
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Sleep    5s
+    Click Element    accessibility_id=Socializing
+    Sleep    5s
+    Capture Page Screenshot     filename=S32SC.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technical support
+    Sleep    5s
+    Capture Page Screenshot     filename=S33TS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technology resources
+    Sleep    5s
+    Capture Page Screenshot     filename=S34TR.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Capture Page Screenshot     filename=S35UHS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Getting home safely
+    Sleep    5s
+    Capture Page Screenshot     filename=S36GHS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Quiet space
+    Sleep    5s
+    Capture Page Screenshot     filename=S37QS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Alternative modes of transportation
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Capture Page Screenshot     filename=S38Books.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+#    Click Element    xpath=(//android.widget.Button[@content-desc="Digital tools and computers"])[1]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S39DTS.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    xpath=(//android.widget.Button[@content-desc="Digital tools and computers"])[2]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S40DTTS.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+
+    Click Element    accessibility_id=Technical support
+    Sleep    5s
+    Capture Page Screenshot     filename=S41TS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Technology resources
+    Sleep    5s
+    Capture Page Screenshot     filename=S42TRS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Alternative modes of transportation
+    Sleep    5s
+    Capture Page Screenshot     filename=S43ATS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus landmarks
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Click Element    accessibility_id=Getting home safely
+    Sleep    5s
+    Capture Page Screenshot     filename=S44GHS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Long distance travel
+    Sleep    5s
+    Capture Page Screenshot     filename=S45LDS.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Travel by car
+    Sleep    5s
+    Capture Page Screenshot     filename=S46TC.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+
+
+
+
+#
+#Digital tools and computers
+#
+#    Sleep   5s
+#    Click Element    xpath=(//android.widget.ImageView[@content-desc="Housing"])[1]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S27Housing.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Books
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S28Books1.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    xpath=(//android.widget.ImageView[@content-desc="Dining"])[2]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S29Dining2.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#
+#
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Physical health
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#
+#    sleep   5s
+#
+#    Click Element    accessibility_id=Financial support
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S30Financial support.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=General safety
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S31General safety.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Housing
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S32Housing.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#
+#    Click Element    accessibility_id=Physical health
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S33Physical health.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Socializing
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S34Socializing.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Tech resources
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S35Tech resources.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Tech support
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S36Tech support.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Quiet space
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    Sleep     5s
+#
+#    Click Element    accessibility_id=Socializing
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S37Socializing.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=General safety
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S38General safety.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Getting home safely
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S39Getting home safely.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Quiet space
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S40Quiet space.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#
+#
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=(//android.widget.ImageView[@content-desc="Digital tools and computers"])[2]
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Books
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S41Books.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    xpath=(//android.widget.ImageView[@content-desc="Digital tools and computers"])[1]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S42DTC.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=(//android.widget.ImageView[@content-desc="Digital tools and computers"])[2]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S43DTC1.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Tech resources
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S44Tech resources1.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Travel by car
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#
+#    Sleep  5s
+#
+#    Click Element    accessibility_id=Tech support
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S45Tech support1.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Alternative modes of transportation
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S46Alternative modes of transportation.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Long distance travel
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S47Long distance travel.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#    Click Element    accessibility_id=Travel by car
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S48Travel by car.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#
+#
+#
+#
+#
+##    Swipe    500     600     500    0  1000
+##    Swipe    500     600     500    0  1000
+##    Sleep    5s
+#
+#
+#
+#Scroll1 test
+#    Click Element    accessibility_id=Browse, Browse Page
+#    Sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    Click Element    accessibility_id=Privacy Center
+#    Sleep    5s
+#    Click Element    accessibility_id=Manage and Understand Your Privacy
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=Choose Your Privacy Level
+#    #Page Should Contain Element    accessibility_id=Privacy Level: 5 Access all features, get connected to campus, and let the app suggest tailored experiences that you and your friends all enjoy.
+#    Sleep    5s
+#    Click Element    accessibility_id=Expand All
+#    Sleep     5s
+#
+#    Page Should Contain Element    accessibility_id=Close All
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=LGBTQ
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Financial Support
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=COVID-19
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Socializing
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Physical health
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Quiet space
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=(//android.widget.ImageView[@content-desc="Digital tools and computers"])[2]
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Travel by car
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#
+#
+#
+#
+#
+#
+#    Click Element    accessibility_id=Books
+#    Sleep    5s
+#    Capture Page Screenshot     filename=Book1.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Excel academically
+#    Sleep    5s
+#    Capture Page Screenshot     filename=Excel academically.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=General support
+#    Sleep    5s
+#    Capture Page Screenshot     filename=General support.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#International education
+#
+#Writing help
+#//Career
+#Get ready for the job market
+#Jobs
+#//Diversity
+#    Swipe    500     600     500    0  1000
+#    Swipe    500     600     500    0  1000
+#
+#Cultural centers
+#
+#LGBTQ
+#Resource centers
+#
+#Support services
+#
+#//Financial
+#
+#Financial Support
+#
+#Jobs
+#
+#Legal support
+#
+#Money management
+#
+#    Swipe    500     600     500    0  1000
+#    Swipe    500     600     500    0  1000
+#
+# //health
+#
+#COVID-19
+#Exercise
+#Mental & emotional health
+#
+#Nutrition
+#Physical health
+#
+#// involvemnet
+#Community engagement
+#
+#Socializing
+#    Swipe    500     600     500    0  1000
+#    Swipe    500     600     500    0  1000
+#
+#//living
+#(//android.widget.ImageView[@content-desc="Dining"])[1]
+#
+#(//android.widget.ImageView[@content-desc="Housing"])[1]
+#
+#//New student
+#Books
+#Digital tools and computers
+#(//android.widget.ImageView[@content-desc="Dining"])[2]
+#
+#Financial support
+#
+#General safety
+#
+#Housing
+#
+#Physical health
+#
+#Socializing
+#Tech resources
+#Tech support
+#
+#
+#//Safety
+#
+#General safety
+#Getting home safely
+#//Spirutual
+#Quiet space
+#
+#//Supplies
+#Books
+#(//android.widget.ImageView[@content-desc="Digital tools and computers"])[1]
+#
+#//Tech
+#
+#(//android.widget.ImageView[@content-desc="Digital tools and computers"])[2]
+#
+#Tech resources
+#
+#Tech support
+#
+#//Transportation
+#
+#Alternative modes of transportation
+#Long distance travel
+#
+#Travel by car
+
+
+
+
 
 
 
@@ -726,7 +1648,7 @@ Proceed with Netid
     Switch To Context    ${contexts}[1]
     #Log To Console    ${contexts}[1]
     Sleep    10s
-    ${current}        Get Current Context
+    ${current}    Get Current Context
     Sleep    10s
     Input Text    id=j_username    ${NETID}
     Sleep    5s
@@ -738,7 +1660,7 @@ Proceed with Netid
     #Close the keyboard
     Sleep  10s
     # Swtich back to Native app
-    Switch To Context     ${contexts}[0] 
+    Switch To Context  ${contexts}[0]
     Sleep  10s
     Capture Page Screenshot     filename=SaferApp05.png
 
@@ -1540,15 +2462,21 @@ Close the Application
 
 Valid Screenshot test
     Open the Application
+    #Open the Application Noreset
     Start the Application
     Screen Shot of Homescreen
-    Saved screen
-    Wellness screen
-    Wallet screen
+    #Saved screen
+    #Wellness screen
+    #Wallet screen
     Close the Application
 
-
-
+Valid SG test
+    Open the Application Noreset
+    #Open the Application
+    #Start the Application
+    #Screen Shot of Homescreen
+    StudentGuide screen
+    Close the Application
 
 Valid MyIllini screen
     Open the Application

@@ -9,18 +9,19 @@ Documentation  Test Cases for evaluation of a proper setup with
 ...   A screenshot will be saved to the working directory before closing
 
 Library     AppiumLibrary
+Variables    input.yaml
 
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 
 *** Keywords ***
 Open the Application
-    Open Application    ${LOCAL_APPIUM_SERVER}    platformName=android    platformVersion=9.0
+    Open Application    ${LOCAL_APPIUM_SERVER}    platformName=android    platformVersion=11.0
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.rokwire    appActivity=edu.illinois.rokwire.MainActivity
 
 Open the Application Noreset
-    Open Application    ${LOCAL_APPIUM_SERVER}    platformName=android    platformVersion=9.0
+    Open Application    ${LOCAL_APPIUM_SERVER}    platformName=android    platformVersion=11.0
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.rokwire    appActivity=edu.illinois.rokwire.MainActivity
         ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
@@ -29,48 +30,322 @@ Open the Application Noreset
 
 Start the Application
     Sleep  15s
-    #Wait Until Page Contains Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button
-    Click Element    accessibility_id=Get Started
-    Sleep  5s
+#    Capture Page Screenshot     filename=Splash.png
+#
+#    #Wait Until Page Contains Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button
+#    Sleep  5s
+    #Click Element    accessibility_id=Continue
+    Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
+    Sleep    5s
+#    Capture Page Screenshot     filename=Continue.png
+#    Sleep    10s
+    Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, University student"]
+    #Click Element    accessibility_id=unchecked, checkbox, University Student
+#    Sleep    5s
+#    Capture Page Screenshot     filename=Role.png
+    Sleep    5s
     Click Element    accessibility_id=Continue
-    Sleep  5s
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
-    Sleep  5s
-    Click Element    accessibility_id=Set my Privacy, Set my privacy
-    Sleep  5s
-    Click Element    accessibility_id=Receive Notifications
-    Sleep  5s
-    Click Element    accessibility_id=Share my Location
-    Sleep  5s
-    Click Element At Coordinates    794    1045
-    Sleep  5s
-    Click Element    accessibility_id=unchecked, checkbox, University Student
-    Sleep  5s
+    Sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Sleep    5s
+#    Capture Page Screenshot     filename=Privacy.png
+
+    Click Element    accessibility_id=Begin
+    Sleep    5s
+#    Capture Page Screenshot     filename=Location.png
+
     Click Element    accessibility_id=Continue
-    Sleep  5s
-    #Login without netid
-    Click Element At Coordinates    560    1705
+    Sleep   5s
+#    Capture Page Screenshot     filename=AppActivity.png
+
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+#    Capture Page Screenshot     filename=Recommandation.png
+
+    Click Element    accessibility_id=Continue
+
+#    Capture Page Screenshot     filename=FullAccess.png
+    Sleep    10s
+    #Click Element    accessibility_id=Save Privacy Level
+	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
+
+
+#    Capture Page Screenshot     filename=login.png
+    Sleep    5s
+    Click Element    accessibility_id=Sign in with NetID
+    Sleep    5s
+    Proceed with Netid
+#    Sleep    5s
+
+
+
+
+User already loggedin
+    Sleep    5s
+    Click Element    accessibility_id=Log in with NetID
+    Sleep    10s
+    ${Value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+    Sleep     5s
+    Run Keyword If   ${Value}
+    ...    Validating Homescreen
+    ...    ELSE
+    ...    Proceed with Netid
+
+Validating Homescreen
+#    Click Element    accessibility_id=Log in with NetID
+#    Sleep    5s
+#    Proceed with Netid
     Sleep    5s
 
-Validating Setting screen
+
+    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+
+    Run Keyword If   ${value}   Validate blocks
+
+    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc="Events for you"]
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Sleep     5s
+
+Validate blocks
+    Page Should Contain Element    accessibility_id=Events
+    Page Should Contain Element    accessibility_id=Dining
+    Page Should Contain Element    accessibility_id=Athletics
+    Page Should Contain Element    accessibility_id=Illini Cash
+    Page Should Contain Element    accessibility_id=My Illini
+    Sleep    5s
+
+
+Validating Events
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Home, Home Page
+    Sleep    5s
+#    Click Element    accessibility_id=Events
+#    Sleep    5s
+#    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+#    log to console   ${value}
+#    Sleep  5s
+#    Run Keyword If   ${value} == True
+#    ...    Click Text    While using the app
+#    Sleep   15s
+#    Page Should Contain Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
+#    Sleep    5s
+#    Click Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
+#    Sleep    15s
+#    Click Element    xpath=//android.widget.Button[@content-desc="Academic"]
+#    Sleep    5s
+#    Click Element At Coordinates    280    980
+#    Sleep     5s
+#    Click Element    accessibility_id=ACADEMIC
+#    Sleep     5s
+#    Click Element    accessibility_id=Add To Favorites
+#    Sleep     5s
+#    Click Element    accessibility_id=Close
+#    Sleep     5s
+#    Page Should Contain Element    accessibility_id=Remove From Favorites
+#    Sleep     5s
+#    Click Element    accessibility_id=Back
+#    Sleep     5s
+#    Click Element    accessibility_id=Search
+#    Sleep     5s
+##    ${SCvalInput}    Set Variable    school
+##    log to console    ${SRCH}
+#    ${SCval}    Set Variable   	/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
+#    Click element    xpath=${SCval}
+#    Press Keycode    47
+#    Sleep     15s
+#    Click Element    accessibility_id=Search, Search
+#    Sleep     15s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Validating Dining
+    Click Element    accessibility_id=Dining
+    Sleep     5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+    log to console   ${value}
+    Sleep  5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    While using the app
+    Sleep   15s
+    Page Should Contain Element    accessibility_id=All Payment Types, Filter by available payment types
+    Sleep     5s
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${Svalue}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc=", FAR Dining Hall at Florida Avenue (FAR), , 1822.6 mi away, Opening on Sep 5 4:30 PM, , , "]
+        log to console   ${Svalue}
+        Sleep  5s
+        Run Keyword If   ${Svalue} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+Validating Wallet screen
+    Sleep    5s
+
+    Click Element    accessibility_id=Wallet, Wallet Page
+    sleep     5s
+
+    Click Element    xpath=(//android.widget.ImageView[@content-desc="View"])[1]
+    Sleep   5s
+
+    Page Should Contain Element    accessibility_id=Illini Cash
+    sleep    5s
+    Click Element    accessibility_id=Add Illini Cash
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Add Illini Cash
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    accessibility_id=View History
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    xpath=(//android.widget.ImageView[@content-desc="View"])[2]
+    Sleep    5s
+    Page Should Contain Element    xpath=(//android.view.View[@content-desc="University Housing Meal Plan"])[1]
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=View History
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+#Bus pass
+    Click Element    accessibility_id=Use bus pass
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=MTD Bus Pass
+    Sleep    5s
+
+    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
+    sleep    5s
+    Swipe    722     1316     526    1306  1000
+    Sleep    5s
+    Click Element    accessibility_id=Use ID
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=Illini ID
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=MERIT, MAYA TESTER
+    Sleep    5s
+    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
+    Swipe    722     1316     526    1306  1000
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Library Card 20111524320117
+    Sleep   5s
+    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
+    Sleep    5s
+
+
+
+
+
+Validating Illini meal parking feedback
+#    Click Element    accessibility_id=Log in with NetID
+#    Sleep    5s
+#    Proceed with Netid
+    Sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=My Illini
+    Sleep    20s
+    Page Should Contain Element    accessibility_id=My Illini
+    Sleep    20s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Illini Cash
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Illini Cash
+    sleep    5s
+    Click Element    accessibility_id=Add Illini Cash
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Add Illini Cash
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    accessibility_id=View History
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    accessibility_id=Meal Plan
+    Sleep    5s
+    Page Should Contain Element    xpath=(//android.view.View[@content-desc="University Housing Meal Plan"])[1]
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=View History
+    Sleep   5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    accessibility_id=State Farm Event Parking
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Events
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep   5s
+    Click Element    accessibility_id=Provide Feedback
+    Sleep   5s
+    Page Should Contain Element    accessibility_id=Provide Feedback
+    Sleep   5s
+
+Validating Setting
+    sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep     5s
+    Click Element    xpath=(//android.widget.Button[@content-desc="Settings"])[2]
+    sleep    5s
+    Page Should Contain Element    accessibility_id=Illinois NetID
+	Sleep    5s
+    Click Element    accessibility_id=Disconnect your NetID
+    # NO flow
+    sleep    5s
+    Click Element    accessibility_id=No
+    #Yes
+    sleep    5s
+    Click Element    accessibility_id=Yes
+    sleep    5s
+    Page Should Contain Element    accessibility_id=Connect your NetID
+    sleep    10s
+    Click Element    accessibility_id=Connect your NetID
+    sleep    10s
+    Proceed with Netid
+    sleep    10s
+    Personal data and Notification
+
+Validating Privacy center
     #validating external links Privacy Center links
     Click Element    accessibility_id=Browse, Browse Page
     Sleep    5s
     Swipe    500     1300     500    0  1000
     Click Element    accessibility_id=Privacy Center
     Sleep    5s
-    Click Element    accessibility_id=Verify your Identity
-    Sleep    5s
-    Page Should Contain Element    accessibility_id=Verify your Identity
-#
-    Click Element    accessibility_id=Connect Your NetID
-    Sleep    5s
-    Click Element    accessibility_id=Log in with NetID
-    Proceed with Netid
-    Sleep   5s
+#    Click Element    accessibility_id=Verify your Identity
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=Verify your Identity
+##
+#    Click Element    accessibility_id=Connect Your NetID
+#    Sleep    5s
+#    Click Element    accessibility_id=Log in with NetID
+#    Proceed with Netid
+#    Sleep   5s
 
     Click Element    accessibility_id=Manage and Understand Your Privacy
     Sleep    5s
@@ -109,10 +384,10 @@ Validating Setting screen
         Run Keyword If   ${value} == False
         ...    Swipe    500    600    500    1000    1000
         ...    ELSE
-        ...    #Click Element At Coordinates    790    342
-        #Run Keyword If   ${value} == True
         ...    Exit For Loop
     END
+    log to console     loop ended
+    Sleep   5s
     Click Element At Coordinates    790    342
     Sleep   5s
 
@@ -128,67 +403,8 @@ Validating Setting screen
     Click Element    accessibility_id=Set my Privacy
     Sleep     5s
     Personal data
-#    Click Element    accessibility_id=Personal Information
-#    Sleep   5s
-#    Page Should Contain Element    accessibility_id=Personal Information
-#    Click Element    accessibility_id=Personal Information Your name and contact info you’ve shared
-#    Sleep   5s
-#    Page Should Contain Element    accessibility_id=Connect to Illinois
-#    Sleep   5s
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Click Element    accessibility_id=Who You Are Your status as a student, faculty, resident, etc.
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=checked, checkbox, University Student
-#    Sleep    5s
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
-#    Sleep    5s
-#    Click Element    accessibility_id=unchecked, checkbox, Academic
-#    Click Element    accessibility_id=unchecked, checkbox, Community
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
-#    Sleep    5s
-#    Click Element    accessibility_id=unchecked, checkbox, Academic
-#    Click Element    accessibility_id=unchecked, checkbox, Community
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=checked, checkbox, Academic
-#    Page Should Contain Element    accessibility_id=checked, checkbox, Community
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Click Element    accessibility_id=Food Filters Add or edit your food preferences
-#    Sleep    5s
-#    Click Element    accessibility_id=unchecked, checkbox, Vegan
-#
-#    Click Element    accessibility_id=unchecked, checkbox, Vegetarian
-#    Swipe    500     1300     500    0  1000
-#    Swipe    500     1300     500    0  1000
-#    Sleep   5s
-#    Click Element    accessibility_id=unchecked, checkbox, Peanuts
-#    Sleep   5s
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=checked, checkbox, Vegan
-#    Page Should Contain Element    accessibility_id=checked, checkbox, Vegetarian
-#    Swipe    500     1300     500    0  1000
-#    Swipe    500     1300     500    0  1000
-#    Page Should Contain Element    accessibility_id=checked, checkbox, Peanuts
-#    Sleep    5s
-#
-#    Click Element    accessibility_id=Delete my personal data
-#    Sleep    5s
-#    Click Element    accessibility_id=unchecked, checkbox, Your interests
-#    Click Element    accessibility_id=unchecked, checkbox, Food filters
-#    Sleep    5s
-#
-#    Click Element    accessibility_id=Delete My Data
-#    Sleep    5s
-#
-#    ############Chekec the values here ########
-    Click Element    accessibility_id=Back
+
+    #Click Element    accessibility_id=Back
     Sleep    5s
 
     Swipe    500     1300     500    0  1000
@@ -211,21 +427,11 @@ Validating Setting screen
 
     Click Element    accessibility_id=Browse, Browse Page
     Sleep   5s
-    #external link MyIllini
-    Click Element    accessibility_id=My Illini
-    Sleep   5s
-    Click Element At Coordinates    1007    1551
-    Sleep   5s
-    Wait Until Page Contains Element  accessibility_id=My Illini    timeout=None    error=None
-    ${contexts}    Get Contexts
-    Log To Console    ${contexts}
-    ${illinitext}  Get Text  xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.webkit.WebView/android.webkit.WebView/android.view.View[3]/android.view.View/android.view.View[2]/android.view.View[1]
-    Log To Console    ${illinitext}
-    Should Be Equal As Strings      ${illinitext}    Log In to myIllini
-    Sleep    5s
 
 
-Personal data
+
+
+Personal data and Notification
 
     Swipe    500     1300     500    0  1000
     Sleep    5s
@@ -236,8 +442,8 @@ Personal data
     Click Element At Coordinates    970    351
     #Click Element    accessibility_id=Personal Information Your name and contact info you’ve shared
     Sleep   5s
-    Page Should Contain Element    accessibility_id=Connect to Illinois
-    Sleep   5s
+    #Page Should Contain Element    accessibility_id=Connect to Illinois
+    #Sleep   5s
     Click Element    accessibility_id=Back
     Sleep    5s
     Click Element At Coordinates    983    565
@@ -299,6 +505,7 @@ Personal data
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
+#    Notification preference
     Click Element    accessibility_id=Notification Preferences
     Sleep    5s
     Page Should Contain Element    accessibility_id=checked, checkbox, Event reminders
@@ -343,37 +550,7 @@ Scroll test
         #Run Keyword If   ${value} == True
         ...    Exit For Loop
     END
-#    Swipe    500     1300     500    0  1000
-#    sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    Click Element At Coordinates    790    342
-#    Sleep   5s
-#    ###Scroll up untill the below element is visible####
-#    Page Should Contain Element    accessibility_id=Privacy Level: 4 Let the app work for you. You can access your iCard, save credit cards to make future purchases easier, access health information, and get notifications based on your specific interests.
-#    Sleep    5s
-#    Click Element At Coordinates    968    342
-#    Sleep     5s
-#    Click Element    accessibility_id=Set my Privacy
-#
-#    FOR    ${i}    IN RANGE    999999
-#       # value will return either true or false
-#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=CorrectIDHere
-#        Sleep  5s
-#        Run Keyword If   ${value} == False
-#        ...    Swipe    500     1300     500    0  1000
-#        ...    ELSE
-#        ...    Click Text    ${text}
-#        Run Keyword If   ${value} == True
-#        ...    Exit For Loop
-#    END
+
 
 Proceed with Netid
 
@@ -381,28 +558,40 @@ Proceed with Netid
 
     # get all the context displayed on the Shib screen
     ${contexts}    Get Contexts
-
+    Sleep    5s
     #Get the current active context Native app
     ${current}    Get Current Context
-
-    # Displays Webview
-    Switch To Context    ${contexts}[1]
-    #Log To Console    ${contexts}[1]
     Sleep    10s
-    ${current}        Get Current Context
+    # Displays Webview
+#    Switch To Context    ${contexts}[1]
+#    #Log To Console    ${contexts}[1]
+#    Sleep    10s
+#    ${current}    Get Current Context
+#    Sleep    15s
 
-    Input Text    id=j_username    ${NETID}
-    Input Password  id=j_password   ${PWD}
-    #Close the keyboard
-    Press Keycode    4
+    ${idval}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.widget.EditText[1]
+    ${pwval}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.widget.EditText[2]
+    ${Lgval}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View[2]/android.view.View[2]/android.view.View[3]/android.widget.Button
+
+    ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=${Lgval}
+    log to console   ${value}
+    Sleep  5s
+    Input Text    xpath=${idval}    ${NETID}
+    Sleep    5s
+    Input Password  xpath=${pwval}   ${PWD}
+
+
     #Tap on Login button
-    Press Keycode    66
+    Click Element    xpath=${Lgval}
+    #Press Keycode    66
     #Close the keyboard
     Sleep  10s
     # Swtich back to Native app
-    Switch To Context     ${contexts}[0] 
-    Sleep  10s
+    #Switch To Context  ${contexts}[0]
+    Sleep  15s
     Capture Page Screenshot     filename=SaferApp05.png
+
+
 
 Validating Wellness link
     Click Element    accessibility_id=Browse, Browse Page
@@ -1199,11 +1388,24 @@ Close the Application
     Close Application
 
 *** Test Cases ***
-Valid Open and Close
+Valid MyIllini screen
     Open the Application
     Start the Application
+    Validating IlliniCash
     Close the Application
 
+Valid Home screen
+    Open the Application
+    Start the Application
+    Validating Homescreen
+    Close the Application
+
+Validating Events
+    Open the Application
+    Start the Application
+    #Start the Application with already login user
+    Validating Events
+    Close the Application
 
 Valid Wellness Physical links
     Open the Application
