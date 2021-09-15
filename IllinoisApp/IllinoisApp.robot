@@ -10,6 +10,8 @@ Documentation  Test Cases for evaluation of a proper setup with
 
 Library     AppiumLibrary
 Variables    input.yaml
+Library     DateTime
+Library     String
 
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
@@ -29,59 +31,31 @@ Open the Application Noreset
 
 
 Start the Application
-    Sleep  15s
-#    Capture Page Screenshot     filename=Splash.png
-#
-#    #Wait Until Page Contains Element  xpath = /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button
-#    Sleep  5s
+
+    Sleep  20s
     #Click Element    accessibility_id=Continue
     Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
     Sleep    5s
-#    Capture Page Screenshot     filename=Continue.png
-#    Sleep    10s
     Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, University student"]
     #Click Element    accessibility_id=unchecked, checkbox, University Student
-#    Sleep    5s
-#    Capture Page Screenshot     filename=Role.png
     Sleep    5s
     Click Element    accessibility_id=Continue
     Sleep    5s
-#    Swipe    500     1300     500    0  1000
-#    Swipe    500     1300     500    0  1000
-#    Swipe    500     1300     500    0  1000
-#    Swipe    500     1300     500    0  1000
-#    Sleep    5s
-#    Capture Page Screenshot     filename=Privacy.png
-
     Click Element    accessibility_id=Begin
     Sleep    5s
-#    Capture Page Screenshot     filename=Location.png
-
     Click Element    accessibility_id=Continue
     Sleep   5s
-#    Capture Page Screenshot     filename=AppActivity.png
-
     Click Element    accessibility_id=Continue
     Sleep    5s
-#    Capture Page Screenshot     filename=Recommandation.png
-
     Click Element    accessibility_id=Continue
-
-#    Capture Page Screenshot     filename=FullAccess.png
     Sleep    10s
     #Click Element    accessibility_id=Save Privacy Level
 	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
-
-
-#    Capture Page Screenshot     filename=login.png
     Sleep    5s
     Click Element    accessibility_id=Sign in with NetID
     Sleep    5s
     Proceed with Netid
 #    Sleep    5s
-
-
-
 
 User already loggedin
     Sleep    5s
@@ -134,45 +108,49 @@ Validating Events
     Sleep    5s
     Page Should Contain Element    accessibility_id=Home, Home Page
     Sleep    5s
-#    Click Element    accessibility_id=Events
-#    Sleep    5s
-#    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
-#    log to console   ${value}
-#    Sleep  5s
-#    Run Keyword If   ${value} == True
-#    ...    Click Text    While using the app
-#    Sleep   15s
-#    Page Should Contain Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
-#    Sleep    5s
-#    Click Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
-#    Sleep    15s
-#    Click Element    xpath=//android.widget.Button[@content-desc="Academic"]
-#    Sleep    5s
-#    Click Element At Coordinates    280    980
-#    Sleep     5s
-#    Click Element    accessibility_id=ACADEMIC
-#    Sleep     5s
-#    Click Element    accessibility_id=Add To Favorites
-#    Sleep     5s
-#    Click Element    accessibility_id=Close
-#    Sleep     5s
-#    Page Should Contain Element    accessibility_id=Remove From Favorites
-#    Sleep     5s
-#    Click Element    accessibility_id=Back
-#    Sleep     5s
-#    Click Element    accessibility_id=Search
-#    Sleep     5s
-##    ${SCvalInput}    Set Variable    school
-##    log to console    ${SRCH}
-#    ${SCval}    Set Variable   	/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
-#    Click element    xpath=${SCval}
-#    Press Keycode    47
-#    Sleep     15s
-#    Click Element    accessibility_id=Search, Search
-#    Sleep     15s
-#    Click Element    accessibility_id=Back
-#    Sleep    5s
-#    Validating Dining
+    Click Element    accessibility_id=Events
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+    log to console   ${value}
+    Sleep  5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    While using the app
+    Sleep   15s
+    Page Should Contain Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
+    Sleep    5s
+    Click Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
+    Sleep    15s
+    Click Element    xpath=//android.widget.Button[@content-desc="Academic"]
+    Sleep    5s
+    Click Element At Coordinates    280    980
+    Sleep     5s
+    Click Element    accessibility_id=ACADEMIC
+    Sleep     5s
+    Click Element    accessibility_id=Add To Favorites
+    Sleep     5s
+    Click Element    accessibility_id=Close
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=Remove From Favorites
+    Sleep     5s
+    Click Element    accessibility_id=Back
+    Sleep     5s
+    Click Element    accessibility_id=Search
+    Sleep     5s
+#    ${SCvalInput}    Set Variable    school
+#    log to console    ${SRCH}
+    ${SCval}    Set Variable   	/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
+    Click element    xpath=${SCval}
+    Press Keycode    47
+    Sleep     15s
+    Click Element    accessibility_id=Search, Search
+    Sleep     15s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+Validating Dining
+    sleep    5s
+    Click Element    accessibility_id=Home, Home Page
+    Sleep    5s
     Click Element    accessibility_id=Dining
     Sleep     5s
     ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
@@ -183,19 +161,139 @@ Validating Events
     Sleep   15s
     Page Should Contain Element    accessibility_id=All Payment Types, Filter by available payment types
     Sleep     5s
+    #Swipe    500     1300     500    0  1000
+    Sleep     5s
 
-    FOR    ${i}    IN RANGE    20
-       # value will return either true or false
-        ${Svalue}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc=", FAR Dining Hall at Florida Avenue (FAR), , 1822.6 mi away, Opening on Sep 5 4:30 PM, , , "]
-        log to console   ${Svalue}
-        Sleep  5s
-        Run Keyword If   ${Svalue} == False
-        ...    Swipe    500     600     500    0  1000
-        ...    ELSE
-        #...    Click Text    ${text}
-        #Run Keyword If   ${value} == True
-        ...    Exit For Loop
-    END
+    #//android.view.View[@index='1']
+    #${title}=  Get value     xpath=//android.view.View[@index='5']  content-desc
+    #${title}=  Get Element Attribute    xpath=//android.view.View[@index='5']  content-desc
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
+    Sleep     5s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=Ikenberry Dining Center at Ikenberry Commons
+    Sleep     5s
+    Click Element At Coordinates    987    1166
+    #Click Element    accessibility_id=Serving lunch until 2:30PM, activate to show more details
+    Sleep     15s
+    #Page Should Contain Element    accessibility_id=Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay
+
+    Click Element At Coordinates    990    1328
+    #Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Accepted payments')]
+    #Click Element    accessibility_id=Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay
+    Sleep    5s
+    Swipe    500     1930     500    1190  1000
+    Sleep    5s
+    #Page Should Contain Element    xpath=//android.view.View[@content-desc="Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay "]
+
+    ${date}     Get Current Date
+    ${future}      Convert Date      ${date}      result_format=%B %d,%Y %H:%M %p
+#    ${MD}      Convert Date      ${date}      result_format=%d
+    ${MD}      Convert Date      ${date}          %A, %b %d
+    Sleep    5s
+    Log To Console    ${MD}
+    Sleep    5s
+    ${dayValue}=  Get Element Attribute    accessibility_id=${MD}    content-desc
+    Log To Console    ${dayValue}
+    Sleep    5s
+    ${Value}    Run Keyword And Return Status    Should Contain    ${dayValue}    ${MD}
+    Sleep    5s
+    Click Element    accessibility_id=Breakfast
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=7:00 AM - 10:00 AM
+    Sleep    5s
+    Click Element    accessibility_id=Lunch
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=10:30 AM - 2:30 PM
+    Sleep    5s
+    Click Element    accessibility_id=Dinner
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=4:30 PM - 8:30 PM
+    Sleep    5s
+
+Validating Athletics
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Home, Home Page
+    Sleep    5s
+    Click Element    accessibility_id=Athletics
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Athletics
+    Sleep    5s
+	Click Element    accessibility_id=Teams
+    Sleep    5s
+    Click Element At Coordinates    965    578
+#    Sleep    5s
+#	Click Element    accessibility_id=unchecked, checkbox, Football
+	Sleep    5s
+	Click Element    accessibility_id=Back
+	Sleep    5s
+    Page Should Contain Element    accessibility_id=FOOTBALL
+	Sleep    15s
+	Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Football')]
+    #Page Should Contain Element    xpath=//*[@class='android.view.View' and contains(@content-desc,'Because of your interest in: Football')]
+    Sleep    5s
+	Click Element    accessibility_id=Add To Favorites
+    Sleep    5s
+    ${value}    Run Keyword And Return Status        Page Should Contain Element    accessibility_id=This starred item has been added to your saved list
+    log to console   ${value}
+    Sleep    5s
+    Run Keyword If   ${value} == True
+    ...    Click Element    accessibility_id=Close
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Explore Athletics
+    Sleep    5s
+    Click Element    accessibility_id=View upcoming eventsunchecked, checkbox, Upcoming Events
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+    log to console   ${value}
+    Sleep  5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    While using the app
+    Sleep   15s
+    Page Should Contain Element    accessibility_id=Explore
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Athletics, Filter by category
+    sleep    5s
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Athletics')]
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=View newsunchecked, checkbox, News
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Athletics News
+    Sleep    5s
+    Click Element    accessibility_id=All Athletics News
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Sleep    15s
+    Click Element    accessibility_id=Women's Tennis
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=Women's Tennis
+    Sleep     5s
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'TENNIS')]
+    ##Page Should Contain Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'WOMEN'S TENNIS')]
+    Sleep     5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=View ticketsunchecked, checkbox, Tickets
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=View the Game Day Guideunchecked, checkbox, Game Day Guide
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
 
 Validating Wallet screen
     Sleep    5s
@@ -591,6 +689,483 @@ Proceed with Netid
     Sleep  15s
     Capture Page Screenshot     filename=SaferApp05.png
 
+
+
+
+StudentGuide screen
+    Sleep    10s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    5s
+    Click Element    accessibility_id=Student Guide
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Student Guide
+    Sleep    5s
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Books, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Distance learning
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Distance learning, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+#    Click Element    accessibility_id=Excel academically
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=General support
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+    Click Element    accessibility_id=International education
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=International education, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+
+    Sleep    5s
+    Click Element    accessibility_id=New student programs
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=New student programs, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Writing help
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Writing help, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+
+#### Camous Rules and protocol
+    Click Element    accessibility_id=COVID-19
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=COVID-19, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Code of conduct
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Code of conduct, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+###Diversity & inclusion ####
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Support services
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    10s
+
+    Click Element    accessibility_id=Cultural centers
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Cultural centers, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=LGBTQ
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=LGBTQ, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Support services
+    #Click Element    xpath=//android.widget.ImageView[@content-desc="Support centers"]
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Support services, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+###Finance & Legal####
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Exercise
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    10s
+
+
+
+    Click Element    accessibility_id=Financial support
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Financial support, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+#    Click Element    accessibility_id=Jobs
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+
+    Click Element    accessibility_id=Legal support
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Legal support, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Money management
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Money management, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+#####Health and Wellness
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Tips
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    10s
+
+    Click Element    accessibility_id=Exercise
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Exercise, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    Click Element    accessibility_id=Mental & emotional health
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Mental & emotional health, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Nutrition
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Nutrition, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Physical health
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Physical health, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+ #####Illinois App help####
+    Click Element    accessibility_id=Tips
+    Sleep    5s
+	Page Should Contain Element    accessibility_id=Tips, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+######Involvement############
+
+    Click Element    accessibility_id=Community engagement
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Socializing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+#######Living Spaces##########
+    Click Element    accessibility_id=General housing information
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Off-campus housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Private certified housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+##########Maps#########
+
+    Click Element    accessibility_id=Get ready for the job market
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Jobs
+    Sleep    5s
+    Capture Page Screenshot     filename=S8Jobs.png
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+#    Click Element    accessibility_id=Cultural centers
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=LGBTQ
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S10LGBTQ.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Support services
+#    #Click Element    xpath=//android.widget.ImageView[@content-desc="Support centers"]
+#    Sleep    5s
+#    Capture Page Screenshot     filename=S11Support centers.png
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Exercise
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+#    Click Element    accessibility_id=Financial support
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Jobs
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#
+#    Sleep   5s
+#    Click Element    accessibility_id=Legal support
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Money management
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+    Click Element    accessibility_id=COVID-19
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+#    Click Element    accessibility_id=Exercise
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+
+###########
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Private certified housing
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+#    Click Element    accessibility_id=Mental & emotional health
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Nutrition
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Click Element    accessibility_id=Physical health
+#    Sleep    5s
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+    Click Element    accessibility_id=Community engagement
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Socializing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=General housing information
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Off-campus housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Private certified housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+#####Maps ############ Working on it
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Religious practice
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+
+
+#####Religious and Spirutuality ############
+
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Digital tools and computers
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Financial support
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=General safety
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Physical health
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Quiet space
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Sleep    5s
+    Click Element    accessibility_id=Socializing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technical support
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technology resources
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=University Housing
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Getting home safely
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Quiet space
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Alternative modes of transportation
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+    Click Element    accessibility_id=Books
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technical support
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Technology resources
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Alternative modes of transportation
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus landmarks
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Click Element    accessibility_id=Getting home safely
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Long distance travel
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Travel by car
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
 
 
 Validating Wellness link
@@ -1021,18 +1596,18 @@ Validating Spiritual links
      Capture Page Screenshot     filename=BNAACC.png
      Sleep   5s
      Click Element    accessibility_id=Back
-    Sleep    5s
-    Click Element    accessibility_id=AACC, This link takes you to a website outside of the Illinois app
-    Sleep   15s
-    Capture Page Screenshot     filename=AACC.png
-    Sleep   5s
-    Click Element    accessibility_id=Back
-    Sleep    5s
-    Click Element    accessibility_id=La Casa, This link takes you to a website outside of the Illinois app
-    Sleep   15s
-    Capture Page Screenshot     filename=La Casa.png
-    Sleep   5s
-    Click Element    accessibility_id=Back
+     Sleep    5s
+     Click Element    accessibility_id=AACC, This link takes you to a website outside of the Illinois app
+     Sleep   15s
+     Capture Page Screenshot     filename=AACC.png
+     Sleep   5s
+     Click Element    accessibility_id=Back
+     Sleep    5s
+     Click Element    accessibility_id=La Casa, This link takes you to a website outside of the Illinois app
+     Sleep   15s
+     Capture Page Screenshot     filename=La Casa.png
+     Sleep   5s
+     Click Element    accessibility_id=Back
      Sleep    5s
      Click Element    accessibility_id=Native American House, This link takes you to a website outside of the Illinois app
      Sleep   15s
@@ -1405,6 +1980,20 @@ Validating Events
     Start the Application
     #Start the Application with already login user
     Validating Events
+    Close the Application
+
+Validating Dining
+    Open the Application
+    Start the Application
+    #Start the Application with already login user
+    Validating Dining
+    Close the Application
+
+Valid test Athletics
+    Open the Application
+    Start the Application
+    #Start the Application with already login user
+    Validating Athletics
     Close the Application
 
 Valid Wellness Physical links
