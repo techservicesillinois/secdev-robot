@@ -73,11 +73,16 @@ Validating Homescreen
 #    Sleep    5s
 #    Proceed with Netid
     Sleep    5s
-
-
+    Click Element    accessibility_id=Settings
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Privacy Center
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
     ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
 
     Run Keyword If   ${value}   Validate blocks
+
 
     Sleep    5s
     FOR    ${i}    IN RANGE    20
@@ -94,6 +99,43 @@ Validating Homescreen
     END
 
     Sleep     5s
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Student Guide Highlights
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    sleep    5s
+    Click Element    accessibility_id=View all events, Tap to view all events
+    sleep    5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    While using the app
+    Sleep   15s
+    Page Should Contain Element    accessibility_id=Explore
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Create a poll
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Create a Quick Poll
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element At Coordinates    657    1320
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Home, Home Page
+
 
 Validate blocks
     Page Should Contain Element    accessibility_id=Events
@@ -343,12 +385,12 @@ Validating Wallet screen
     Page Should Contain Element    accessibility_id=MERIT, MAYA TESTER
     Sleep    5s
     Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
-    Swipe    722     1316     526    1306  1000
+#    Swipe    722     1316     526    1306  1000
     Sleep    5s
-    Page Should Contain Element    accessibility_id=Library Card 20111524320117
-    Sleep   5s
-    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
-    Sleep    5s
+#    Page Should Contain Element    accessibility_id=Library Card 20111524320117
+#    Sleep   5s
+#    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
+#    Sleep    5s
 
 
 
@@ -408,23 +450,21 @@ Validating Setting
     sleep    5s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep     5s
-    Click Element    xpath=(//android.widget.Button[@content-desc="Settings"])[2]
+    Click Element    accessibility_id=Settings
     sleep    5s
     Page Should Contain Element    accessibility_id=Illinois NetID
 	Sleep    5s
     Click Element    accessibility_id=Disconnect your NetID
-    # NO flow
-    sleep    5s
-    Click Element    accessibility_id=No
-    #Yes
+    # Tapping NO flow
+#    sleep    5s
+#    Click Element    accessibility_id=No
+    #Tapping Yes
     sleep    5s
     Click Element    accessibility_id=Yes
     sleep    5s
     Page Should Contain Element    accessibility_id=Connect your NetID
     sleep    10s
     Click Element    accessibility_id=Connect your NetID
-    sleep    10s
-    Proceed with Netid
     sleep    10s
     Personal data and Notification
 
@@ -530,47 +570,59 @@ Validating Privacy center
 
 
 Personal data and Notification
-
+    sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep     5s
+    Click Element    accessibility_id=Settings
+    sleep    5s
     Swipe    500     1300     500    0  1000
     Sleep    5s
     Click Element    accessibility_id=Personal Information
     Sleep   5s
     Page Should Contain Element    accessibility_id=Personal Information
     Sleep    5s
-    Click Element At Coordinates    970    351
-    #Click Element    accessibility_id=Personal Information Your name and contact info you’ve shared
+#    Click Element    accessibility_id=Back
+#    Sleep    5s
+#    Swipe    527     740     520    1518  1000
+#    Sleep    5s
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Personal Information')]
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Personal Information')]
+
     Sleep   5s
-    #Page Should Contain Element    accessibility_id=Connect to Illinois
-    #Sleep   5s
+    Page Should Contain Element    accessibility_id=mmerit
+
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element At Coordinates    983    565
-    #Click Element    accessibility_id=Who You Are Your status as a student, faculty, resident, etc.
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Who You Are')]
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Who You Are')]
+
     Sleep    5s
-    Page Should Contain Element    accessibility_id=checked, checkbox, University Student
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'University Student')]
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element At Coordinates    973    762
-    #Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
+
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Your Interests')]
+
     Sleep    5s
     Click Element    accessibility_id=unchecked, checkbox, Academic
+    Sleep    5s
     Click Element    accessibility_id=unchecked, checkbox, Community
+    Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element At Coordinates    973    762
-    #Click Element    accessibility_id=Your Interests Categories, teams, and tags you follow
-    Sleep    5s
-#    Click Element    accessibility_id=unchecked, checkbox, Academic
-#    Click Element    accessibility_id=unchecked, checkbox, Community
-#    Click Element    accessibility_id=Back
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Your Interests')]
+
     Sleep    5s
     Page Should Contain Element    accessibility_id=checked, checkbox, Academic
     Page Should Contain Element    accessibility_id=checked, checkbox, Community
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element At Coordinates    973    976
-    #Click Element    accessibility_id=Food Filters Add or edit your food preferences
+
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Food Filters')]
+
     Sleep    5s
     Click Element    accessibility_id=unchecked, checkbox, Vegan
 
@@ -582,8 +634,9 @@ Personal data and Notification
     Sleep   5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element At Coordinates    973    976
-    #Click Element    accessibility_id=Food Filters Add or edit your food preferences
+
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Food Filters')]
+
     Sleep    5s
     Page Should Contain Element    accessibility_id=checked, checkbox, Vegan
     Page Should Contain Element    accessibility_id=checked, checkbox, Vegetarian
@@ -617,6 +670,8 @@ Personal data and Notification
     Click Element    accessibility_id=Forget all of my information, This will delete all of your personal information that was shared and stored within the app.
     Sleep    5s
     Click Element    accessibility_id=Forget My Information
+    Sleep    5s
+    Swipe    527     740     520    1518  1000
     Sleep    5s
     Page Should Contain Element    accessibility_id=Privacy Center
     Sleep   5s
@@ -1995,6 +2050,28 @@ Valid test Athletics
     #Start the Application with already login user
     Validating Athletics
     Close the Application
+
+
+Valid Wallet screen
+    Open the Application
+    Start the Application
+    Validating Wallet screen
+    Close the Application
+
+Valid Setting screen
+    Open the Application
+    Start the Application
+    Validating Setting
+    #Personal data and Notification
+    Close the Application
+
+
+Valid Meal parking feedback screen
+    Open the Application
+    Start the Application
+    Validating Illini meal parking feedback
+    Close the Application
+
 
 Valid Wellness Physical links
     Open the Application
