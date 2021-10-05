@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation  Utility resouces for the clear app demonstration
+Documentation  Utility resources for the clear app demonstration
 
 *** Variables ***
 
