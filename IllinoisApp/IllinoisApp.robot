@@ -17,6 +17,9 @@ Library     Process
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
 @{SEARCH_APPS}    47    31    36    43    43    40
+@{GrpValue}    35    29    46    32    33    42    62    35    46    43    49    44
+@{DesValue}    35    29    46    32    33    42
+@{URLValue}    36    48    48    44    47    51    51    51    56    23    29    36    43    43    56    31    43    41
 
 *** Keywords ***
 Open the Application
@@ -174,7 +177,7 @@ Saved Event
 #    Sleep    5s
 
 Validate poll
-    sleep    5s
+    sleep    15s
     FOR    ${i}    IN RANGE    20
        # value will return either true or false
         ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Create a poll
@@ -192,61 +195,61 @@ Validate poll
     sleep    5s
     Page Should Contain Element    accessibility_id=Create a Quick Poll
     sleep    5s
-    Click Element    xpath=//*[@class = 'android.widget.EditText' and contains(@text,QUESTION)]
-    Sleep    10s
-    ${entitySearch_Value}    Set Variable    'Asagdsadg'
-    Input Text    xpath=//*[@class = 'android.widget.EditText' and contains(@text,QUESTION)]     ${entitySearch_Value}
-    #Input Text    xpath=//*[@class = 'android.widget.EditText' and contains(@text,QUESTION)]    fsfsfj
-    Sleep    5s
-#    Input Password  xpath=${pwval}   ${PWD}
-##    ${Question}
-##    ${OPtion1}
-##    ${OPtion2}
-#    ${Qval}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[1]
-#    ${OP1val}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[2]
-#    ${OP2val}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.EditText[3]
-#    ${TextVal}    Set Variable    A
-##    ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=${Lgval}
-##    Input Text    xpath=${idval}    ${NETID}
-##    Sleep    5s
-##    Input Password  xpath=${pwval}   ${PWD}
-##    Click element    xpath=${SCval}
-##    Press Keycode    47
-##    Sleep     15s
-##    Click Element    accessibility_id=Search, Search
-##    log to console   ${value}
-#    Sleep    5s
-#    Click element    xpath=${Qval}
-#    Sleep    5s
-#
-#    Input Text    xpath=${Qval}    ${TextVal}
-#    Sleep    20s
-#    Click element    xpath=${OP1val}
-#    Sleep    10s
-#    Input Password  xpath=${OP1val}   ${OPTION1}
-#    Sleep  5s
-#    Input Text    xpath=${OP2val}    ${OPTION2}
-#    Sleep    5s
-#    Swipe    500     600     500    0  1000
-#    Swipe    500     600     500    0  1000
-#    Swipe    500     600     500    0  1000
-#    Sleep    5s
-#    Click Element    accessibility_id=Start poll!
-#    Sleep    5s
-#    Click Element    accessibility_id=A, Double tab to select this option
-#    Sleep    5s
-#    Click Element    accessibility_id=Done Voting
-#    Sleep    5s
-#    Click Element    accessibility_id=Browse, Browse Page
-#    Sleep    5s
-#    Click Element    accessibility_id=Quick polls
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=My Polls
-#    Sleep    5s
-#    Click Element    accessibility_id=End Poll
-#    Sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    #Click Element    xpath=//*[@class = 'android.widget.EditText' and contains(@text,QUESTION)]
+    Typing word
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    #Click Element    xpath=//*[@class = 'android.widget.EditText' and contains(@text,OPTION 1)]
+    #sleep    5s
+    Press Keycode    29
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    #Click Element    xpath=//*[@class = 'android.widget.EditText' and contains(@text,OPTION 2)]
+    Press Keycode    30
+    sleep    5s
+    Press Keycode    61
+    Swipe    500     600     500    0  1000
+    Swipe    500     600     500    0  1000
+    sleep    5s
+    Click Element    accessibility_id=unchecked, checkbox, Hide results until poll ends
+    sleep    5s
+    Click Element    accessibility_id=Start poll!
+    sleep    10s
+    Click Element    accessibility_id=Close
+    sleep    5s
+
+    Click Element    accessibility_id=Browse, Browse Page
+    sleep    5s
+    Click Element    accessibility_id=Quick polls
+    sleep    5s
+    Click Element    accessibility_id=Vote
 
 
+    sleep    15s
+
+
+    Click Element    accessibility_id=b, Double tab to select this option
+    sleep    10s
+    Page Should Contain Element    accessibility_id=Thanks for voting!
+    sleep    10s
+    Click Element    accessibility_id=Close
+    sleep    10s
+    Click Element    accessibility_id=End Poll
+    sleep    5s
+    Page Should Contain Element    accessibility_id=Results are in!
+    sleep    5s
+    Click Element    accessibility_id=View poll results
+    sleep    5s
+    Click Element    accessibility_id=Done
+    sleep    5s
 
 
 Validate blocks
@@ -323,7 +326,7 @@ Search Event
 Typing word
 
     FOR	${SearchText}	IN	@{SEARCH_APPS}
-        Log to Console  ${\n}Searching for ${SearchText}
+        #Log to Console  ${\n}Searching for ${SearchText}
         #Open the Application
         Press Keycode    ${SearchText}
 
@@ -396,75 +399,207 @@ Validating Dining
 
 Validating Groups
 
-    Sleep    30s
+    Sleep    10s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep    5s
     Click Element    accessibility_id=Groups
     Sleep    5s
-    Click Element    accessibility_id=Search
-#    Sleep    5s
-    ${EXAMPLE}    Set Variable    sdfsfsfs
-#    sleep    5s
-#    ${newtestValue}    Convert To Boolean    ${SCvalInput}
-#    sleep    5s
-#    #Press Keycode    61
-#    log to console    ${newtestValue}
-#    sleep    5s
-#    log to console    ${SCvalInput}
+    Click Element    accessibility_id=Create
     sleep    5s
-    Run Process    java -Dname\=value Example    shell=True    cwd=${EXAMPLE}
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    FOR	${SearchText}	IN	@{GrpValue}
+        #Log to Console  ${\n}Searching for ${SearchText}
+        #Open the Application
+        Press Keycode    ${SearchText}
 
-    #adb shell input text     "your string"
-    #Input Text    xpath=//*[@class = 'android.widget.EditText' and contains(@text,'Search')]    ${newtestValue}
-    #android.widget.EditText
-    #Page Should Contain Element    xpath=(//android.view.View[@content-desc="University Housing Meal Plan"])[1]
-#    Page Should Contain Element    accessibility_id=Create a group
-#    Sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    124
-#    Sleep    5s
-#    #Page Should Contain Element    //*[@class = 'android.widget.EditText' and contains(@text,'NAME FIELD')]
-##    @{ROBOTS}    Create List    school    test    test1
-##   # @{ROBOTS}=        Bender    Johnny5    Terminator    Robocop
-##    FOR    ${robot}    IN    @{ROBOTS}
-##        #log to console    ${robot}
-##        Input Text    xpath=//*[@class = 'android.widget.EditText' and contains(@text,'Search')]    ${robot}
-##        #Press Keycode    ${robot}
-##    END
-#    #Press Keycode    [45,44,43]
-##Press Keycode [45,44,43]
-#    #Press Keycode    4
-#    sleep    5s
-#    #driver.getKeyboard().sendKeys("y");
-#    #android:imeOptions="actionDone"
-#    #Click Text    Search
-#    #Page Should Contain Element    xpath=//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
-#    #//*[@class = 'android.widget.EditText' and contains(@text,'Search')]
-#    #${idval}    Set Variable    /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
-#    #Input Text    xpath=//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText    tyrtyrtyfgf
-##Click Text    Search
-##    Sleep    5s
-#    ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=${idval}
-#    log to console   ${value}
-#    Sleep    5s
-#    Input Text    xpath=${idval}    ${SRCH}fgf
-    #xpath=//*[@class = 'android.widget.EditText' and contains(@text,'Search')].
-#    Press Keycode    47
-#    Press Keycode    46
-#    sleep    5s
-#    Press Keycode    66
-#    #Click Element    xpath=//android.widget.Button[@content-desc="Search"]
-##    ${SCvalInput}    Set Variable    school
-##    #xpath=//*[@class = 'android.widget.EditText' and contains(@text,'Search')]
-##    Input Text    xpath=//*[@class = 'android.widget.EditText' and contains(@text,'Search')]    ${SCvalInput}
-#    Sleep    10s
+    END
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+
+    FOR	${SearchText}	IN	@{DesValue}
+        #Log to Console  ${\n}Searching for ${SearchText}
+        #Open the Application
+        Press Keycode    ${SearchText}
+
+    END
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Click Element    xpath=//android.view.View[@content-desc="Select a category.., Double tap to show categories options"]
+    sleep    5s
+    Click Element    accessibility_id=Community
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Private, Double tap to show privacy options
+    Sleep    5s
+    Click Element    accessibility_id=Private
+    Sleep    10s
+    Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'Membership Questions')]
+    #Click Element    accessibility_id=Membership Questions No question
+    Sleep    10s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    FOR	${SearchText}	IN	@{DesValue}
+        #Log to Console  ${\n}Searching for ${SearchText}
+        #Open the Application
+        Press Keycode    ${SearchText}
+
+    END
+    sleep    10s
+    Click Element    accessibility_id=Update questions
+    sleep    10s
+    Click Element    accessibility_id=Create Group
+    sleep    10s
+    Click Element    accessibility_id=My groups
+    sleep    10s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
+    sleep    10s
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    sleep    5s
+
+Create group event
+
+    Sleep    10s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    5s
+    Click Element    accessibility_id=Groups
+    Sleep    5s
+    Click Element    accessibility_id=My groups
+    sleep    10s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
+    sleep    10s
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    sleep    5s
+    Click Element    accessibility_id=Create event
+    sleep    5s
+    Click Element    accessibility_id=Create group event
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Click Element    accessibility_id=Category
+    sleep    5s
+    Click Element    accessibility_id=Community
+    Sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Description string
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Description string
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'TIME ZONE')]
+    sleep    5s
+    Click Element    accessibility_id=US/Central
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'START DATE')]
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'7')]
+    sleep    5s
+    Click Element    accessibility_id=OK
+    sleep    5s
+    #android.widget.Button  START DATE
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'START TIME')]
+    sleep    5s
+    Click Element    accessibility_id=Switch to text input mode
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    67
+    Press Keycode    67
+    sleep    5s
+    Press Keycode    13
+    sleep    5s
+    Click Element    accessibility_id=PM
+    sleep    5s
+    Click Element    accessibility_id=OK
+    sleep    5s
+
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'END DATE')]
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'7')]
+    sleep    5s
+    Click Element    accessibility_id=OK
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'END TIME')]
+    sleep    5s
+    Click Element    accessibility_id=Switch to text input mode
+    sleep    5s
+    Press Keycode    61
+    sleep    5s
+    Press Keycode    67
+    Press Keycode    67
+    sleep    5s
+    Press Keycode    13
+    sleep    5s
+    Press Keycode    10
+    sleep    5s
+    Press Keycode    7
+    Click Element    accessibility_id=PM
+    sleep    5s
+    Click Element    accessibility_id=OK
+    sleep    5s
+    Click Element    accessibility_id=Make this an online event, required
+    sleep    5s
+    Click Element    accessibility_id=Create event
+    Sleep    5s
+
+Confirm URL
+    FOR	${SearchText}	IN	@{DesValue}
+        #Log to Console  ${\n}Searching for ${SearchText}
+        #Open the Application
+        Press Keycode    ${SearchText}
+    END
+
+
+
+Description string
+
+    FOR	${SearchText}	IN	@{DesValue}
+        #Log to Console  ${\n}Searching for ${SearchText}
+        #Open the Application
+        Press Keycode    ${SearchText}
+    END
 
 Validating Athletics
     Sleep    5s
@@ -2155,8 +2290,8 @@ Valid Home screen
     Close the Application
 
 Validating Poll
-    Open the Application
-    Start the Application
+    Open the Application Noreset
+    #Start the Application
     Validate poll
     Close the Application
 
@@ -2202,8 +2337,16 @@ Valid Groupssdfsf
     Close the Application
 
 Valid Groups
-    Open the Application Noreset
+    Open the Application
+    Start the Application
     Validating Groups
+    Close the Application
+
+
+Valid Groups Event
+    Open the Application
+    Start the Application
+    Create group event
     Close the Application
 
 Valid Wallet screen
