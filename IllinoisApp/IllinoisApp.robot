@@ -399,9 +399,9 @@ Validating Dining
 
 Validating Groups
 
-    Sleep    10s
+    Sleep    15s
     Click Element    accessibility_id=Browse, Browse Page
-    Sleep    5s
+    Sleep    15s
     Click Element    accessibility_id=Groups
     Sleep    5s
     Click Element    accessibility_id=Create
@@ -448,8 +448,15 @@ Validating Groups
     END
     sleep    5s
     Press Keycode    61
-    sleep    5s
-    Click Element    xpath=//android.view.View[@content-desc="Select a category.., Double tap to show categories options"]
+    sleep    15s
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@index,6)]
+    Sleep    5s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@index,6)]
+    #Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'category')]
+    #Click Element    xpath=//android.view.View' and contains(@content-desc,'category')]
+    #Click Element    xpath=//android.view.View[@content-desc="Select a category.., Double tap to show categories options"]
+
+
     sleep    5s
     Click Element    accessibility_id=Community
     Sleep    5s
@@ -490,15 +497,21 @@ Validating Groups
 
 Create group event
 
-    Sleep    10s
+    Sleep    30s
     Click Element    accessibility_id=Browse, Browse Page
-    Sleep    5s
+    Sleep    20s
     Click Element    accessibility_id=Groups
-    Sleep    5s
-    Click Element    accessibility_id=My groups
-    sleep    10s
+    Sleep    10s
+    Click Element    accessibility_id=All groups
+    sleep    5s
+    Swipe    500     1300     500    0  1000
+    sleep    5s
+    #garden group
+    Wait Until Page Contains Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
+
+    sleep    5s
     Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
-    sleep    10s
+
     Sleep    5s
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
@@ -529,10 +542,11 @@ Create group event
     sleep    5s
     Press Keycode    61
     sleep    5s
-    Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'TIME ZONE')]
-    sleep    5s
+    Press Keycode    66
+    #Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'TIME ZONE')]
+    sleep    15s
     Click Element    accessibility_id=US/Central
-    sleep    5s
+    #sleep    5s
     Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'START DATE')]
     sleep    5s
     Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'7')]
@@ -570,17 +584,40 @@ Create group event
     Press Keycode    67
     Press Keycode    67
     sleep    5s
-    Press Keycode    13
+    Press Keycode    14
     sleep    5s
-    Press Keycode    10
-    sleep    5s
-    Press Keycode    7
     Click Element    accessibility_id=PM
     sleep    5s
     Click Element    accessibility_id=OK
     sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Make this an online event, required
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    sleep    5s
     Click Element    accessibility_id=Make this an online event, required
     sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Create event
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
     Click Element    accessibility_id=Create event
     Sleep    5s
 
@@ -2277,6 +2314,12 @@ Close the Application
     Close Application
 
 *** Test Cases ***
+
+Valid Netid Test
+    Open the Application
+    Start the Application
+    Close the Application
+
 Valid MyIllini screen
     Open the Application
     Start the Application
@@ -2337,15 +2380,20 @@ Valid Groupssdfsf
     Close the Application
 
 Valid Groups
-    Open the Application
+
+  Open the Application
     Start the Application
+    #Open the Application Noreset
+    #Start the Application
     Validating Groups
+    Create group event
     Close the Application
 
 
 Valid Groups Event
     Open the Application
     Start the Application
+    #Open the Application Noreset
     Create group event
     Close the Application
 
