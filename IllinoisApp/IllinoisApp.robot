@@ -13,6 +13,7 @@ Variables    input.yaml
 Library     DateTime
 Library     String
 Library     Process
+Library     Dialogs
 
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
@@ -34,6 +35,180 @@ Open the Application Noreset
         ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
         ...    allowInvisibleElements=true    ignoreUnimportantViews=false
 
+
+Start the Application Resident Visitor Alumini
+
+    Sleep  20s
+    #Click Element    accessibility_id=Continue
+    Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
+    Sleep    5s
+    Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, Visitor"]
+    #Click Element    accessibility_id=unchecked, checkbox, University Student
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Begin
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep   5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    10s
+    #Click Element    accessibility_id=Save Privacy Level
+	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
+    Sleep    5s
+    Click Element    accessibility_id=Verify My Phone Number
+    Sleep    5s
+    Execute Manual Step    Enter the phone number
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+    Run Keyword If   ${value}   Validate blocks Resident Visitor Alumini
+    sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc="Events for you"]
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    sleep    5s
+    Page Should Contain Element    accessibility_id=Explore, Explore Page
+#    Sleep     5s
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Student Guide Highlights
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+    sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    sleep    5s
+    Page Should Not Contain Element    accessibility_id=My Illini
+    Page Should Not Contain Element    accessibility_id=Illini Cash
+    Page Should Not Contain Element    accessibility_id=Meal Plan
+
+
+Start the Application Parents
+
+    Sleep  20s
+    #Click Element    accessibility_id=Continue
+    Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
+    Sleep    5s
+    Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, Parent"]
+    #Click Element    accessibility_id=unchecked, checkbox, University Student
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Begin
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep   5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    10s
+    #Click Element    accessibility_id=Save Privacy Level
+	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
+    Sleep    5s
+    Click Element    accessibility_id=Verify My Phone Number
+    Sleep    5s
+    Execute Manual Step    Enter the phone number
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+    Sleep    5s
+    Run Keyword If   ${value}   Validate blocks Parent
+    sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc="Events for you"]
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    sleep    5s
+    Page Should Contain Element    accessibility_id=Explore, Explore Page
+
+    sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    sleep    5s
+    Page Should Not Contain Element    accessibility_id=My Illini
+    Page Should Not Contain Element    accessibility_id=Illini Cash
+    Page Should Not Contain Element    accessibility_id=Meal Plan
+
+Validate blocks Parent
+
+    Page Should Contain Element    accessibility_id=Events
+    Page Should Contain Element    accessibility_id=Dining
+    Page Should Contain Element    accessibility_id=Athletics
+    Page Should Contain Element    accessibility_id=Wellness
+    Page Should Contain Element    accessibility_id=Illini Cash
+    Sleep    5s
+
+Start the Application Athletics
+
+    Sleep  20s
+    #Click Element    accessibility_id=Continue
+    Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
+    Sleep    5s
+    Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, Athletics fan"]
+    #Click Element    accessibility_id=unchecked, checkbox, University Student
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Begin
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep   5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    10s
+    #Click Element    accessibility_id=Save Privacy Level
+	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
+    Sleep    5s
+    Click Element    accessibility_id=Verify My Phone Number
+    Sleep    5s
+    Execute Manual Step    Enter the phone number
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Athletics
+    Sleep    5s
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Swipe    500     1300     500    0  1000
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Explore, Explore Page
+
+    sleep    5s
+    Click Element    accessibility_id=Browse, Browse Page
+    sleep    5s
+    Page Should Not Contain Element    accessibility_id=My Illini
+    Page Should Not Contain Element    accessibility_id=Illini Cash
+    Page Should Not Contain Element    accessibility_id=Meal Plan
+
+
+Validate blocks Resident Visitor Alumini
+    Page Should Contain Element    accessibility_id=Events
+    Page Should Contain Element    accessibility_id=Dining
+    Page Should Contain Element    accessibility_id=Athletics
+    Page Should Contain Element    accessibility_id=Wellness
+    Sleep    5s
 
 Start the Application
 
@@ -258,6 +433,7 @@ Validate blocks
     Page Should Contain Element    accessibility_id=Athletics
     Page Should Contain Element    accessibility_id=Illini Cash
     Page Should Contain Element    accessibility_id=My Illini
+    Page Should Contain Element    accessibility_id=Wellness
     Sleep    5s
 
 
@@ -2486,4 +2662,17 @@ Valid Swipe links
     Validating Setting screen
     Close the Application
 
+Valid Resident Visitor Alumini
 
+    Open the Application
+    Start the Application Resident Visitor Alumini
+    #Validating Setting screen
+    Close the Application
+
+
+Valid Athletics
+
+    Open the Application
+    Start the Application Athletics
+    #Validating Setting screen
+    Close the Application
