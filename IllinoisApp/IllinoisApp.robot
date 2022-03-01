@@ -17,6 +17,8 @@ Library     Dialogs
 
 *** Variables ***
 ${LOCAL_APPIUM_SERVER}    http://localhost:4723/wd/hub
+#${LOCAL_APPIUM_SERVER}    http://127.0.0.1:4723/wd/hub
+#${LOCAL_APPIUM_SERVER}    http://localhost:4723/
 @{SEARCH_APPS}    47    31    36    43    43    40
 @{GrpValue}    35    29    46    32    33    42    62    35    46    43    49    44
 @{DesValue}    35    29    46    32    33    42
@@ -33,8 +35,6 @@ Open the Application Noreset
         ...    deviceName=emulator-5554    automationName=uiautomator2
         ...    appPackage=edu.illinois.rokwire    appActivity=edu.illinois.rokwire.MainActivity
         ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
-        ...    allowInvisibleElements=true    ignoreUnimportantViews=false
-
 
 Start the Application Resident Visitor Alumini
 
@@ -50,7 +50,7 @@ Start the Application Resident Visitor Alumini
     Click Element    accessibility_id=Begin
     Sleep    5s
     Click Element    accessibility_id=Continue
-    Sleep   5s
+    Sleep   25s
     Click Element    accessibility_id=Continue
     Sleep    5s
     Click Element    accessibility_id=Continue
@@ -212,7 +212,7 @@ Validate blocks Resident Visitor Alumini
 
 Start the Application
 
-    Sleep  20s
+    Sleep  35s
     #Click Element    accessibility_id=Continue
     Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
     Sleep    5s
@@ -224,7 +224,8 @@ Start the Application
     Click Element    accessibility_id=Begin
     Sleep    5s
     Click Element    accessibility_id=Continue
-    Sleep   5s
+    Sleep   35s
+
     Click Element    accessibility_id=Continue
     Sleep    5s
     Click Element    accessibility_id=Continue
@@ -248,23 +249,111 @@ User already loggedin
     ...    ELSE
     ...    Proceed with Netid
 
-Validating Homescreen
-#    Click Element    accessibility_id=Log in with NetID
+
+#Validating Homescreen New addition
+#    Sleep    35s
+#    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Test Locations')]
+#    Sleep    15s
+#
+#building access
+##    Click Element At Coordinates    400    560
+##    Building Access Check your current building access.
+##
+##    Sleep    5s
+###back button
+##    Press Keycode    4
+##    Sleep    5s
+##Test location
+#    #Click Element At Coordinates    400    830
+#    Sleep    15s
+#    Click Element    accessibility_id=Test Locations Find test locations
 #    Sleep    5s
-#    Proceed with Netid
-    Sleep    5s
+#    Press Keycode    4
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=Test Locations
+#    Sleep    5s
+##Mckinley
+#    #Click Element At Coordinates    400    1020
+#    Click Element    accessibility_id=MyMcKinley MyMcKinley Patient Health Portal
+#    sleep    15s
+#    Press Keycode    4
+#    Sleep    5s
+##Wellness
+#    #Click Element At Coordinates    400    1260
+#    Click Element    accessibility_id=Answer Center Get answers to your questions.
+#    Sleep    5s
+#    Press Keycode    4
+#    #Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'MyMcKinley')]
+#    Sleep    5s
+#    Page Should Contain Element    accessibility_id=Twitter
+#    Sleep    5s
+#    Swipe    500     600     500    0  1000
+#
+#    Sleep    15s
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    sleep   5s
+#    Click Element    accessibility_id=Personalize this app
+#    sleep   5s
+#    Press Keycode    4
+#    sleep   5s
+#    Click Element    accessibility_id=Manage notification preferences
+#    sleep   5s
+#    Press Keycode    4
+#    sleep   5s
+#    Click Element    accessibility_id=Manage my privacy
+#    sleep   5s
+#    Press Keycode    4
+#    sleep   5s
+#    Click Element    accessibility_id=Campus Guide
+#    sleep   5s
+#    Press Keycode    4
+#    sleep   5s
+
+Scrolldown test
+    Sleep   50s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    15s
+    Scroll    accessibility_id=Groups    accessibility_id=Athletics
+    #Scroll Up    accessibility_id=My Illini
+    #scrollBackTo     accessibility_id=Groups    accessibility_id=Athletics
+    Sleep    15s
+
+
+Validating Homescreen
+    Sleep    45s
     Click Element    accessibility_id=Settings
-    Sleep    5s
+    Sleep    15s
     Page Should Contain Element    accessibility_id=Privacy Center
-    Sleep    5s
+    Sleep    15s
     Click Element    accessibility_id=Back
     Sleep    5s
-    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Resources
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    15     1000     400    340  1000
+        ...    ELSE
+        ...    Exit For Loop
+    END
+    sleep   5s
     Run Keyword If   ${value}   Validate blocks
     Sleep    5s
     FOR    ${i}    IN RANGE    20
        # value will return either true or false
-        ${value}    Run Keyword And Return Status    Page Should Contain Element    xpath=//android.view.View[@content-desc="Events for you"]
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Reminders
         log to console   ${value}
         Sleep  5s
         Run Keyword If   ${value} == False
@@ -280,7 +369,7 @@ Validating Homescreen
 
     FOR    ${i}    IN RANGE    20
        # value will return either true or false
-        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Student Guide Highlights
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide Highlights
         log to console   ${value}
         Sleep  5s
         Run Keyword If   ${value} == False
@@ -293,8 +382,10 @@ Validating Homescreen
     sleep    5s
     Click Element    accessibility_id=View all events, Tap to view all events
     sleep    5s
-    Run Keyword If   ${value} == True
-    ...    Click Text    While using the app
+#    Pop up for first time
+#    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide Highlights
+#    Run Keyword If   ${value} == True
+#    ...    Click Text    While using the app
     Sleep   15s
     Page Should Contain Element    accessibility_id=Explore
     Sleep    5s
@@ -304,6 +395,21 @@ Validating Homescreen
     Swipe    500     1300     500    0  1000
     Swipe    500     1300     500    0  1000
     Sleep    5s
+
+Validate Poll homescreen
+
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Create a poll
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
     Click Element    accessibility_id=Create a poll
     Sleep    5s
     Page Should Contain Element    accessibility_id=Create a Quick Poll
@@ -314,45 +420,81 @@ Validating Homescreen
     Sleep    5s
     Page Should Contain Element    accessibility_id=Home, Home Page
 
-Saved Event
-
-    Sleep    5s
-    Swipe    500     600     500    0  1000
-    Swipe    500     600     500    0  1000
-    Swipe    500     600     500    0  1000
-    sleep    5s
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@index,3)]
-    sleep    5s
-    ${Value}    Set Variable    //*[@class = 'android.view.View' and contains(@index,3)]
-    sleep    5s
-    ${CDValue}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,3)]  content-desc
-    sleep    5s
-    Log To Console    ${CDValue}
-    Click Element    xpath=//*[@class = 'android.view.View' and contains(@index,3)]
-    Sleep    5s
-    ${CDValue1}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,2)]  content-desc
-    Log To Console    ${CDValue1}
-    Sleep    5s
-    ${TextValue}    Run Keyword And Return Status    Should Contain    ${CDValue}    ${CDValue1}
-
-    Sleep    5s
-
-    Click Element    accessibility_id=Add To Favorites
-    Sleep     5s
-    Click Element    accessibility_id=View
-    Sleep     5s
-    Page Should Contain Element    accessibility_id=Saved
-    Sleep    5s
-    #${Savedvalue}=  Get Element Attribute    class=android.widget.Button  content-desc
-    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'${CDValue1}')]
-###    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
-
-    Sleep    5s
-#    ${SValue}    Run Keyword And Return Status    Should Contain    ${CDValue}    ${Savedvalue}
+#Saved Event
+#
+#    Sleep    35s
+#    FOR    ${i}    IN RANGE    20
+#       # value will return either true or false
+#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Events
+#        log to console   ${value}
+#        Sleep  5s
+#        Run Keyword If   ${value} == False
+#        ...    Swipe    500     600     500    0  1000
+#        ...    ELSE
+#        #...    Click Text    ${text}
+#        #Run Keyword If   ${value} == True
+#        ...    Exit For Loop
+#    END
+#    Sleep    15s
+#    Click Element    accessibility_id=Events
+#    sleep    25s
+#    #Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@index,3)]
+#    Page Should Contain Element    xpath=(//android.widget.Button[@content-desc="Add To Favorites"])[2]
+#
 #    Sleep    5s
+#    #${Value}    Set Variable    //android.widget.Button[@content-desc="Community, University Housing - Housing Sign-Up - 2022 - 2023, Oct 19 - Oct 26, https://housing.illinois.edu/signup, , , , Online event"]
+#    ${Value}=  Get Element Attribute    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Community')]  content-desc
+#    #${CDValue}=  Get Element Attribute    xpath=//*[@class = 'android.widget.Button' and contains(@index,0)]  content-desc
+#    log to console   ${Value}
+#    sleep    15
+#    Click Element    xpath=(//android.widget.Button[@content-desc="Add To Favorites"])[2]
+#    Sleep    5s
+##    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+##    log to console   ${value}
+##    Sleep  5s
+##    Run Keyword If   ${value} == True
+##    ...    Click Element    id=com.android.permissioncontroller:id/permission_allow_button
+##    ...    Sleep    5s
+##    ...    Click Element    accessibility_id=View saved
+##    Sleep   15s
+#    Click Element    accessibility_id=Browse, Browse Page
+#    Sleep    15s
+#    Swipe    500     1300     500    0  1000
+#    Swipe    500     1300     500    0  1000
+#    Sleep    15s
+#    Click Element    accessibility_id=Saved
+#    Sleep    15s
+#    ${CDValue}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,0)]  content-desc
+#    sleep    5s
+##    Log To Console    ${CDValue}
+##    Click Element    xpath=//*[@class = 'android.view.View' and contains(@index,3)]
+##    Sleep    5s
+##    ${CDValue1}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,2)]  content-desc
+##    Log To Console    ${CDValue1}
+##    Sleep    5s
+#    ${TextValue}    Run Keyword And Return Status    Should Contain    ${CDValue}    ${Value}
+#
+#    Sleep    5s
+#
+##    Click Element    accessibility_id=Add To Favorites
+##    Sleep     5s
+##    Click Element    accessibility_id=View
+##    Sleep     5s
+##    Page Should Contain Element    accessibility_id=Saved
+##    Sleep    5s
+##    #${Savedvalue}=  Get Element Attribute    class=android.widget.Button  content-desc
+##    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'${CDValue1}')]
+####    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
+#
+#    Sleep    5s
+##    ${SValue}    Run Keyword And Return Status    Should Contain    ${CDValue}    ${Savedvalue}
+##    Sleep    5s
+#
+#
+
 
 Validate poll
-    sleep    15s
+    sleep    25s
     FOR    ${i}    IN RANGE    20
        # value will return either true or false
         ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Create a poll
@@ -370,12 +512,14 @@ Validate poll
     sleep    5s
     Page Should Contain Element    accessibility_id=Create a Quick Poll
     sleep    5s
-    Press Keycode    61
+    Click TExt    text=QUESTION
     sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
     #Click Element    xpath=//*[@class = 'android.widget.EditText' and contains(@text,QUESTION)]
     Typing word
     sleep    5s
@@ -428,19 +572,27 @@ Validate poll
 
 
 Validate blocks
+
     Page Should Contain Element    accessibility_id=Events
     Page Should Contain Element    accessibility_id=Dining
     Page Should Contain Element    accessibility_id=Athletics
     Page Should Contain Element    accessibility_id=Illini Cash
     Page Should Contain Element    accessibility_id=My Illini
     Page Should Contain Element    accessibility_id=Wellness
+    Page Should Contain Element    accessibility_id=Crisis Help
     Sleep    5s
 
 
 Validating Events
-    Sleep    5s
+    Sleep    35s
     Page Should Contain Element    accessibility_id=Home, Home Page
-    Sleep    5s
+    Sleep    15s
+    Scroll    accessibility_id=Twitter    accessibility_id=Building Access
+    Sleep    15s
+#    Scroll    accessibility_id=Highlighted Features    accessibility_id=Twitter
+#    Sleep    15s
+#    Scroll    accessibility_id=Campus Resources    accessibility_id=My Groups
+#    Sleep    15s
     Click Element    accessibility_id=Events
     Sleep    5s
     ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
@@ -454,19 +606,18 @@ Validating Events
     Click Element    xpath=//android.widget.Button[@content-desc="All Categories, Filter by category"]
     Sleep    15s
     Click Element    xpath=//android.widget.Button[@content-desc="Academic"]
+    Sleep    35s
+    Swipe    500     1250     500    750  1000
+    Swipe    500     1250     500    750  1000
     Sleep    5s
-    Swipe    500     600     500    0  1000
-    Swipe    500     600     500    0  1000
-    Sleep    5s
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@index,2)]
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Online')]
+    #Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@index,1)]
     sleep    5s
-    #${Value}    Set Variable    //*[@class = 'android.view.View' and contains(@index,1)]
-    #sleep    5s
-    ${CDValue}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,2)]  content-desc
+    ${CDValue}=  Get Element Attribute    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Online')]  content-desc
     sleep    5s
     Log To Console    ${CDValue}
     Sleep    5s
-    Click Element    xpath=//*[@class = 'android.view.View' and contains(@index,2)]
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Online')]
     Sleep    5s
     ${CDValue1}=  Get Element Attribute    xpath=//*[@class = 'android.view.View' and contains(@index,2)]  content-desc
     Log To Console    ${CDValue1}
@@ -478,6 +629,8 @@ Validating Events
     Click Element    accessibility_id=Back
 
 Search Event
+    Sleep    35s
+    Scroll    accessibility_id=Twitter    accessibility_id=Building Access
     Sleep    15s
     Click Element    accessibility_id=Events
     Sleep    5s
@@ -489,7 +642,8 @@ Search Event
     Sleep   15s
     Click Element    accessibility_id=Search
     Sleep     5s
-    Page Should Contain Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
+    Page Should Contain Element    accessibility_id=Search
+    #Page Should Contain Element    xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText
     sleep    5s
     Typing word
 
@@ -510,9 +664,11 @@ Typing word
 
 
 Validating Dining
-    sleep    5s
-    Click Element    accessibility_id=Home, Home Page
-    Sleep    5s
+    Sleep    35s
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Test Locations')]
+    Sleep    15s
+    Scroll    accessibility_id=Twitter    accessibility_id=Building Access
+    Sleep    15s
     Click Element    accessibility_id=Dining
     Sleep     5s
     ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
@@ -529,22 +685,23 @@ Validating Dining
     #//android.view.View[@index='1']
     #${title}=  Get value     xpath=//android.view.View[@index='5']  content-desc
     #${title}=  Get Element Attribute    xpath=//android.view.View[@index='5']  content-desc
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
+    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Ikenberry')]
     Sleep     5s
-    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Ikenberry')]
+    Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Ikenberry')]
     Sleep     5s
     Page Should Contain Element    accessibility_id=Ikenberry Dining Center at Ikenberry Commons
     Sleep     5s
+    #Clcik on serving  drop down
     Click Element At Coordinates    987    1166
     #Click Element    accessibility_id=Serving lunch until 2:30PM, activate to show more details
     Sleep     15s
     #Page Should Contain Element    accessibility_id=Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay
-
-    Click Element At Coordinates    990    1328
+    #click on accepted payment dropdown Details
+    Click Element At Coordinates    990    1274
     #Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Accepted payments')]
     #Click Element    accessibility_id=Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay
     Sleep    5s
-    Swipe    500     1930     500    1190  1000
+    Swipe    500     1850     500    800  1000
     Sleep    5s
     #Page Should Contain Element    xpath=//android.view.View[@content-desc="Accepted payments: ClassicMeal DiningDollars IlliniCash CreditCard GooglePay ApplePay "]
 
@@ -562,6 +719,7 @@ Validating Dining
     Sleep    5s
     Click Element    accessibility_id=Breakfast
     Sleep    5s
+
     Page Should Contain Element    accessibility_id=7:00 AM - 10:00 AM
     Sleep    5s
     Click Element    accessibility_id=Lunch
@@ -570,26 +728,31 @@ Validating Dining
     Sleep    5s
     Click Element    accessibility_id=Dinner
     Sleep    5s
-    Page Should Contain Element    accessibility_id=4:30 PM - 8:30 PM
-    Sleep    5s
+#    Page Should Contain Element    accessibility_id=4:30 PM - 8:30 PM
+#    Sleep    5s
 
 Validating Groups
 
-    Sleep    15s
+    Sleep    35s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep    15s
     Click Element    accessibility_id=Groups
     Sleep    5s
+#    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
+#    Sleep    5s
     Click Element    accessibility_id=Create
     sleep    5s
-    Press Keycode    61
+    Click Text    text=NAME FIELD
     sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
+# Pressing TAB key
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
     FOR	${SearchText}	IN	@{GrpValue}
         #Log to Console  ${\n}Searching for ${SearchText}
         #Open the Application
@@ -598,23 +761,9 @@ Validating Groups
     END
     sleep    5s
     Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
+    Sleep    5s
+    Click Text    text=DESCRIPTION FIELD
+    Sleep    5s
 
     FOR	${SearchText}	IN	@{DesValue}
         #Log to Console  ${\n}Searching for ${SearchText}
@@ -625,12 +774,9 @@ Validating Groups
     sleep    5s
     Press Keycode    61
     sleep    15s
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@index,6)]
+    Click Element    xpath=//android.view.View[@content-desc="Select a category.., Double tap to show categories options"]
     Sleep    5s
-    Click Element    xpath=//*[@class = 'android.view.View' and contains(@index,6)]
-    #Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'category')]
-    #Click Element    xpath=//android.view.View' and contains(@content-desc,'category')]
-    #Click Element    xpath=//android.view.View[@content-desc="Select a category.., Double tap to show categories options"]
+
 
 
     sleep    5s
@@ -644,7 +790,8 @@ Validating Groups
     Sleep    5s
     Click Element    accessibility_id=Private
     Sleep    10s
-    Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'Membership Questions')]
+    Click Element At Coordinates    800    1650
+    #Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'Membership Questions No question')]
     #Click Element    accessibility_id=Membership Questions No question
     Sleep    10s
     Press Keycode    61
@@ -680,8 +827,8 @@ Create group event
     Sleep    10s
     Click Element    accessibility_id=All groups
     sleep    5s
-    Swipe    500     1300     500    0  1000
-    sleep    5s
+#    Swipe    500     1300     500    0  1000
+#    sleep    5s
     #garden group
     Wait Until Page Contains Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'garden')]
 
@@ -694,35 +841,40 @@ Create group event
     sleep    5s
     Click Element    accessibility_id=Create event
     sleep    5s
-    Click Element    accessibility_id=Create group event
+    Click Element    accessibility_id=Create new event
     sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
-    Press Keycode    61
-    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+#    sleep    5s
+#    Press Keycode    61
+
     Click Element    accessibility_id=Category
     sleep    5s
     Click Element    accessibility_id=Community
     Sleep    5s
-    Press Keycode    61
+    Click Text    text=EVENT TITLE FIELD
+#   Press Keycode    61
     sleep    5s
     Description string
     sleep    5s
     Press Keycode    61
     sleep    5s
     Description string
-    sleep    5s
+    Sleep    5s
+    #lands on time zone dropdown
     Press Keycode    61
     sleep    5s
+    #Pressing enter to open up the list of time zone
     Press Keycode    66
+    sleep    5s
     #Click Element    xpath=//*[@class = 'android.widget.ImageView' and contains(@content-desc,'TIME ZONE')]
     sleep    15s
     Click Element    accessibility_id=US/Central
-    #sleep    5s
+    sleep    5s
+
     Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'START DATE')]
     sleep    5s
     Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'7')]
@@ -815,16 +967,31 @@ Description string
     END
 
 Validating Athletics
-    Sleep    5s
+    Sleep    25s
     Page Should Contain Element    accessibility_id=Home, Home Page
     Sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Athletics
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    5s
+
     Click Element    accessibility_id=Athletics
     Sleep    5s
     Page Should Contain Element    accessibility_id=Athletics
     Sleep    5s
 	Click Element    accessibility_id=Teams
     Sleep    5s
-    Click Element At Coordinates    965    578
+###    checking unchecked, checkbox, Football
+    Click Element At Coordinates    965    1028
 #    Sleep    5s
 #	Click Element    accessibility_id=unchecked, checkbox, Football
 	Sleep    5s
@@ -862,8 +1029,8 @@ Validating Athletics
     Sleep    5s
     Page Should Contain Element    accessibility_id=Athletics, Filter by category
     sleep    5s
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Athletics')]
-    Sleep    5s
+#    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Athletics')]
+#    Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
     Click Element    accessibility_id=View newsunchecked, checkbox, News
@@ -902,7 +1069,7 @@ Validating Athletics
 
 
 Validating Wallet screen
-    Sleep    5s
+    Sleep    35s
 
     Click Element    accessibility_id=Wallet, Wallet Page
     sleep     5s
@@ -1011,7 +1178,7 @@ Validating Illini meal parking feedback
     Sleep   5s
 
 Validating Setting
-    sleep    5s
+    sleep    25s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep     5s
     Click Element    accessibility_id=Settings
@@ -1023,7 +1190,7 @@ Validating Setting
 #    sleep    5s
 #    Click Element    accessibility_id=No
     #Tapping Yes
-    sleep    5s
+#    sleep    5s
     Click Element    accessibility_id=Yes
     sleep    5s
     Page Should Contain Element    accessibility_id=Connect your NetID
@@ -1038,22 +1205,14 @@ Validating Setting
 
 Validating Privacy center
     #validating external links Privacy Center links
-    Sleep    5s
+    Sleep    35s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep    5s
-    Swipe    500     1300     500    0  1000
+    Click Element    accessibility_id=Settings
+    sleep    5s
+#    Swipe    500     1300     500    0  1000
     Click Element    accessibility_id=Privacy Center
     Sleep    5s
-#    Click Element    accessibility_id=Verify your Identity
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=Verify your Identity
-##
-#    Click Element    accessibility_id=Connect Your NetID
-#    Sleep    5s
-#    Click Element    accessibility_id=Log in with NetID
-#    Proceed with Netid
-#    Sleep   5s
-
     Click Element    accessibility_id=Manage and Understand Your Privacy
     Sleep    5s
     Page Should Contain Element    accessibility_id=Choose Your Privacy Level
@@ -1108,13 +1267,7 @@ Validating Privacy center
     Click Element At Coordinates    968    463
     Sleep     5s
     Click Element    accessibility_id=Set my Privacy
-    #Sleep     5s
-    Personal data and Notification
-
-    #Click Element    accessibility_id=Back
-    Sleep    5s
-
-    Swipe    500     1300     500    0  1000
+    Sleep     5s
     Click Element    accessibility_id=Privacy Statement
     Sleep   5s
     Wait Until Page Contains Element  accessibility_id=Privacy Statement    timeout=None    error=None
@@ -1128,12 +1281,12 @@ Validating Privacy center
 
 
 Personal data and Notification
-    sleep    5s
+    sleep    35s
     Click Element    accessibility_id=Browse, Browse Page
     Sleep     5s
     Click Element    accessibility_id=Settings
     sleep    5s
-    Swipe    500     1300     500    0  1000
+    #Swipe    500     1300     500    0  1000
     Sleep    5s
     Click Element    accessibility_id=Personal Information
     Sleep   5s
@@ -1148,7 +1301,7 @@ Personal data and Notification
     Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Personal Information')]
 
     Sleep   5s
-    Page Should Contain Element    accessibility_id=mmerit
+    Page Should Contain Element    accessibility_id=Tester
 
     Click Element    accessibility_id=Back
     Sleep    5s
@@ -1157,7 +1310,8 @@ Personal data and Notification
     Click Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Who You Are')]
 
     Sleep    5s
-    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'University Student')]
+    Page Should Contain Element    accessibility_id=checked, checkbox, University student
+    #Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'University Student')]
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
@@ -1204,13 +1358,13 @@ Personal data and Notification
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Click Element    accessibility_id=Delete my personal data
+    Click Element    accessibility_id=Delete my personal information
     Sleep    5s
     Click Element    accessibility_id=unchecked, checkbox, Your interests
     Click Element    accessibility_id=unchecked, checkbox, Food filters
 
     Sleep    5s
-    Click Element    accessibility_id=Delete My Data
+    Click Element    accessibility_id=Delete My Information
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
@@ -1221,7 +1375,7 @@ Personal data and Notification
     Sleep    5s
     Page Should Contain Element    accessibility_id=checked, checkbox, Athletics updates
     Sleep   5s
-    Page Should Contain Element    accessibility_id=checked, checkbox, Dining specials
+    Page Should Contain Element    accessibility_id=checked, checkbox, Group updates
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
@@ -1305,7 +1459,7 @@ Proceed with Netid
 
 
 
-
+###################Student guide ########################
 
 
 StudentGuide screen
@@ -1343,14 +1497,33 @@ StudentGuide screen
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-
+    Click Element    accessibility_id=Student Guidance
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=New student programs, Heading
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
     Click Element    accessibility_id=Writing help
     Sleep    5s
     Page Should Contain Element    accessibility_id=Writing help, Heading
     Sleep    5s
     Click Element    accessibility_id=Back
+    Sleep    5s
 
 #### Camous Rules and protocol
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Code of Conduct
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Sleep    10s
     Click Element    accessibility_id=COVID-19
     Sleep    5s
     Page Should Contain Element    accessibility_id=COVID-19, Heading
@@ -2490,10 +2663,18 @@ Close the Application
     Close Application
 
 *** Test Cases ***
+Basic Test
+    Open the Application Noreset
+    Close the Application
 
 Valid Netid Test
     Open the Application
     Start the Application
+    Close the Application
+
+Valid New addition
+    Open the Application Noreset
+    Validating Homescreen New addition
     Close the Application
 
 Valid MyIllini screen
@@ -2503,10 +2684,17 @@ Valid MyIllini screen
     Close the Application
 
 Valid Home screen
-    Open the Application
-    Start the Application
+    #Open the Application
+    #Start the Application
+    Open the Application Noreset
     Validating Homescreen
     Close the Application
+
+Valid Scrolldown test
+    Open the Application Noreset
+    Scrolldown test
+    Close the Application
+
 
 Validating Poll
     Open the Application Noreset
@@ -2515,49 +2703,50 @@ Validating Poll
     Close the Application
 
 Validating Events
-    Open the Application
-    Start the Application
-    #Start the Application with already login user
+    #Open the Application
+    #Start the Application
+    Open the Application Noreset
     Validating Events
     Close the Application
 
 Validating Search Events
-    Open the Application
-    Start the Application
-    #Start the Application with already login user
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
     Search Event
     Close the Application
 
 
 Validating Dining
-    Open the Application
-    Start the Application
-    #Start the Application with already login user
+
+    Open the Application Noreset
     Validating Dining
     Close the Application
 
 Valid test Athletics
-    Open the Application
-    Start the Application
-    #Start the Application with already login user
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
     Validating Athletics
     Close the Application
 
 Valid SaveEvent
-    Open the Application
-    Start the Application
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
     Saved Event
     Close the Application
 
-Valid Groupssdfsf
-    Open the Application
-    Start the Application
+Valid TestGroups
+    #Open the Application
+    #Start the Application
+    Open the Application Noreset
     Validating Groups
     Close the Application
 
 Valid Groups
 
-  Open the Application
+    Open the Application
     Start the Application
     #Open the Application Noreset
     #Start the Application
@@ -2567,9 +2756,9 @@ Valid Groups
 
 
 Valid Groups Event
-    Open the Application
-    Start the Application
-    #Open the Application Noreset
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
     Create group event
     Close the Application
 
@@ -2580,16 +2769,18 @@ Valid Wallet screen
     Close the Application
 
 Valid Setting screen
-    Open the Application
-    Start the Application
-    Validating Setting
-    #Personal data and Notification
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
+    #Validating Setting
+    Personal data and Notification
     Close the Application
 
 Valid Privacy center
 
-    Open the Application
-    Start the Application
+#    Open the Application
+#    Start the Application
+    Open the Application Noreset
     Validating Privacy center
     Close the Application
 
