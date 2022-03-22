@@ -36,26 +36,33 @@ Open the Application Noreset
         ...    appPackage=edu.illinois.rokwire    appActivity=edu.illinois.rokwire.MainActivity
         ...    noReset=true    fullReset=false    desiredCapabilities=lastOpenedActivity
 
+
 Start the Application Resident Visitor Alumini
 
     Sleep  20s
-    #Click Element    accessibility_id=Continue
+    #Click Element    accessibility_id=Continue 1st screen
     Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
     Sleep    5s
+    #Who are you screen
     Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, Visitor"]
     #Click Element    accessibility_id=unchecked, checkbox, University Student
     Sleep    5s
+    #Click continue in who are you screen
     Click Element    accessibility_id=Continue
     Sleep    5s
+    #Tap on Begin in Control your Data Privacy
     Click Element    accessibility_id=Begin
     Sleep    5s
+    #Tap on Continue in Enable location screen
     Click Element    accessibility_id=Continue
     Sleep   25s
+    #Tap on Continue in App activity
     Click Element    accessibility_id=Continue
     Sleep    5s
+    #Tap on Continue in Share your activity history
     Click Element    accessibility_id=Continue
     Sleep    10s
-    #Click Element    accessibility_id=Save Privacy Level
+    #Tap on Full access Save Privacy screen
 	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
     Sleep    5s
     Click Element    accessibility_id=Verify My Phone Number
@@ -213,26 +220,32 @@ Validate blocks Resident Visitor Alumini
 Start the Application
 
     Sleep  35s
-    #Click Element    accessibility_id=Continue
+    #Click Element    accessibility_id=Continue 1st screen
     Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
     Sleep    5s
+    #Who are you screen
     Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, University student"]
     #Click Element    accessibility_id=unchecked, checkbox, University Student
     Sleep    5s
+    #Click continue in who are you screen
     Click Element    accessibility_id=Continue
     Sleep    5s
+    #Tap on Begin in Control your Data Privacy
     Click Element    accessibility_id=Begin
     Sleep    5s
+    #Tap on Continue in Enable location screen
     Click Element    accessibility_id=Continue
-    Sleep   35s
-
+    Sleep   25s
+    #Tap on Continue in App activity
     Click Element    accessibility_id=Continue
     Sleep    5s
+    #Tap on Continue in Share your activity history
     Click Element    accessibility_id=Continue
     Sleep    10s
-    #Click Element    accessibility_id=Save Privacy Level
+    #Tap on Full access Save Privacy screen
 	Click Element    xpath=//android.widget.Button[@content-desc="Save privacy level"]
     Sleep    5s
+    #Sign in with Net id
     Click Element    accessibility_id=Sign in with NetID
     Sleep    5s
     Proceed with Netid
@@ -250,11 +263,17 @@ User already loggedin
     ...    Proceed with Netid
 
 
-#Validating Homescreen New addition
-#    Sleep    35s
-#    Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'Test Locations')]
-#    Sleep    15s
-#
+Validating Homescreen New addition
+    Sleep    45s
+    Page Should Contain Element    accessibility_id=Building Access Check your current building access.
+    #${Value}    Run Keyword And Return Status    xpath=//android.widget.Button[@content-desc="MyMcKinley MyMcKinley Patient Health Portal"]
+
+#    	                                                    //android.widget.Button[@content-desc="MyMcKinley MyMcKinley Patient Health Portal"]
+#    xpath=//*android.widget.ScrollView
+#/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.view.View
+    Sleep     5s
+
+
 #building access
 ##    Click Element At Coordinates    400    560
 ##    Building Access Check your current building access.
@@ -270,7 +289,7 @@ User already loggedin
 #    Sleep    5s
 #    Press Keycode    4
 #    Sleep    5s
-#    Page Should Contain Element    accessibility_id=Test Locations
+#    Page Should Contain Element    accessibility_id=Building Access Check your current building access.
 #    Sleep    5s
 ##Mckinley
 #    #Click Element At Coordinates    400    1020
@@ -2659,10 +2678,12 @@ Validating IA links
     Sleep   5s
 
 Close the Application
+
     Capture Page Screenshot
     Close Application
 
 *** Test Cases ***
+
 Basic Test
     Open the Application Noreset
     Close the Application
