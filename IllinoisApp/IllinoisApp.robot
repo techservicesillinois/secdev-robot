@@ -368,6 +368,7 @@ Validating Homescreen
         ...    Exit For Loop
     END
     sleep   5s
+    Swipe    500     600     500    0  1000
     Run Keyword If   ${value}   Validate blocks
     Sleep    5s
     FOR    ${i}    IN RANGE    20
@@ -388,7 +389,22 @@ Validating Homescreen
 
     FOR    ${i}    IN RANGE    20
        # value will return either true or false
-        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide Highlights
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Events For You
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+    Swipe    500     600     500    0  1000
+    Swipe    500     600     500    0  1000
+    sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=View All Events, Tap to view all events
         log to console   ${value}
         Sleep  5s
         Run Keyword If   ${value} == False
@@ -399,7 +415,7 @@ Validating Homescreen
         ...    Exit For Loop
     END
     sleep    5s
-    Click Element    accessibility_id=View all events, Tap to view all events
+    Click Element    accessibility_id=View All Events, Tap to view all events
     sleep    5s
 #    Pop up for first time
 #    ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide Highlights
@@ -410,8 +426,32 @@ Validating Homescreen
     Sleep    5s
     Click Element    accessibility_id=Back
     Sleep    5s
-    Swipe    500     1300     500    0  1000
-    Swipe    500     1300     500    0  1000
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Recently Viewed
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    sleep    5s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide Highlights
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
     Swipe    500     1300     500    0  1000
     Sleep    5s
 
@@ -592,6 +632,8 @@ Validate poll
 
 Validate blocks
 
+    sleep    5s
+    Swipe    500     600     500    0  1000
     Page Should Contain Element    accessibility_id=Events
     Page Should Contain Element    accessibility_id=Dining
     Page Should Contain Element    accessibility_id=Athletics
