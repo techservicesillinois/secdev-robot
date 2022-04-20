@@ -265,79 +265,77 @@ User already loggedin
 
 Validating Homescreen New addition
     Sleep    45s
-    Page Should Contain Element    accessibility_id=Building Access Check your current building access.
-    #${Value}    Run Keyword And Return Status    xpath=//android.widget.Button[@content-desc="MyMcKinley MyMcKinley Patient Health Portal"]
+    Click Element    accessibility_id=Test Locations, Find test locations
+    Sleep    15s
+    Page Should Contain Element    accessibility_id=Test Locations
+    Sleep    15s
+    Press Keycode    4
+    Sleep    15s
+    Click Element    accessibility_id=MyMcKinley, MyMcKinley Patient Health Portal
+    Sleep    15s
+    Page Should Contain Text    MyMcKinley Portal Login
+    Sleep    15s
+    Press Keycode    4
+    Sleep    15s
+    Click Element    accessibility_id=Answer Center, Get answers to your questions.
+    Sleep    15s
+    Page Should Contain Element    accessibility_id=Answer Center
+    Sleep    5s
+    Press Keycode    4
+    Sleep    15s
+    Page Should Contain Element    accessibility_id=Building Access, Check your current building access.
+    Sleep    15s
+    Click Element    accessibility_id=Building Access, Check your current building access.
+    Sleep    15s
+    Page Should Contain Element    accessibility_id=Building Access
+    Sleep    15s
+    ${title}=  Get Element Attribute    class=android.widget.ImageView  content-desc
+    Log to Console    ${title}
+    ${Value}    Run Keyword And Return Status    Should Contain    ${title}    denied
+    Run Keyword If   ${Value}
+    ...    BuildingAccessDeny
+    ...    ELSE
+    ...    BuildingAccessGrant
+    Sleep    5s
 
-#    	                                                    //android.widget.Button[@content-desc="MyMcKinley MyMcKinley Patient Health Portal"]
-#    xpath=//*android.widget.ScrollView
-#/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.view.View
+
+BuildingAccessDeny
+    ${Deny}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=DENIED
+    Sleep    5s
+    ${date}     Get Current Date
+    ${future}      Convert Date      ${date}      result_format=%B %d,%Y %H:%M %p
+    ${MD}      Convert Date      ${date}      result_format=%B %d,%Y
+    Log To Console    ${future}
+    Log To Console    ${MD}
     Sleep     5s
+    ${Value}    Run Keyword And Return Status    Should Contain    ${future}    ${MD}
+    #else pop up error
+    Sleep    5s
+    ${Orange}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=building access denied
+    Sleep    5s
+    Press Keycode    4
+    Sleep    15s
+
+#verify the accessibility text of the grant
+BuildingAccessGrant
+
+    ${Deny}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=GRANTED
+    Sleep    5s
+    ${date}     Get Current Date
+    ${future}      Convert Date      ${date}      result_format=%B %d,%Y %H:%M %p
+    ${MD}      Convert Date      ${date}      result_format=%B %d,%Y
+    Log To Console    ${future}
+    Log To Console    ${MD}
+    Sleep     5s
+    ${Value}    Run Keyword And Return Status    Should Contain    ${future}    ${MD}
+    #else pop up error
+    Sleep    5s
+    ${Orange}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=building access granted
+    Sleep    5s
+    Press Keycode    4
+    Sleep    15s
 
 
-#building access
-##    Click Element At Coordinates    400    560
-##    Building Access Check your current building access.
-##
-##    Sleep    5s
-###back button
-##    Press Keycode    4
-##    Sleep    5s
-##Test location
-#    #Click Element At Coordinates    400    830
-#    Sleep    15s
-#    Click Element    accessibility_id=Test Locations Find test locations
-#    Sleep    5s
-#    Press Keycode    4
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=Building Access Check your current building access.
-#    Sleep    5s
-##Mckinley
-#    #Click Element At Coordinates    400    1020
-#    Click Element    accessibility_id=MyMcKinley MyMcKinley Patient Health Portal
-#    sleep    15s
-#    Press Keycode    4
-#    Sleep    5s
-##Wellness
-#    #Click Element At Coordinates    400    1260
-#    Click Element    accessibility_id=Answer Center Get answers to your questions.
-#    Sleep    5s
-#    Press Keycode    4
-#    #Page Should Contain Element    xpath=//*[@class = 'android.widget.Button' and contains(@content-desc,'MyMcKinley')]
-#    Sleep    5s
-#    Page Should Contain Element    accessibility_id=Twitter
-#    Sleep    5s
-#    Swipe    500     600     500    0  1000
-#
-#    Sleep    15s
-#    FOR    ${i}    IN RANGE    20
-#       # value will return either true or false
-#        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Campus Guide
-#        log to console   ${value}
-#        Sleep  5s
-#        Run Keyword If   ${value} == False
-#        ...    Swipe    500     600     500    0  1000
-#        ...    ELSE
-#        #...    Click Text    ${text}
-#        #Run Keyword If   ${value} == True
-#        ...    Exit For Loop
-#    END
-#    sleep   5s
-#    Click Element    accessibility_id=Personalize this app
-#    sleep   5s
-#    Press Keycode    4
-#    sleep   5s
-#    Click Element    accessibility_id=Manage notification preferences
-#    sleep   5s
-#    Press Keycode    4
-#    sleep   5s
-#    Click Element    accessibility_id=Manage my privacy
-#    sleep   5s
-#    Press Keycode    4
-#    sleep   5s
-#    Click Element    accessibility_id=Campus Guide
-#    sleep   5s
-#    Press Keycode    4
-#    sleep   5s
 
 Scrolldown test
     Sleep   50s
@@ -454,6 +452,52 @@ Validating Homescreen
     END
     Swipe    500     1300     500    0  1000
     Sleep    5s
+
+Validate Highlighted Features
+
+    Sleep    45s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Highlighted Features
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    15     1000     400    340  1000
+        ...    ELSE
+        ...    Exit For Loop
+    END
+    sleep   5s
+#    Run Keyword If   ${value}   Validate Highlighted Features
+#    Sleep    5s
+
+
+    Swipe    500     600     500    0  1000
+    Sleep    5s
+    Click Element    accessibility_id=Personalize This App
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Personal Information
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Manage Notification Preferences
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Notifications
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Manage My Privacy
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Choose Your Privacy Level
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+    Click Element    accessibility_id=Campus Guide
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Campus Guide
+    Sleep    5s
+    Click Element    accessibility_id=Back
+    Sleep    5s
+
 
 Validate Poll homescreen
 
