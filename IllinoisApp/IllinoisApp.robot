@@ -523,9 +523,28 @@ Validate Poll homescreen
     Sleep    5s
     Page Should Contain Element    accessibility_id=Home, Home Page
 
-#Saved Event
-#
-#    Sleep    35s
+Saved Event
+    Sleep    35s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    15s
+    FOR    ${i}    IN RANGE    20
+       # value will return either true or false
+        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Saved
+        log to console   ${value}
+        Sleep  5s
+        Run Keyword If   ${value} == False
+        ...    Swipe    500     600     500    0  1000
+        ...    ELSE
+        #...    Click Text    ${text}
+        #Run Keyword If   ${value} == True
+        ...    Exit For Loop
+    END
+
+    Sleep    5s
+    Click Element    accessibility_id=Saved
+    Sleep    5s
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'MSA')]
+    Sleep    5s
 #    FOR    ${i}    IN RANGE    20
 #       # value will return either true or false
 #        ${value}    Run Keyword And Return Status    Page Should Contain Element    accessibility_id=Events
@@ -733,6 +752,8 @@ Validating Events
 
     Click Element    accessibility_id=Back
 
+
+
 Search Event
     Sleep    35s
     Scroll    accessibility_id=Twitter    accessibility_id=Building Access
@@ -849,15 +870,7 @@ Validating Groups
     sleep    5s
     Click Text    text=NAME FIELD
     sleep    5s
-# Pressing TAB key
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
+
     FOR	${SearchText}	IN	@{GrpValue}
         #Log to Console  ${\n}Searching for ${SearchText}
         #Open the Application
@@ -948,13 +961,7 @@ Create group event
     sleep    5s
     Click Element    accessibility_id=Create new event
     sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
-#    sleep    5s
-#    Press Keycode    61
+
 
     Click Element    accessibility_id=Category
     sleep    5s
@@ -1070,6 +1077,25 @@ Description string
         #Open the Application
         Press Keycode    ${SearchText}
     END
+
+
+Validating Crisis help
+    Sleep    30s
+    Click Element    accessibility_id=Browse, Browse Page
+    Sleep    20s
+    Click Element    accessibility_id=Crisis Help
+    Sleep    15s
+    ${value}    Run Keyword And Return Status    Page Should Contain Text    	I Agree
+    log to console   ${value}
+    Sleep  5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    	I Agree
+    Sleep   15s
+    Page Should Contain Text    Wellness
+    Sleep    5s
+    Press Keycode    4
+
+
 
 Validating Athletics
     Sleep    25s
@@ -2838,8 +2864,6 @@ Valid test Athletics
     Close the Application
 
 Valid SaveEvent
-#    Open the Application
-#    Start the Application
     Open the Application Noreset
     Saved Event
     Close the Application
@@ -2889,6 +2913,12 @@ Valid Privacy center
 #    Start the Application
     Open the Application Noreset
     Validating Privacy center
+    Close the Application
+
+Valid Crisis help
+
+    Open the Application Noreset
+    Validating Crisis help
     Close the Application
 
 
@@ -2974,3 +3004,6 @@ Valid Athletics
     Start the Application Athletics
     #Validating Setting screen
     Close the Application
+
+
+
