@@ -222,8 +222,23 @@ Start the Application
     Sleep  35s
     #Click Element    accessibility_id=Continue 1st screen
     Click Element    xpath=//android.widget.Button[@content-desc="Continue"]
+    Sleep    15s
+    #Video part of the App
+    Click Element    class=android.view.View
     Sleep    5s
+    #Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'explore menus')]
+    #//android.view.View[@content-desc="explore menus, and filter meal options by dietary preferences."]
+    #Page Should Contain Element    xpath=//android.view.View[@content-desc="explore menus, and filter meal options by dietary preferences."]
+    Click Element    class=android.view.View
+    Sleep    5s
+    #Skip button
+    Page Should Contain Element    accessibility_id=Skip
     #Who are you screen
+    Wait Until Element Is Visible    accessibility_id=Continue    timeout=120s
+    #Wait Until Page Contains Element    accessibility_id=Continue
+    Sleep    5s
+    Click Element    accessibility_id=Continue
+    Sleep    5s
     Click Element    xpath=//android.view.View[@content-desc="unchecked, checkbox, University student"]
     #Click Element    accessibility_id=unchecked, checkbox, University Student
     Sleep    5s
@@ -235,7 +250,13 @@ Start the Application
     Sleep    5s
     #Tap on Continue in Enable location screen
     Click Element    accessibility_id=Continue
-    Sleep   25s
+    Sleep    5s
+    ${value}    Run Keyword And Return Status    Page Should Contain Text    While using the app
+    log to console   ${value}
+    Sleep  5s
+    Run Keyword If   ${value} == True
+    ...    Click Text    While using the app
+    Sleep   15s
     #Tap on Continue in App activity
     Click Element    accessibility_id=Continue
     Sleep    5s
@@ -249,7 +270,7 @@ Start the Application
     Click Element    accessibility_id=Sign in with NetID
     Sleep    5s
     Proceed with Netid
-#    Sleep    5s
+    Validating Wallet screen
 
 User already loggedin
     Sleep    5s
@@ -261,6 +282,12 @@ User already loggedin
     ...    Validating Homescreen
     ...    ELSE
     ...    Proceed with Netid
+
+Favourite screen validation
+    Sleep    5s
+    Page Should Contain Element    accessibility_id=Welcome to Illinois 4
+    Sleep    5s
+
 
 
 Validating Homescreen New addition
@@ -1201,9 +1228,20 @@ Validating Athletics
 
 Validating Wallet screen
     Sleep    35s
-
-    Click Element    accessibility_id=Wallet, Wallet Page
+    Scroll Down    accessibility_id=655243201, Illini ID MERIT, MAYA TESTER
+    sleep    5s
+    Page Should Contain Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Illini ID')]
+    sleep    5s
+    Click Element    xpath=//*[@class = 'android.view.View' and contains(@content-desc,'Illini ID')]
+    Page Should Contain Element    accessibility_id=Illini ID
+    Sleep     5s
+    Page Should Contain Element    accessibility_id=MERIT, MAYA TESTER
+    Sleep    5s
+    Click Element    xpath=(//android.widget.Button[@content-desc="close"])[2]
+#    Click Element    accessibility_id=Wallet, Wallet Page
     sleep     5s
+
+Next part of Wallet
 
     Click Element    xpath=(//android.widget.ImageView[@content-desc="View"])[1]
     Sleep   5s
@@ -1220,8 +1258,8 @@ Validating Wallet screen
     Sleep   5s
     Click Element    accessibility_id=Back
     Sleep   5s
-    Click Element    xpath=(//android.widget.ImageView[@content-desc="View"])[2]
-    Sleep    5s
+#    Click Element    xpath=(//android.widget.ImageView[@content-desc="View"])[2]
+#    Sleep    5s
     Page Should Contain Element    xpath=(//android.view.View[@content-desc="University Housing Meal Plan"])[1]
     Sleep    5s
     Swipe    500     1300     500    0  1000
@@ -1240,6 +1278,7 @@ Validating Wallet screen
     sleep    5s
     Swipe    722     1316     526    1306  1000
     Sleep    5s
+    //////////////////////
     Click Element    accessibility_id=Use ID
     Sleep     5s
     Page Should Contain Element    accessibility_id=Illini ID
@@ -1585,7 +1624,7 @@ Proceed with Netid
     # Swtich back to Native app
     #Switch To Context  ${contexts}[0]
     Sleep  15s
-    Capture Page Screenshot     filename=SaferApp05.png
+
 
 
 
@@ -2798,6 +2837,11 @@ Close the Application
 
 Basic Test
     Open the Application Noreset
+    Close the Application
+
+Valid Newversion Test
+    Open the Application
+    Start the Application
     Close the Application
 
 Valid Netid Test
